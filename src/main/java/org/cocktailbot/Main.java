@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import org.cocktailbot.command.HowToMakeDrinkCommand;
 import org.cocktailbot.command.RandomCocktailCommand;
+import org.cocktailbot.reader.UrlJsonResponseReader;
 import org.cocktailbot.validator.EqualsValidator;
 import org.cocktailbot.validator.PrefixValidator;
 
@@ -20,7 +21,7 @@ public class Main {
                 .setActivity(Activity.playing("Preparing drink"))
                 .build();
 
-        bot.addEventListener(new RandomCocktailCommand(PrefixValidator.getInstance()));
-        bot.addEventListener(new HowToMakeDrinkCommand(EqualsValidator.getInstance()));
+        bot.addEventListener(new RandomCocktailCommand(PrefixValidator.getInstance(), UrlJsonResponseReader.getInstance()));
+        bot.addEventListener(new HowToMakeDrinkCommand(EqualsValidator.getInstance(), UrlJsonResponseReader.getInstance()));
     }
 }
