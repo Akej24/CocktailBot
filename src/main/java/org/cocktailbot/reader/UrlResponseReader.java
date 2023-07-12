@@ -1,4 +1,4 @@
-package org.cocktailbot;
+package org.cocktailbot.reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;

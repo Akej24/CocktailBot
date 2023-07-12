@@ -3,6 +3,10 @@ package org.cocktailbot;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import org.cocktailbot.command.HowToMakeDrinkCommand;
+import org.cocktailbot.command.RandomCocktailCommand;
+import org.cocktailbot.validator.EqualsValidator;
+import org.cocktailbot.validator.PrefixValidator;
 
 import javax.security.auth.login.LoginException;
 
@@ -16,6 +20,7 @@ public class Main {
                 .setActivity(Activity.playing("Preparing drink"))
                 .build();
 
-        bot.addEventListener(new Commands());
+        bot.addEventListener(new RandomCocktailCommand(PrefixValidator.getInstance()));
+        bot.addEventListener(new HowToMakeDrinkCommand(EqualsValidator.getInstance()));
     }
 }

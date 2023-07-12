@@ -1,21 +1,30 @@
-package org.cocktailbot;
+package org.cocktailbot.command;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.cocktailbot.reader.UrlResponseReader;
+import org.cocktailbot.validator.ValidationType;
+import org.cocktailbot.validator.Validator;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Commands extends ListenerAdapter {
+public class RandomCocktailCommand extends ListenerAdapter {
+
+    private static final String COMMAND = "!random";
+    private final Validator validator;
+
+    public RandomCocktailCommand(Validator validator) {
+        this.validator = validator;
+    }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        String message = event.getMessage().getContentRaw();
         String author = event.getAuthor().getName();
-        if (message.equalsIgnoreCase("!drink") && !author.equals("Cocktail Bot")) {
+        if (validator.validateCommand(event, COMMAND, ValidationType.EQUALS)) {
             String randomCocktailJson = UrlResponseReader.getJsonResponseFromUrl("https://www.thecocktaildb.com/api/json/v1/1/random.php", "GET");
             String drink = getCocktailNameFromJson(randomCocktailJson);
-            event.getChannel().sendMessage("Hello " + author + "!\nThis is your random drink: " + drink)./*addFile(new File("")).*/queue();
+            event.getChannel().sendMessage("Hello @" + author + "!\nThis is your random drink: " + drink)./*addFile(new File("")).*/queue();
         }
     }
 
@@ -28,6 +37,4 @@ public class Commands extends ListenerAdapter {
         }
         return "not found";
     }
-
-
 }
