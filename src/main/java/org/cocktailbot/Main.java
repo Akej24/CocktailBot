@@ -3,11 +3,11 @@ package org.cocktailbot;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
-import org.cocktailbot.command.HowToMakeDrinkCommand;
-import org.cocktailbot.command.RandomCocktailCommand;
-import org.cocktailbot.reader.UrlJsonResponseReader;
-import org.cocktailbot.validator.EqualsValidator;
-import org.cocktailbot.validator.PrefixValidator;
+import org.cocktailbot.application.HowToMakeDrinkCommand;
+import org.cocktailbot.application.RandomCocktailCommand;
+import org.cocktailbot.infrastructure.UrlJsonResponseReader;
+import org.cocktailbot.infrastructure.EqualsValidator;
+import org.cocktailbot.infrastructure.PrefixValidator;
 
 import javax.security.auth.login.LoginException;
 

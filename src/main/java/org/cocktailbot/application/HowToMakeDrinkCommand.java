@@ -1,9 +1,7 @@
-package org.cocktailbot.command;
+package org.cocktailbot.application;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.reader.UrlResponseReader;
-import org.cocktailbot.validator.Validator;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;

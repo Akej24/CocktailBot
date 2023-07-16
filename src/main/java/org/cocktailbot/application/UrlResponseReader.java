@@ -1,4 +1,4 @@
-package org.cocktailbot.reader;
+package org.cocktailbot.application;
 
 public interface UrlResponseReader {
 

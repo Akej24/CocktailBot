@@ -1,4 +1,4 @@
-package org.cocktailbot.validator;
+package org.cocktailbot.application;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
