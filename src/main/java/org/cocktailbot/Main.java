@@ -21,6 +21,7 @@ public class Main {
                 .setActivity(Activity.playing("Preparing drink"))
                 .build();
 
+
         bot.addEventListener(new RandomCocktailCommand(PrefixValidator.getInstance(), UrlJsonResponseReader.getInstance()));
         bot.addEventListener(new HowToMakeDrinkCommand(EqualsValidator.getInstance(), UrlJsonResponseReader.getInstance()));
     }
