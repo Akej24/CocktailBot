@@ -1,4 +1,4 @@
-package org.cocktailbot.core;
+package org.cocktailbot.drink.url_response;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.stream.Collectors;
 
-class UrlJsonResponseReader implements UrlResponseReader {
+public class UrlJsonResponseReader implements UrlResponseReader {
 
     private static UrlJsonResponseReader INSTANCE;
 

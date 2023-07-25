@@ -1,8 +1,8 @@
-package org.cocktailbot.core;
+package org.cocktailbot.drink.validator;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-interface Validator {
+public interface Validator {
 
     boolean validateCommand(MessageReceivedEvent event, String correctCommandName);
 

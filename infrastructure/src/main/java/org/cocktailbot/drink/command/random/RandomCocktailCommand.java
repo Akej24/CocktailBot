@@ -1,10 +1,9 @@
-package org.cocktailbot.core;
+package org.cocktailbot.drink.command.random;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.cocktailbot.drink.validator.Validator;
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 class RandomCocktailCommand extends ListenerAdapter {
 
@@ -21,7 +20,7 @@ class RandomCocktailCommand extends ListenerAdapter {
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         String author = event.getAuthor().getName();
         if (validator.validateCommand(event, COMMAND)) {
-            String drink = randomCocktailService.getCocktailNameJsonResponse();
+            String drink = randomCocktailService.getRandomDrink();
             event.getChannel().sendMessage("Hello @" + author + "!\nThis is your random drink: " + drink)./*addFile(new File("")).*/queue();
         }
     }

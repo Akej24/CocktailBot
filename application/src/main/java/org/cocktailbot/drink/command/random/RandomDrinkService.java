@@ -1,5 +1,6 @@
-package org.cocktailbot.core;
+package org.cocktailbot.drink.command.random;
 
+import org.cocktailbot.drink.url_response.UrlResponseReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,14 +12,14 @@ class RandomDrinkService {
         this.urlResponseReader = urlResponseReader;
     }
 
-    public String getCocktailNameJsonResponse() {
+    public String getRandomDrink() {
         String randomCocktailJson = urlResponseReader.getResponseFromUrl(
                 "https://www.thecocktaildb.com/api/json/v1/1/random.php", "GET"
         );
-        return getCocktailNameFromJson(randomCocktailJson);
+        return getDrinkNameFromJson(randomCocktailJson);
     }
 
-    private static String getCocktailNameFromJson(String randomCocktailJsonResponse) {
+    private static String getDrinkNameFromJson(String randomCocktailJsonResponse) {
         JSONObject jsonObject = new JSONObject(randomCocktailJsonResponse);
         JSONArray drinksArray = jsonObject.getJSONArray("drinks");
         if (drinksArray.length() > 0) {
