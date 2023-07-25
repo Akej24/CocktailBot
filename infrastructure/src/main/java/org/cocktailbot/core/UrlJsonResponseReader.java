@@ -1,6 +1,4 @@
-package org.cocktailbot.infrastructure;
-
-import org.cocktailbot.application.UrlResponseReader;
+package org.cocktailbot.core;
 
 import java.io.BufferedReader;
 import java.io.IOException;

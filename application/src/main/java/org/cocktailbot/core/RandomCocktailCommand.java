@@ -1,4 +1,4 @@
-package org.cocktailbot.application;
+package org.cocktailbot.core;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

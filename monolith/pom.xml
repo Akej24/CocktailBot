@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>CocktailBot</artifactId>
+        <groupId>org.cocktailbot</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>monolith</artifactId>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <start-class>org.cocktailbot.CocktailBot</start-class>
+    </properties>
+    <name>monolith</name>
+    <description>Cocktail discord bot with monolith architecture</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.cocktailbot</groupId>
+            <artifactId>infrastructure</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.cocktailbot</groupId>
+            <artifactId>application</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- Discord API -->
+        <dependency>
+            <groupId>net.dv8tion</groupId>
+            <artifactId>JDA</artifactId>
+            <version>5.0.0-alpha.4</version>
+        </dependency>
+    </dependencies>
+
+</project>
