@@ -20,9 +20,11 @@ class HowToMakeDrinkCommand extends ListenerAdapter {
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (validator.validateCommand(event, COMMAND)) {
             String drinkName = event.getMessage().getContentRaw().substring(COMMAND.length());
-            String drinkInstructions = howToMakeDrinkService.getDrinkRecipe(drinkName);
+            String drinkRecipe = howToMakeDrinkService.getDrinkRecipe(drinkName);
             String author = event.getAuthor().getName();
-            event.getChannel().sendMessage("Hello " + author + "!\nThis is how to make " + drinkName + "\n\n" + drinkInstructions)./*addFile(new File("")).*/queue();
+            event.getChannel()
+                    .sendMessage("Hello " + author + "!\nThis is how to make " + drinkName + "\n\n" + drinkRecipe)
+                    ./*addFile(new File("")).*/queue();
         }
     }
 

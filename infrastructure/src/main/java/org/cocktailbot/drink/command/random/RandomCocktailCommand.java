@@ -18,8 +18,8 @@ class RandomCocktailCommand extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        String author = event.getAuthor().getName();
         if (validator.validateCommand(event, COMMAND)) {
+            String author = event.getAuthor().getName();
             String drink = randomCocktailService.getRandomDrink();
             event.getChannel().sendMessage("Hello @" + author + "!\nThis is your random drink: " + drink)./*addFile(new File("")).*/queue();
         }
