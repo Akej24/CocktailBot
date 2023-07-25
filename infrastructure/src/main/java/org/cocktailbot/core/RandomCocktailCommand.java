@@ -9,31 +9,22 @@ import org.json.JSONObject;
 class RandomCocktailCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!random";
-    private final UrlResponseReader urlResponseReader;
+    private final RandomDrinkService randomCocktailService;
     private final Validator validator;
 
-    public RandomCocktailCommand(Validator validator, UrlResponseReader urlResponseReader) {
+    public RandomCocktailCommand(Validator validator, RandomDrinkService randomCocktailService) {
         this.validator = validator;
-        this.urlResponseReader = urlResponseReader;
+        this.randomCocktailService = randomCocktailService;
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         String author = event.getAuthor().getName();
         if (validator.validateCommand(event, COMMAND)) {
-            String randomCocktailJson = urlResponseReader.getResponseFromUrl("https://www.thecocktaildb.com/api/json/v1/1/random.php", "GET");
-            String drink = getCocktailNameFromJson(randomCocktailJson);
+            String drink = randomCocktailService.getCocktailNameJsonResponse();
             event.getChannel().sendMessage("Hello @" + author + "!\nThis is your random drink: " + drink)./*addFile(new File("")).*/queue();
         }
     }
 
-    private static String getCocktailNameFromJson(String randomCocktailJsonResponse) {
-        JSONObject jsonObject = new JSONObject(randomCocktailJsonResponse);
-        JSONArray drinksArray = jsonObject.getJSONArray("drinks");
-        if (drinksArray.length() > 0) {
-            JSONObject drinkObject = drinksArray.getJSONObject(0);
-            return drinkObject.getString("strDrink");
-        }
-        return "not found";
-    }
+
 }
