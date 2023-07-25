@@ -7,22 +7,26 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class HowToMakeDrinkCommand extends ListenerAdapter {
+class HowToMakeDrinkCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!howtomake ";
     private final UrlResponseReader urlResponseReader;
     private final Validator validator;
+    private final HowToMakeDrinkService howToMakeDrinkService;
 
-    public HowToMakeDrinkCommand(Validator validator, UrlResponseReader urlResponseReader) {
+    public HowToMakeDrinkCommand(Validator validator, UrlResponseReader urlResponseReader, HowToMakeDrinkService howToMakeDrinkService) {
         this.validator = validator;
         this.urlResponseReader = urlResponseReader;
+        this.howToMakeDrinkService = howToMakeDrinkService;
     }
 
     @Override
+    //CONTROLLER
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw();
         String author = event.getAuthor().getName();
         if (validator.validateCommand(event, COMMAND)) {
+            //SERVICE
             String drinkNameFromMessage = message.substring(COMMAND.length());
             String drinkJsonResponse = urlResponseReader.getResponseFromUrl("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkNameFromMessage, "GET");
             String drinkInstructions = getInstructionsFromJson(drinkJsonResponse);

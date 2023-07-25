@@ -2,7 +2,7 @@ package org.cocktailbot.core;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public final class EqualsValidator implements Validator {
+final class EqualsValidator implements Validator {
 
     private static EqualsValidator INSTANCE;
 

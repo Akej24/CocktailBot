@@ -9,15 +9,9 @@ import javax.security.auth.login.LoginException;
 
 public class CocktailBot {
 
-    private static final String TOKEN = "MTEyODM2OTI5MzIyMzAxMDQ0NQ.Gj_YKF.kB3IpuRGwwKIj5G01df9Z09-5ypJOlFOBsyE_8";
-
     public static void main(String[] args) throws LoginException {
-        JDA bot = JDABuilder
-                .createDefault(TOKEN)
-                .setActivity(Activity.playing("Preparing drink"))
-                .build();
-
-        bot.addEventListener(new RandomCocktailCommand(PrefixValidator.getInstance(), UrlJsonResponseReader.getInstance()));
-        bot.addEventListener(new HowToMakeDrinkCommand(EqualsValidator.getInstance(), UrlJsonResponseReader.getInstance()));
+        JDA bot = JdaBot.buildBot();
+        bot.addEventListener(RandomCocktailConfig.getInstance());
+        bot.addEventListener(HowToMakeDrinkConfig.getInstance());
     }
 }

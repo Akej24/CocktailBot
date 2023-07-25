@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class RandomCocktailCommand extends ListenerAdapter {
+class RandomCocktailCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!random";
     private final UrlResponseReader urlResponseReader;

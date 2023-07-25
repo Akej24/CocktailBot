@@ -2,7 +2,7 @@ package org.cocktailbot.core;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public final class PrefixValidator implements Validator {
+final class PrefixValidator implements Validator {
 
     private static PrefixValidator INSTANCE;
 

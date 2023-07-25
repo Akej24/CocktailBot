@@ -8,7 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.stream.Collectors;
 
-public class UrlJsonResponseReader implements UrlResponseReader {
+class UrlJsonResponseReader implements UrlResponseReader {
 
     private static UrlJsonResponseReader INSTANCE;
 
