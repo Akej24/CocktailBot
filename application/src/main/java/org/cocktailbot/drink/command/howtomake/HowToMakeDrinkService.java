@@ -27,7 +27,7 @@ class HowToMakeDrinkService {
             JSONObject drinkObject = drinksArray.getJSONObject(0);
             return drinkObject.getString("strInstructions");
         } catch (JSONException e) {
-            return "Drink does not exist";
+            return "";
         }
     }
 }

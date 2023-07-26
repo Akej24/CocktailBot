@@ -21,7 +21,12 @@ class RandomCocktailCommand extends ListenerAdapter {
         if (validator.validateCommand(event, COMMAND)) {
             String author = event.getAuthor().getName();
             String drink = randomCocktailService.getRandomDrink();
-            event.getChannel().sendMessage("Hello @" + author + "!\nThis is your random drink: " + drink)./*addFile(new File("")).*/queue();
+            String message = String.format(
+                    "Hello @%s!\n%s",
+                    author,
+                    (drink.isEmpty() ? "Your drink does not exist" : "This is your random drink: " + drink)
+            );
+            event.getChannel().sendMessage(message)./*addFile(new File("")).*/queue();
         }
     }
 

@@ -22,9 +22,12 @@ class HowToMakeDrinkCommand extends ListenerAdapter {
             String drinkName = event.getMessage().getContentRaw().substring(COMMAND.length());
             String drinkRecipe = howToMakeDrinkService.getDrinkRecipe(drinkName);
             String author = event.getAuthor().getName();
-            event.getChannel()
-                    .sendMessage("Hello " + author + "!\nThis is how to make " + drinkName + "\n\n" + drinkRecipe)
-                    ./*addFile(new File("")).*/queue();
+            String message = String.format(
+                            "Hello @%s!\n%s",
+                            author,
+                            (drinkRecipe.isEmpty() ? "Your drink does not exist" : "This is how to make " + drinkName + "\n" + drinkRecipe)
+            );
+            event.getChannel().sendMessage(message)./*addFile(new File("")).*/queue();
         }
     }
 

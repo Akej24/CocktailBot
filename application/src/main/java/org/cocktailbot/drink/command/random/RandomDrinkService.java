@@ -26,6 +26,6 @@ class RandomDrinkService {
             JSONObject drinkObject = drinksArray.getJSONObject(0);
             return drinkObject.getString("strDrink");
         }
-        return "not found";
+        return "";
     }
 }
