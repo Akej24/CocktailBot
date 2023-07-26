@@ -8,23 +8,40 @@ class RandomDrinkService {
 
     private final UrlResponseReader urlResponseReader;
 
-    public RandomDrinkService(UrlResponseReader urlResponseReader) {
+    RandomDrinkService(UrlResponseReader urlResponseReader) {
         this.urlResponseReader = urlResponseReader;
     }
 
-    public String getRandomDrink() {
-        String randomCocktailJson = urlResponseReader.getResponseFromUrl(
-                "https://www.thecocktaildb.com/api/json/v1/1/random.php", "GET"
-        );
-        return getDrinkNameFromJson(randomCocktailJson);
+    String getRandomDrink(AlcoholContent wantedAlcoholContent) {
+        int maxAttempts = 100;
+        int attempts = 0;
+        try {
+            while (attempts < maxAttempts) {
+                Thread.sleep(300);
+                String randomDrinkJson = getRandomDrinkJson();
+                String alcoholContent = getNodeValueFromDrinksJson(randomDrinkJson, "strAlcoholic");
+                if (wantedAlcoholContent.equals(AlcoholContent.ANY) ||
+                        wantedAlcoholContent.getName().equalsIgnoreCase(alcoholContent)){
+                    return getNodeValueFromDrinksJson(randomDrinkJson, "strDrink");
+                }
+                attempts++;
+            }
+        } catch(InterruptedException e) {
+            return "Exceeded the maximum number of connection attempts or something else went wrong, please try again";
+        }
+        return "";
     }
 
-    private static String getDrinkNameFromJson(String randomCocktailJsonResponse) {
-        JSONObject jsonObject = new JSONObject(randomCocktailJsonResponse);
+    private String getRandomDrinkJson() {
+        return urlResponseReader.getResponseFromUrl("https://www.thecocktaildb.com/api/json/v1/1/random.php", "GET");
+    }
+
+    private static String getNodeValueFromDrinksJson(String randomCocktailJson, String node) {
+        JSONObject jsonObject = new JSONObject(randomCocktailJson);
         JSONArray drinksArray = jsonObject.getJSONArray("drinks");
         if (drinksArray.length() > 0) {
             JSONObject drinkObject = drinksArray.getJSONObject(0);
-            return drinkObject.getString("strDrink");
+            return drinkObject.getString(node);
         }
         return "";
     }

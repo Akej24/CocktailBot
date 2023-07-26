@@ -16,6 +16,7 @@ public class PrefixValidator implements Validator {
     @Override
     public boolean validateCommand(MessageReceivedEvent event, String correctCommandName) {
         return event.getMessage().getContentRaw().startsWith(correctCommandName)
-                && !event.getAuthor().isBot() && !event.getAuthor().isSystem();
+                && !event.getAuthor().isBot()
+                && !event.getAuthor().isSystem();
     }
 }
