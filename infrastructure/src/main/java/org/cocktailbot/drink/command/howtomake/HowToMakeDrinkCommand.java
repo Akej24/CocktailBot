@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 class HowToMakeDrinkCommand extends ListenerAdapter {
 
-    private static final String COMMAND = "!howtomake ";
+    private static final String COMMAND = "!howtomake";
     private final Validator validator;
     private final HowToMakeDrinkService howToMakeDrinkService;
 
@@ -21,14 +21,17 @@ class HowToMakeDrinkCommand extends ListenerAdapter {
         if (validator.validateCommand(event, COMMAND)) {
             String drinkName = event.getMessage().getContentRaw().substring(COMMAND.length());
             String drinkRecipe = howToMakeDrinkService.getDrinkRecipe(drinkName);
-            String author = event.getAuthor().getName();
-            String message = String.format(
-                            "Hello @%s!\n%s",
-                            author,
-                            (drinkRecipe.isEmpty() ? "Your drink does not exist" : "This is how to make " + drinkName + "\n" + drinkRecipe)
-            );
+            String author = event.getAuthor().getAsMention();
+            String message = buildReturnMessage(author, drinkName, drinkRecipe);
             event.getChannel().sendMessage(message)./*addFile(new File("")).*/queue();
         }
     }
 
+    private String buildReturnMessage(String author, String drinkName, String drinkRecipe) {
+        return String.format(
+                "Hello %s!\n%s", author, drinkRecipe.isEmpty()
+                        ? "Your drink does not exist"
+                        : "This is how to make " + drinkName + "\n" + drinkRecipe
+        );
+    }
 }

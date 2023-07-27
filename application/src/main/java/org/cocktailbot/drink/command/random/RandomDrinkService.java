@@ -4,6 +4,10 @@ import org.cocktailbot.drink.url_response.UrlResponseReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
+
 class RandomDrinkService {
 
     private final UrlResponseReader urlResponseReader;
@@ -12,7 +16,15 @@ class RandomDrinkService {
         this.urlResponseReader = urlResponseReader;
     }
 
-    String getRandomDrink(AlcoholContent wantedAlcoholContent) {
+    RandomDrinkResponse getRandomDrinkWithAlcoholContent(String messageWithFlags) {
+        return Arrays.stream(AlcoholContent.values())
+                .filter(alcoholContent -> messageWithFlags.contains(alcoholContent.getFlag()))
+                .findFirst()
+                .map(this::getRandomDrink)
+                .orElseGet(() -> getRandomDrink(AlcoholContent.ANY));
+    }
+
+    RandomDrinkResponse getRandomDrink(AlcoholContent wantedAlcoholContent) {
         int maxAttempts = 100;
         int attempts = 0;
         try {
@@ -22,14 +34,18 @@ class RandomDrinkService {
                 String alcoholContent = getNodeValueFromDrinksJson(randomDrinkJson, "strAlcoholic");
                 if (wantedAlcoholContent.equals(AlcoholContent.ANY) ||
                         wantedAlcoholContent.getName().equalsIgnoreCase(alcoholContent)) {
-                    return getNodeValueFromDrinksJson(randomDrinkJson, "strDrink");
+                    return new RandomDrinkResponse(
+                            getNodeValueFromDrinksJson(randomDrinkJson, "strDrink"),
+                            new URL(getNodeValueFromDrinksJson(randomDrinkJson, "strDrinkThumb")),
+                            true
+                    );
                 }
                 attempts++;
             }
-        } catch (InterruptedException e) {
-            return "Exceeded the maximum number of connection attempts or something else went wrong, please try again";
+        } catch (InterruptedException | MalformedURLException e) {
+            e.printStackTrace();
         }
-        return "";
+        return new RandomDrinkResponse("", null, false);
     }
 
     private String getRandomDrinkJson() {
