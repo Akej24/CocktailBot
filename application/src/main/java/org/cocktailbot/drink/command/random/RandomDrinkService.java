@@ -30,22 +30,28 @@ class RandomDrinkService {
         try {
             while (attempts < maxAttempts) {
                 Thread.sleep(300);
-                String randomDrinkJson = getRandomDrinkJson();
-                String alcoholContent = getNodeValueFromDrinksJson(randomDrinkJson, "strAlcoholic");
-                if (wantedAlcoholContent.equals(AlcoholContent.ANY) ||
-                        wantedAlcoholContent.getName().equalsIgnoreCase(alcoholContent)) {
-                    return new RandomDrinkResponse(
-                            getNodeValueFromDrinksJson(randomDrinkJson, "strDrink"),
-                            new URL(getNodeValueFromDrinksJson(randomDrinkJson, "strDrinkThumb")),
-                            true
-                    );
-                }
+                RandomDrinkResponse randomDrinkJson = drawMatchingDrink(wantedAlcoholContent);
+                if (randomDrinkJson != null) return randomDrinkJson;
                 attempts++;
             }
         } catch (InterruptedException | MalformedURLException e) {
             e.printStackTrace();
         }
         return new RandomDrinkResponse("", null, false);
+    }
+
+    private RandomDrinkResponse drawMatchingDrink(AlcoholContent wantedAlcoholContent) throws MalformedURLException {
+        String randomDrinkJson = getRandomDrinkJson();
+        String alcoholContent = getNodeValueFromDrinksJson(randomDrinkJson, "strAlcoholic");
+        if (wantedAlcoholContent.equals(AlcoholContent.ANY) ||
+                wantedAlcoholContent.getName().equalsIgnoreCase(alcoholContent)) {
+            return new RandomDrinkResponse(
+                    getNodeValueFromDrinksJson(randomDrinkJson, "strDrink"),
+                    new URL(getNodeValueFromDrinksJson(randomDrinkJson, "strDrinkThumb")),
+                    true
+            );
+        }
+        return null;
     }
 
     private String getRandomDrinkJson() {

@@ -26,7 +26,8 @@ class RandomDrinkCommand extends ListenerAdapter {
             String author = event.getAuthor().getAsMention();
             String message = event.getMessage().getContentRaw();
             RandomDrinkResponse response = randomDrinkService.getRandomDrinkWithAlcoholContent(message);
-            try (InputStream imageStream = response.drinkImageUrl().openStream()) {
+            try {
+                InputStream imageStream = response.drinkImageUrl().openStream();
                 event.getChannel()
                         .sendMessage(buildReturnMessage(author, response.drinkName(), response.responseStatus()))
                         .addFile(imageStream, "drink.png")

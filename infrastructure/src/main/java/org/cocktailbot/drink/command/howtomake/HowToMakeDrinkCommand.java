@@ -19,7 +19,7 @@ class HowToMakeDrinkCommand extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (validator.validateCommand(event, COMMAND)) {
-            String drinkName = event.getMessage().getContentRaw().substring(COMMAND.length());
+            String drinkName = event.getMessage().getContentRaw().substring(COMMAND.length()+1);
             String drinkRecipe = howToMakeDrinkService.getDrinkRecipe(drinkName);
             String author = event.getAuthor().getAsMention();
             String message = buildReturnMessage(author, drinkName, drinkRecipe);
