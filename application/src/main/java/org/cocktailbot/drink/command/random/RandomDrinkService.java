@@ -21,12 +21,12 @@ class RandomDrinkService {
                 String randomDrinkJson = getRandomDrinkJson();
                 String alcoholContent = getNodeValueFromDrinksJson(randomDrinkJson, "strAlcoholic");
                 if (wantedAlcoholContent.equals(AlcoholContent.ANY) ||
-                        wantedAlcoholContent.getName().equalsIgnoreCase(alcoholContent)){
+                        wantedAlcoholContent.getName().equalsIgnoreCase(alcoholContent)) {
                     return getNodeValueFromDrinksJson(randomDrinkJson, "strDrink");
                 }
                 attempts++;
             }
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             return "Exceeded the maximum number of connection attempts or something else went wrong, please try again";
         }
         return "";

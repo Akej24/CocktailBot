@@ -8,7 +8,7 @@ import javax.security.auth.login.LoginException;
 
 class JdaBot {
 
-    private static final String TOKEN = "MTEyODM2OTI5MzIyMzAxMDQ0NQ.Gj_YKF.kB3IpuRGwwKIj5G01df9Z09-5ypJOlFOBsyE_8";
+    private static final String TOKEN = "MTEyODM2OTI5MzIyMzAxMDQ0NQ.GIyxiX.xBoehSHfa1MnbuXXUfc86kgoVjusBeD0JsTi4E";
     private static JDA bot;
 
     private JdaBot() {
