@@ -31,7 +31,7 @@ class HowToMakeDrinkCommand extends ListenerAdapter {
         return String.format(
                 "Hello %s!\n%s", author, drinkRecipe.isEmpty()
                         ? "Your drink does not exist"
-                        : "This is how to make " + drinkName + "\n" + drinkRecipe
+                        : "This is how to make " + drinkName + "\n\n" + drinkRecipe
         );
     }
 }
