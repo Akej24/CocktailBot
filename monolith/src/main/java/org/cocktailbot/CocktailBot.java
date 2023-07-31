@@ -1,7 +1,7 @@
 package org.cocktailbot;
 
 import net.dv8tion.jda.api.JDA;
-import org.cocktailbot.drink.command.howtomake.HowToMakeDrinkConfig;
+import org.cocktailbot.drink.command.how_to_make.HowToMakeDrinkConfig;
 import org.cocktailbot.drink.command.random.RandomDrinkConfig;
 
 import javax.security.auth.login.LoginException;
