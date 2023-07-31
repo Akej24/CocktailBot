@@ -6,4 +6,6 @@ public interface DrinkClient {
 
     String getDrink(String drinkName);
 
+    String getIngredient(String ingredientName);
+
 }

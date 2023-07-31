@@ -10,7 +10,7 @@ import java.util.Random;
 
 class IngredientCommand extends ListenerAdapter {
 
-    private static final String COMMAND = "!ingredient-random-fact";
+    private static final String COMMAND = "!ingredient";
     private final IngredientService ingredientService;
     private final Validator validator;
 
@@ -35,8 +35,9 @@ class IngredientCommand extends ListenerAdapter {
         return String.format(
                 "Hello %s!\n%s", author, ingredient.ingredientName().name().equals("")
                         ? "Your ingredient does not exist"
-                        : "\n\nIngredient random fact: " + drawRandomFact(ingredient.ingredientFacts())
-                        + "\nAlcohol content: " + ingredient.ingredientAlcoholContent().getName()
+                        : "\nIngredient random fact:\n- " + drawRandomFact(ingredient.ingredientFacts())
+                        + "\n\nAlcohol type:\n- " + ingredient.ingredientType().type()
+                        + "\n\nAlcohol content:\n- " + ingredient.ingredientAlcoholContent().getName()
         );
     }
 

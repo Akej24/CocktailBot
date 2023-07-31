@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 class DrinkRecipeCommand extends ListenerAdapter {
 
-    private static final String COMMAND = "!howtomake";
+    private static final String COMMAND = "!recipe";
     private final Validator validator;
     private final DrinkRecipeService drinkRecipeService;
 
@@ -50,7 +50,7 @@ class DrinkRecipeCommand extends ListenerAdapter {
         }
         return drinkRecipe.recipeIngredients().ingredients().entrySet().stream()
                 .map(entry -> "- "
-                        + entry.getKey().ingredient()
+                        + entry.getKey().name()
                         + ": "
                         + entry.getValue().measure()
                         + "\n")

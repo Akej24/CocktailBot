@@ -31,6 +31,11 @@ public class DrinkJsonClient implements DrinkClient {
         return getResponseFromEndpoint("search.php?s=" + drinkName, "GET");
     }
 
+    @Override
+    public String getIngredient(String ingredientName) {
+        return getResponseFromEndpoint("search.php?i=" + ingredientName, "GET");
+    }
+
     private String getResponseFromEndpoint(String endpoint, String method) {
         try {
             URL url = new URL(DRINK_URL + API_KEY + endpoint);
