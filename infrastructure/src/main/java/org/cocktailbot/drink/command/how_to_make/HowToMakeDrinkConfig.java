@@ -1,7 +1,7 @@
-package org.cocktailbot.drink.command.howtomake;
+package org.cocktailbot.drink.command.how_to_make;
 
-import org.cocktailbot.drink.drinkapi.DrinkJsonClient;
-import org.cocktailbot.drink.drinkapi.DrinkJsonResponseReader;
+import org.cocktailbot.drink.drink_api.DrinkJsonClient;
+import org.cocktailbot.drink.drink_api.DrinkJsonResponseReader;
 import org.cocktailbot.drink.validator.PrefixValidator;
 
 public class HowToMakeDrinkConfig {
