@@ -1,7 +1,9 @@
 package org.cocktailbot.drink.command.random;
 
-import org.cocktailbot.drink.drinkapi.DrinkClient;
-import org.cocktailbot.drink.drinkapi.DrinkResponseReader;
+import org.cocktailbot.drink.command.shared.value_object.DrinkName;
+import org.cocktailbot.drink.command.random.value_object.DrinkImageUrl;
+import org.cocktailbot.drink.drink_api.DrinkClient;
+import org.cocktailbot.drink.drink_api.DrinkResponseReader;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,7 +19,7 @@ class RandomDrinkService {
         this.drinkResponseReader = drinkResponseReader;
     }
 
-    RandomDrinkResponse getRandomDrinkWithAlcoholContent(String messageWithFlags) {
+    RandomDrink getRandomDrinkWithAlcoholContent(String messageWithFlags) {
         return Arrays.stream(AlcoholContent.values())
                 .filter(alcoholContent -> messageWithFlags.contains(alcoholContent.getFlag()))
                 .findFirst()
@@ -25,33 +27,39 @@ class RandomDrinkService {
                 .orElseGet(() -> getRandomDrink(AlcoholContent.ANY));
     }
 
-    RandomDrinkResponse getRandomDrink(AlcoholContent wantedAlcoholContent) {
+    RandomDrink getRandomDrink(AlcoholContent wantedAlcoholContent) {
         int maxAttempts = 100;
         int attempts = 0;
+        RandomDrink randomDrink = drawMatchingDrink(wantedAlcoholContent);
         try {
             while (attempts < maxAttempts) {
                 Thread.sleep(300);
-                RandomDrinkResponse randomDrinkJson = drawMatchingDrink(wantedAlcoholContent);
-                if (randomDrinkJson != null) return randomDrinkJson;
+                if (!randomDrink.drinkName().name().isEmpty()) return randomDrink;
+                randomDrink = drawMatchingDrink(wantedAlcoholContent);
                 attempts++;
             }
-        } catch (InterruptedException | MalformedURLException e) {
+        } catch (InterruptedException e) {
+            System.out.println("Thread is interrupted: " + Thread.currentThread().getName());
             e.printStackTrace();
         }
-        return new RandomDrinkResponse("", null, false);
+        return randomDrink;
     }
 
-    private RandomDrinkResponse drawMatchingDrink(AlcoholContent wantedAlcoholContent) throws MalformedURLException {
+    private RandomDrink drawMatchingDrink(AlcoholContent wantedAlcoholContent) {
         String randomDrink = drinkClient.getRandomDrink();
         String alcoholContent = drinkResponseReader.getValueFromDrink(randomDrink, "strAlcoholic");
         if (wantedAlcoholContent.equals(AlcoholContent.ANY) ||
                 wantedAlcoholContent.getName().equalsIgnoreCase(alcoholContent)) {
-            return new RandomDrinkResponse(
-                    drinkResponseReader.getValueFromDrink(randomDrink, "strDrink"),
-                    new URL(drinkResponseReader.getValueFromDrink(randomDrink, "strDrinkThumb")),
-                    true
-            );
+            try {
+                return RandomDrink.from(
+                        new DrinkName(drinkResponseReader.getValueFromDrink(randomDrink, "strDrink")),
+                        new DrinkImageUrl(new URL(drinkResponseReader.getValueFromDrink(randomDrink, "strDrinkThumb")))
+                );
+            } catch (MalformedURLException e) {
+                System.out.println("Image url for given drink is malformed");
+                e.printStackTrace();
+            }
         }
-        return null;
+        return RandomDrink.from(new DrinkName(""), new DrinkImageUrl(null));
     }
 }

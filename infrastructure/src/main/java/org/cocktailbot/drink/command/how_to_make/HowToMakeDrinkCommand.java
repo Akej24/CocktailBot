@@ -2,7 +2,7 @@ package org.cocktailbot.drink.command.how_to_make;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.attacher.UrlImageStreamer;
+import org.cocktailbot.drink.streamer.UrlImageStreamer;
 import org.cocktailbot.drink.validator.Validator;
 import org.jetbrains.annotations.NotNull;
 
