@@ -20,22 +20,22 @@ class RandomDrinkService {
     }
 
     RandomDrink getRandomDrinkWithAlcoholContent(String messageWithFlags) {
-        return Arrays.stream(AlcoholContent.values())
-                .filter(alcoholContent -> messageWithFlags.contains(alcoholContent.getFlag()))
+        return Arrays.stream(DrinkAlcoholContent.values())
+                .filter(drinkAlcoholContent -> messageWithFlags.contains(drinkAlcoholContent.getFlag()))
                 .findFirst()
                 .map(this::getRandomDrink)
-                .orElseGet(() -> getRandomDrink(AlcoholContent.ANY));
+                .orElseGet(() -> getRandomDrink(DrinkAlcoholContent.ANY));
     }
 
-    RandomDrink getRandomDrink(AlcoholContent wantedAlcoholContent) {
+    RandomDrink getRandomDrink(DrinkAlcoholContent wantedDrinkAlcoholContent) {
         int maxAttempts = 100;
         int attempts = 0;
-        RandomDrink randomDrink = drawMatchingDrink(wantedAlcoholContent);
+        RandomDrink randomDrink = drawMatchingDrink(wantedDrinkAlcoholContent);
         try {
             while (attempts < maxAttempts) {
                 Thread.sleep(300);
                 if (!randomDrink.drinkName().name().isEmpty()) return randomDrink;
-                randomDrink = drawMatchingDrink(wantedAlcoholContent);
+                randomDrink = drawMatchingDrink(wantedDrinkAlcoholContent);
                 attempts++;
             }
         } catch (InterruptedException e) {
@@ -45,11 +45,11 @@ class RandomDrinkService {
         return randomDrink;
     }
 
-    private RandomDrink drawMatchingDrink(AlcoholContent wantedAlcoholContent) {
+    private RandomDrink drawMatchingDrink(DrinkAlcoholContent wantedDrinkAlcoholContent) {
         String randomDrink = drinkClient.getRandomDrink();
         String alcoholContent = drinkResponseReader.getValueFromDrink(randomDrink, "strAlcoholic");
-        if (wantedAlcoholContent.equals(AlcoholContent.ANY) ||
-                wantedAlcoholContent.getName().equalsIgnoreCase(alcoholContent)) {
+        if (wantedDrinkAlcoholContent.equals(DrinkAlcoholContent.ANY) ||
+                wantedDrinkAlcoholContent.getName().equalsIgnoreCase(alcoholContent)) {
             try {
                 return RandomDrink.from(
                         new DrinkName(drinkResponseReader.getValueFromDrink(randomDrink, "strDrink")),

@@ -1,3 +1,3 @@
 package org.cocktailbot.drink.command.shared.value_object;
 
-public record IngredientName(String ingredient) { }
+public record IngredientName(String name) { }
