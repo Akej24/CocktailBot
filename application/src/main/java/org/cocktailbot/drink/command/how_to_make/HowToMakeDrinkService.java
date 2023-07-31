@@ -3,6 +3,7 @@ package org.cocktailbot.drink.command.how_to_make;
 import org.cocktailbot.drink.command.how_to_make.value_object.*;
 import org.cocktailbot.drink.command.random.value_object.DrinkImageUrl;
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
+import org.cocktailbot.drink.command.shared.value_object.IngredientName;
 import org.cocktailbot.drink.drink_api.DrinkClient;
 import org.cocktailbot.drink.drink_api.DrinkResponseReader;
 
@@ -33,10 +34,10 @@ class HowToMakeDrinkService {
             System.out.println("Image url for given drink is malformed");
             e.printStackTrace();
         }
-        return DrinkRecipe.from(new DrinkName(""), new Instruction(""), new Ingredients(null), new DrinkImageUrl(null));
+        return DrinkRecipe.from(new DrinkName(""), new Instruction(""), new RecipeIngredients(null), new DrinkImageUrl(null));
     }
 
-    private Ingredients buildDrinkIngredients(String drink) {
+    private RecipeIngredients buildDrinkIngredients(String drink) {
         var ingredients = new HashMap<IngredientName, Measure>();
         int amount = 1;
         String ingredient = drinkResponseReader.getValueFromDrink(drink, "strIngredient" + amount);
@@ -47,6 +48,6 @@ class HowToMakeDrinkService {
             ingredient = drinkResponseReader.getValueFromDrink(drink, "strIngredient" + amount);
             measure = drinkResponseReader.getValueFromDrink(drink, "strMeasure" + amount);
         }
-        return new Ingredients(ingredients);
+        return new RecipeIngredients(ingredients);
     }
 }

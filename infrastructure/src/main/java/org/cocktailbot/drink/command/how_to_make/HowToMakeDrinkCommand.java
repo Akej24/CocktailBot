@@ -39,16 +39,16 @@ class HowToMakeDrinkCommand extends ListenerAdapter {
                 "Hello %s!\n%s", author, drinkRecipe.drinkName().name().equals("")
                         ? "Your drink does not exist"
                         : "This is how to make " + drinkRecipe.drinkName().name()
-                        + "\n\nIngredients:\n" + generateDrinkIngredients(drinkRecipe)
+                        + "\n\nRecipeIngredients:\n" + generateDrinkIngredients(drinkRecipe)
                         + "\nInstruction:\n- " + drinkRecipe.instruction().instruction().replaceAll("\\. ", ".\n- ")
         );
     }
 
     private String generateDrinkIngredients(DrinkRecipe drinkRecipe) {
-        if (drinkRecipe == null || drinkRecipe.ingredients() == null) {
-            return "No ingredients found for this recipe";
+        if (drinkRecipe == null || drinkRecipe.recipeIngredients() == null) {
+            return "No recipeIngredients found for this recipe";
         }
-        return drinkRecipe.ingredients().ingredients().entrySet().stream()
+        return drinkRecipe.recipeIngredients().ingredients().entrySet().stream()
                 .map(entry -> "- "
                         + entry.getKey().ingredient()
                         + ": "
