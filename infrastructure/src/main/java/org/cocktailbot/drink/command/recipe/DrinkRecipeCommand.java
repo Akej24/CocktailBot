@@ -1,4 +1,4 @@
-package org.cocktailbot.drink.command.how_to_make;
+package org.cocktailbot.drink.command.recipe;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -9,22 +9,22 @@ import org.jetbrains.annotations.NotNull;
 import java.io.InputStream;
 import java.util.stream.Collectors;
 
-class HowToMakeDrinkCommand extends ListenerAdapter {
+class DrinkRecipeCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!howtomake";
     private final Validator validator;
-    private final HowToMakeDrinkService howToMakeDrinkService;
+    private final DrinkRecipeService drinkRecipeService;
 
-    public HowToMakeDrinkCommand(Validator validator, HowToMakeDrinkService howToMakeDrinkService) {
+    public DrinkRecipeCommand(Validator validator, DrinkRecipeService drinkRecipeService) {
         this.validator = validator;
-        this.howToMakeDrinkService = howToMakeDrinkService;
+        this.drinkRecipeService = drinkRecipeService;
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (validator.validateCommand(event, COMMAND)) {
             String drinkMessageName = event.getMessage().getContentRaw().substring(COMMAND.length()+1);
-            DrinkRecipe drinkRecipe = howToMakeDrinkService.getDrinkRecipe(drinkMessageName);
+            DrinkRecipe drinkRecipe = drinkRecipeService.getDrinkRecipe(drinkMessageName);
             String author = event.getAuthor().getAsMention();
             InputStream imageStream = UrlImageStreamer.openStream(drinkRecipe.drinkImageUrl().url());
             event.getChannel()

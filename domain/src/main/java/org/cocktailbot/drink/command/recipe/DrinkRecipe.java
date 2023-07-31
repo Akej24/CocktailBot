@@ -1,6 +1,6 @@
-package org.cocktailbot.drink.command.how_to_make;
+package org.cocktailbot.drink.command.recipe;
 
-import org.cocktailbot.drink.command.how_to_make.value_object.*;
+import org.cocktailbot.drink.command.recipe.value_object.*;
 import org.cocktailbot.drink.command.random.value_object.DrinkImageUrl;
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
 

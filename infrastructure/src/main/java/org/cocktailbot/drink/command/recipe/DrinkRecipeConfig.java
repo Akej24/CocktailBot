@@ -1,15 +1,15 @@
-package org.cocktailbot.drink.command.how_to_make;
+package org.cocktailbot.drink.command.recipe;
 
 import org.cocktailbot.drink.drink_api.DrinkJsonClient;
 import org.cocktailbot.drink.drink_api.DrinkJsonResponseReader;
 import org.cocktailbot.drink.validator.PrefixValidator;
 
-public class HowToMakeDrinkConfig {
+public class DrinkRecipeConfig {
 
-    public static HowToMakeDrinkCommand getInstance(){
-        return new HowToMakeDrinkCommand(
+    public static DrinkRecipeCommand getInstance(){
+        return new DrinkRecipeCommand(
                 PrefixValidator.getInstance(),
-                new HowToMakeDrinkService(
+                new DrinkRecipeService(
                         DrinkJsonClient.getInstance(),
                         DrinkJsonResponseReader.getInstance()
                 )
