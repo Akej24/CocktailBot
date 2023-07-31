@@ -1,6 +1,7 @@
-package org.cocktailbot.drink.drinkapi;
+package org.cocktailbot.drink.drink_api;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class DrinkJsonResponseReader implements DrinkResponseReader {
@@ -25,12 +26,13 @@ public class DrinkJsonResponseReader implements DrinkResponseReader {
     }
 
     private String getValueFromParent(String text, String parent, String key) {
-        JSONObject jsonObject = new JSONObject(text);
-        JSONArray drinksArray = jsonObject.getJSONArray(parent);
-        if (drinksArray.length() > 0) {
-            JSONObject drinkObject = drinksArray.getJSONObject(0);
-            return drinkObject.getString(key);
+        try {
+            JSONObject json = new JSONObject(text);
+            JSONArray drinksArray = json.getJSONArray(parent);
+            JSONObject drink = drinksArray.getJSONObject(0);
+            return drink.getString(key);
+        } catch (JSONException e) {
+            return "";
         }
-        return "";
     }
 }

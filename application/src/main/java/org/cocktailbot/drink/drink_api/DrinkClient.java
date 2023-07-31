@@ -1,4 +1,4 @@
-package org.cocktailbot.drink.drinkapi;
+package org.cocktailbot.drink.drink_api;
 
 public interface DrinkClient {
 
