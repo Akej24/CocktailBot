@@ -10,7 +10,7 @@ import java.util.Random;
 
 class IngredientCommand extends ListenerAdapter {
 
-    private static final String COMMAND = "!ingredient";
+    private static final String COMMAND = "/ingredient";
     private final IngredientService ingredientService;
     private final Validator validator;
 

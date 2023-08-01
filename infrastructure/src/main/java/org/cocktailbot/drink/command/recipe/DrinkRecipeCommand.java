@@ -1,9 +1,11 @@
 package org.cocktailbot.drink.command.recipe;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.cocktailbot.drink.utils.Emojis;
 import org.cocktailbot.drink.validator.Validator;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +17,7 @@ class DrinkRecipeCommand extends ListenerAdapter {
     private final Validator validator;
     private final DrinkRecipeService drinkRecipeService;
 
-    public DrinkRecipeCommand(Validator validator, DrinkRecipeService drinkRecipeService) {
+    DrinkRecipeCommand(Validator validator, DrinkRecipeService drinkRecipeService) {
         this.validator = validator;
         this.drinkRecipeService = drinkRecipeService;
     }
@@ -33,7 +35,10 @@ class DrinkRecipeCommand extends ListenerAdapter {
             event.getChannel()
                     .sendMessage(buildReturnMessage(author, drinkRecipe))
                     .setEmbeds(embed)
-                    .queue();
+                    .queue(message -> {
+                        message.addReaction(Emojis.HEART).queue();
+                        message.addReaction(Emojis.CROSS).queue();
+                    });
         }
     }
 
