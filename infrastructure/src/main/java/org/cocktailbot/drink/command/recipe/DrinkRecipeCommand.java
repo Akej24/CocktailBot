@@ -1,12 +1,12 @@
 package org.cocktailbot.drink.command.recipe;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.streamer.UrlImageStreamer;
 import org.cocktailbot.drink.validator.Validator;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.InputStream;
 import java.util.stream.Collectors;
 
 class DrinkRecipeCommand extends ListenerAdapter {
@@ -26,11 +26,14 @@ class DrinkRecipeCommand extends ListenerAdapter {
             String drinkMessageName = event.getMessage().getContentRaw().substring(COMMAND.length()+1);
             DrinkRecipe drinkRecipe = drinkRecipeService.getDrinkRecipe(drinkMessageName);
             String author = event.getAuthor().getAsMention();
-            InputStream imageStream = UrlImageStreamer.openStream(drinkRecipe.drinkImageUrl().url());
+            MessageEmbed embed = new EmbedBuilder()
+                    .setTitle(drinkRecipe.drinkName().name())
+                    .setImage(drinkRecipe.drinkImageUrl().url().toString())
+                    .build();
             event.getChannel()
                     .sendMessage(buildReturnMessage(author, drinkRecipe))
-                    .addFile(imageStream, "drink.png")
-                    .queue(success -> UrlImageStreamer.closeStream(imageStream), failure -> UrlImageStreamer.closeStream(imageStream));
+                    .setEmbeds(embed)
+                    .queue();
         }
     }
 
@@ -39,7 +42,7 @@ class DrinkRecipeCommand extends ListenerAdapter {
                 "Hello %s!\n%s", author, drinkRecipe.drinkName().name().equals("")
                         ? "Your drink does not exist"
                         : "This is how to make " + drinkRecipe.drinkName().name()
-                        + "\n\nRecipeIngredients:\n" + generateDrinkIngredients(drinkRecipe)
+                        + "\n\nIngredients:\n" + generateDrinkIngredients(drinkRecipe)
                         + "\nInstruction:\n- " + drinkRecipe.instruction().instruction().replaceAll("\\. ", ".\n- ")
         );
     }

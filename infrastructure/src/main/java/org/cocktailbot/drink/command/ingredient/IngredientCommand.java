@@ -36,7 +36,7 @@ class IngredientCommand extends ListenerAdapter {
                 "Hello %s!\n%s", author, ingredient.ingredientName().name().equals("")
                         ? "Your ingredient does not exist"
                         : "\nIngredient random fact:\n- " + drawRandomFact(ingredient.ingredientFacts())
-                        + "\n\nAlcohol type:\n- " + ingredient.ingredientType().type()
+                        + "\n\nType:\n- " + ingredient.ingredientType().type()
                         + "\n\nAlcohol content:\n- " + ingredient.ingredientAlcoholContent().getName()
         );
     }
