@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 class FavouriteCommand extends ListenerAdapter {
 
-    private static final String COMMAND = "!favourite";
+    private static final String COMMAND = "!favourites";
     private final FavouriteService favouriteService;
     private final Validator validator;
 
@@ -21,10 +21,11 @@ class FavouriteCommand extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (validator.validateCommand(event, COMMAND)) {
-            String username = event.getAuthor().getAsMention();
+            String mentionUsername = event.getAuthor().getAsMention();
+            String username = event.getAuthor().getName();
             Favourites favourites = favouriteService.getUserFavouritesDrink(username);
             event.getChannel()
-                    .sendMessage(buildReturnMessage(username, favourites))
+                    .sendMessage(buildReturnMessage(mentionUsername, favourites))
                     .queue();
         }
     }
