@@ -1,6 +1,6 @@
 package org.cocktailbot.drink.reaction.favourite;
 
-interface FavouriteDrinkRepository {
+interface FavouriteRepository {
 
     void addUserFavouriteDrink(String user, String drinkToSave);
 

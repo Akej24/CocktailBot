@@ -8,12 +8,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-class FavouriteDrinkReaction extends ListenerAdapter {
+class FavouriteReaction extends ListenerAdapter {
 
-    private final FavouriteDrinkService favouriteDrinkService;
+    private final FavouriteService favouriteService;
 
-    FavouriteDrinkReaction(FavouriteDrinkService favouriteDrinkService) {
-        this.favouriteDrinkService = favouriteDrinkService;
+    FavouriteReaction(FavouriteService favouriteService) {
+        this.favouriteService = favouriteService;
     }
 
     @Override
@@ -22,9 +22,9 @@ class FavouriteDrinkReaction extends ListenerAdapter {
         if(validateEmoteEvent(event, embedTitle)) {
             String username = getUsername(event);
             if(validateEmote(event, Emojis.HEART)){
-                favouriteDrinkService.saveDrinkToFavourites(username, embedTitle);
+                favouriteService.saveDrinkToFavourites(username, embedTitle);
             } else if(validateEmote(event, Emojis.CROSS)) {
-                favouriteDrinkService.removedDrinkFromFavourites(username, embedTitle);
+                favouriteService.removedDrinkFromFavourites(username, embedTitle);
             }
         }
     }

@@ -1,15 +1,15 @@
-package org.cocktailbot.drink.command.ingredient;
+package org.cocktailbot.drink.command.recipe;
 
 import org.cocktailbot.drink.drink_api.DrinkJsonClient;
 import org.cocktailbot.drink.drink_api.DrinkJsonResponseReader;
 import org.cocktailbot.drink.validator.PrefixValidator;
 
-public class IngredientConfig {
+public class RecipeCommandConfig {
 
-    public static IngredientCommand getInstance() {
-        return new IngredientCommand(
+    public static RecipeCommand getInstance(){
+        return new RecipeCommand(
                 PrefixValidator.getInstance(),
-                new IngredientService(
+                new DrinkRecipeService(
                         DrinkJsonClient.getInstance(),
                         DrinkJsonResponseReader.getInstance()
                 )

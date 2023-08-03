@@ -2,19 +2,19 @@ package org.cocktailbot.drink.command.random;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.streamer.UrlImageStreamer;
+import org.cocktailbot.drink.utils.UrlImageStreamer;
 import org.cocktailbot.drink.validator.Validator;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
 
-class RandomDrinkCommand extends ListenerAdapter {
+class RandomCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!random";
     private final RandomDrinkService randomDrinkService;
     private final Validator validator;
 
-    public RandomDrinkCommand(Validator validator, RandomDrinkService randomCocktailService) {
+    public RandomCommand(Validator validator, RandomDrinkService randomCocktailService) {
         this.validator = validator;
         this.randomDrinkService = randomCocktailService;
     }

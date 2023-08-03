@@ -1,7 +1,7 @@
 package org.cocktailbot.drink.command.random;
 
+import org.cocktailbot.drink.command.shared.value_object.DrinkImageUrl;
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
-import org.cocktailbot.drink.command.random.value_object.DrinkImageUrl;
 import org.cocktailbot.drink.drink_api.DrinkClient;
 import org.cocktailbot.drink.drink_api.DrinkResponseReader;
 
@@ -20,22 +20,22 @@ class RandomDrinkService {
     }
 
     RandomDrink getRandomDrinkWithAlcoholContent(String messageWithFlags) {
-        return Arrays.stream(DrinkAlcoholContent.values())
-                .filter(drinkAlcoholContent -> messageWithFlags.contains(drinkAlcoholContent.getFlag()))
+        return Arrays.stream(AlcoholContent.values())
+                .filter(alcoholContent -> messageWithFlags.contains(alcoholContent.getFlag()))
                 .findFirst()
                 .map(this::getRandomDrink)
-                .orElseGet(() -> getRandomDrink(DrinkAlcoholContent.ANY));
+                .orElseGet(() -> getRandomDrink(AlcoholContent.ANY));
     }
 
-    RandomDrink getRandomDrink(DrinkAlcoholContent wantedDrinkAlcoholContent) {
+    RandomDrink getRandomDrink(AlcoholContent wantedAlcoholContent) {
         int maxAttempts = 100;
         int attempts = 0;
-        RandomDrink randomDrink = drawMatchingDrink(wantedDrinkAlcoholContent);
+        RandomDrink randomDrink = drawMatchingDrink(wantedAlcoholContent);
         try {
             while (attempts < maxAttempts) {
                 Thread.sleep(300);
                 if (!randomDrink.drinkName().name().isEmpty()) return randomDrink;
-                randomDrink = drawMatchingDrink(wantedDrinkAlcoholContent);
+                randomDrink = drawMatchingDrink(wantedAlcoholContent);
                 attempts++;
             }
         } catch (InterruptedException e) {
@@ -45,11 +45,11 @@ class RandomDrinkService {
         return randomDrink;
     }
 
-    private RandomDrink drawMatchingDrink(DrinkAlcoholContent wantedDrinkAlcoholContent) {
+    private RandomDrink drawMatchingDrink(AlcoholContent wantedAlcoholContent) {
         String randomDrink = drinkClient.getRandomDrink();
         String alcoholContent = drinkResponseReader.getValueFromDrink(randomDrink, "strAlcoholic");
-        if (wantedDrinkAlcoholContent.equals(DrinkAlcoholContent.ANY) ||
-                wantedDrinkAlcoholContent.getName().equalsIgnoreCase(alcoholContent)) {
+        if (wantedAlcoholContent.equals(AlcoholContent.ANY) ||
+                wantedAlcoholContent.getName().equalsIgnoreCase(alcoholContent)) {
             try {
                 return RandomDrink.from(
                         new DrinkName(drinkResponseReader.getValueFromDrink(randomDrink, "strDrink")),

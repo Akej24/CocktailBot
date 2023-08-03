@@ -1,7 +1,5 @@
 package org.cocktailbot.drink.command.ingredient;
 
-import org.cocktailbot.drink.command.ingredient.value_object.IngredientFacts;
-import org.cocktailbot.drink.command.ingredient.value_object.IngredientType;
 import org.cocktailbot.drink.command.shared.value_object.IngredientName;
 import org.cocktailbot.drink.drink_api.DrinkClient;
 import org.cocktailbot.drink.drink_api.DrinkResponseReader;
@@ -30,7 +28,7 @@ class IngredientService {
                 new IngredientName(name),
                 new IngredientFacts(breakDescriptionIntoFacts(description)),
                 new IngredientType(ingredientType),
-                alcoholContent.equalsIgnoreCase("yes") ? IngredientAlcoholContent.ALCOHOLIC : IngredientAlcoholContent.NON_ALCOHOLIC
+                alcoholContent.equalsIgnoreCase("yes") ? AlcoholContent.ALCOHOLIC : AlcoholContent.NON_ALCOHOLIC
         );
     }
 

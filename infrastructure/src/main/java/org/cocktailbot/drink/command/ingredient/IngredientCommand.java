@@ -2,7 +2,6 @@ package org.cocktailbot.drink.command.ingredient;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.command.ingredient.value_object.IngredientFacts;
 import org.cocktailbot.drink.validator.Validator;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,7 +9,7 @@ import java.util.Random;
 
 class IngredientCommand extends ListenerAdapter {
 
-    private static final String COMMAND = "/ingredient";
+    private static final String COMMAND = "!ingredient";
     private final IngredientService ingredientService;
     private final Validator validator;
 
@@ -37,7 +36,7 @@ class IngredientCommand extends ListenerAdapter {
                         ? "Your ingredient does not exist"
                         : "\nIngredient random fact:\n- " + drawRandomFact(ingredient.ingredientFacts())
                         + "\n\nType:\n- " + ingredient.ingredientType().type()
-                        + "\n\nAlcohol content:\n- " + ingredient.ingredientAlcoholContent().getName()
+                        + "\n\nAlcohol content:\n- " + ingredient.alcoholContent().getName()
         );
     }
 

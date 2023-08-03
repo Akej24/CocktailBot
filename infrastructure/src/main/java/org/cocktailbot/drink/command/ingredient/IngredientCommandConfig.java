@@ -1,15 +1,15 @@
-package org.cocktailbot.drink.command.random;
+package org.cocktailbot.drink.command.ingredient;
 
 import org.cocktailbot.drink.drink_api.DrinkJsonClient;
 import org.cocktailbot.drink.drink_api.DrinkJsonResponseReader;
 import org.cocktailbot.drink.validator.PrefixValidator;
 
-public class RandomDrinkConfig {
+public class IngredientCommandConfig {
 
-    public static RandomDrinkCommand getInstance() {
-        return new RandomDrinkCommand(
+    public static IngredientCommand getInstance() {
+        return new IngredientCommand(
                 PrefixValidator.getInstance(),
-                new RandomDrinkService(
+                new IngredientService(
                         DrinkJsonClient.getInstance(),
                         DrinkJsonResponseReader.getInstance()
                 )

@@ -1,7 +1,6 @@
 package org.cocktailbot.drink.command.recipe;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -11,13 +10,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;
 
-class DrinkRecipeCommand extends ListenerAdapter {
+class RecipeCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!recipe";
     private final Validator validator;
     private final DrinkRecipeService drinkRecipeService;
 
-    DrinkRecipeCommand(Validator validator, DrinkRecipeService drinkRecipeService) {
+    RecipeCommand(Validator validator, DrinkRecipeService drinkRecipeService) {
         this.validator = validator;
         this.drinkRecipeService = drinkRecipeService;
     }
@@ -26,14 +25,14 @@ class DrinkRecipeCommand extends ListenerAdapter {
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (validator.validateCommand(event, COMMAND)) {
             String drinkMessageName = event.getMessage().getContentRaw().substring(COMMAND.length()+1);
-            DrinkRecipe drinkRecipe = drinkRecipeService.getDrinkRecipe(drinkMessageName);
+            Recipe recipe = drinkRecipeService.getDrinkRecipe(drinkMessageName);
             String author = event.getAuthor().getAsMention();
             MessageEmbed embed = new EmbedBuilder()
-                    .setTitle(drinkRecipe.drinkName().name())
-                    .setImage(drinkRecipe.drinkImageUrl().url().toString())
+                    .setTitle(recipe.drinkName().name())
+                    .setImage(recipe.drinkImageUrl().url().toString())
                     .build();
             event.getChannel()
-                    .sendMessage(buildReturnMessage(author, drinkRecipe))
+                    .sendMessage(buildReturnMessage(author, recipe))
                     .setEmbeds(embed)
                     .queue(message -> {
                         message.addReaction(Emojis.HEART).queue();
@@ -42,21 +41,21 @@ class DrinkRecipeCommand extends ListenerAdapter {
         }
     }
 
-    private String buildReturnMessage(String author, DrinkRecipe drinkRecipe) {
+    private String buildReturnMessage(String author, Recipe recipe) {
         return String.format(
-                "Hello %s!\n%s", author, drinkRecipe.drinkName().name().equals("")
+                "Hello %s!\n%s", author, recipe.drinkName().name().equals("")
                         ? "Your drink does not exist"
-                        : "This is how to make " + drinkRecipe.drinkName().name()
-                        + "\n\nIngredients:\n" + generateDrinkIngredients(drinkRecipe)
-                        + "\nInstruction:\n- " + drinkRecipe.instruction().instruction().replaceAll("\\. ", ".\n- ")
+                        : "This is how to make " + recipe.drinkName().name()
+                        + "\n\nIngredients:\n" + generateDrinkIngredients(recipe)
+                        + "\nInstruction:\n- " + recipe.instruction().instruction().replaceAll("\\. ", ".\n- ")
         );
     }
 
-    private String generateDrinkIngredients(DrinkRecipe drinkRecipe) {
-        if (drinkRecipe == null || drinkRecipe.recipeIngredients() == null) {
+    private String generateDrinkIngredients(Recipe recipe) {
+        if (recipe == null || recipe.recipeIngredients() == null) {
             return "No recipeIngredients found for this recipe";
         }
-        return drinkRecipe.recipeIngredients().ingredients().entrySet().stream()
+        return recipe.recipeIngredients().ingredients().entrySet().stream()
                 .map(entry -> "- "
                         + entry.getKey().name()
                         + ": "

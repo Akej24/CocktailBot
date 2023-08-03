@@ -1,4 +1,4 @@
-package org.cocktailbot.drink.command.random.value_object;
+package org.cocktailbot.drink.command.shared.value_object;
 
 import java.net.URL;
 

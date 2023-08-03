@@ -1,10 +1,10 @@
 package org.cocktailbot.drink.command.favourite;
 
-class FavouriteDrinkService {
+class FavouriteService {
 
-    private final FavouriteDrinkRepository favouriteDrinkRepository;
+    private final FavouriteRepository favouriteDrinkRepository;
 
-    public FavouriteDrinkService(FavouriteDrinkRepository favouriteDrinkRepository) {
+    public FavouriteService(FavouriteRepository favouriteDrinkRepository) {
         this.favouriteDrinkRepository = favouriteDrinkRepository;
     }
 

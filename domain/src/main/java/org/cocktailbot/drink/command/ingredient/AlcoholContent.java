@@ -1,13 +1,13 @@
 package org.cocktailbot.drink.command.ingredient;
 
-enum IngredientAlcoholContent {
+enum AlcoholContent {
 
     ALCOHOLIC("alcoholic"),
     NON_ALCOHOLIC("non alcoholic");
 
     private final String name;
 
-    IngredientAlcoholContent(String name) {
+    AlcoholContent(String name) {
         this.name = name;
     }
 

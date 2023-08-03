@@ -1,6 +1,6 @@
 package org.cocktailbot.drink.command.random;
 
-enum DrinkAlcoholContent {
+enum AlcoholContent {
 
     ALCOHOLIC("-a", "alcoholic"),
     NON_ALCOHOLIC("-na", "non alcoholic"),
@@ -9,7 +9,7 @@ enum DrinkAlcoholContent {
     private final String flag;
     private final String name;
 
-    DrinkAlcoholContent(String flag, String name) {
+    AlcoholContent(String flag, String name) {
         this.flag = flag;
         this.name = name;
     }

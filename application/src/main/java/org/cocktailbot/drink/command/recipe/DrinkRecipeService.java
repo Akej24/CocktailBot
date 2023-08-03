@@ -1,7 +1,6 @@
 package org.cocktailbot.drink.command.recipe;
 
-import org.cocktailbot.drink.command.recipe.value_object.*;
-import org.cocktailbot.drink.command.random.value_object.DrinkImageUrl;
+import org.cocktailbot.drink.command.shared.value_object.DrinkImageUrl;
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
 import org.cocktailbot.drink.command.shared.value_object.IngredientName;
 import org.cocktailbot.drink.drink_api.DrinkClient;
@@ -21,10 +20,10 @@ class DrinkRecipeService {
         this.drinkResponseReader = drinkResponseReader;
     }
 
-    public DrinkRecipe getDrinkRecipe(String drinkNameFromMessage) {
+    public Recipe getDrinkRecipe(String drinkNameFromMessage) {
         String drink = drinkClient.getDrink(drinkNameFromMessage);
         try {
-            return DrinkRecipe.from(
+            return Recipe.from(
                     new DrinkName(drinkResponseReader.getValueFromDrink(drink, "strDrink")),
                     new Instruction(drinkResponseReader.getValueFromDrink(drink, "strInstructions")),
                     buildDrinkIngredients(drink),
@@ -34,7 +33,7 @@ class DrinkRecipeService {
             System.out.println("Image url for given drink is malformed");
             e.printStackTrace();
         }
-        return DrinkRecipe.from(new DrinkName(""), new Instruction(""), new RecipeIngredients(null), new DrinkImageUrl(null));
+        return Recipe.from(new DrinkName(""), new Instruction(""), new RecipeIngredients(null), new DrinkImageUrl(null));
     }
 
     private RecipeIngredients buildDrinkIngredients(String drink) {

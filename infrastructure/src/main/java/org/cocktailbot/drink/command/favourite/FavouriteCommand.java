@@ -7,22 +7,22 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;
 
-class FavouriteDrinkCommand extends ListenerAdapter {
+class FavouriteCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!favourite";
-    private final FavouriteDrinkService favouriteDrinkService;
+    private final FavouriteService favouriteService;
     private final Validator validator;
 
-    public FavouriteDrinkCommand(Validator validator, FavouriteDrinkService favouriteDrinkService) {
+    public FavouriteCommand(Validator validator, FavouriteService favouriteService) {
         this.validator = validator;
-        this.favouriteDrinkService = favouriteDrinkService;
+        this.favouriteService = favouriteService;
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (validator.validateCommand(event, COMMAND)) {
             String username = event.getAuthor().getName();
-            Favourites favourites = favouriteDrinkService.getUserFavouritesDrink(username);
+            Favourites favourites = favouriteService.getUserFavouritesDrink(username);
             event.getChannel()
                     .sendMessage(buildReturnMessage(username, favourites))
                     .queue();
