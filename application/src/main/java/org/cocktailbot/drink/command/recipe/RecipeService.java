@@ -10,12 +10,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-class DrinkRecipeService {
+class RecipeService {
 
     private final DrinkClient drinkClient;
     private final DrinkResponseReader drinkResponseReader;
 
-    public DrinkRecipeService(DrinkClient drinkClient, DrinkResponseReader drinkResponseReader) {
+    public RecipeService(DrinkClient drinkClient, DrinkResponseReader drinkResponseReader) {
         this.drinkClient = drinkClient;
         this.drinkResponseReader = drinkResponseReader;
     }

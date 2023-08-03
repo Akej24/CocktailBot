@@ -47,7 +47,7 @@ public class DrinkJsonClient implements DrinkClient {
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException("Invalid endpoint: " + endpoint);
         } catch (Exception e) {
-            throw new RuntimeException("Error during connection or closing");
+            throw new RuntimeException("Error during opening or closing connection");
         }
     }
 

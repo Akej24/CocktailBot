@@ -9,7 +9,7 @@ public class RecipeCommandConfig {
     public static RecipeCommand getInstance(){
         return new RecipeCommand(
                 PrefixValidator.getInstance(),
-                new DrinkRecipeService(
+                new RecipeService(
                         DrinkJsonClient.getInstance(),
                         DrinkJsonResponseReader.getInstance()
                 )

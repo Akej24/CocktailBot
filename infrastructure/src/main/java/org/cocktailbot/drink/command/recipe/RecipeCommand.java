@@ -14,18 +14,19 @@ class RecipeCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!recipe";
     private final Validator validator;
-    private final DrinkRecipeService drinkRecipeService;
+    private final RecipeService recipeService;
 
-    RecipeCommand(Validator validator, DrinkRecipeService drinkRecipeService) {
+    RecipeCommand(Validator validator, RecipeService recipeService) {
         this.validator = validator;
-        this.drinkRecipeService = drinkRecipeService;
+        this.recipeService = recipeService;
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (validator.validateCommand(event, COMMAND)) {
-            String drinkMessageName = event.getMessage().getContentRaw().substring(COMMAND.length()+1);
-            Recipe recipe = drinkRecipeService.getDrinkRecipe(drinkMessageName);
+            String drinkMessageName = event.getMessage().getContentRaw().substring(COMMAND.length()).trim();
+            if (drinkMessageName.isEmpty()) return;
+            Recipe recipe = recipeService.getDrinkRecipe(drinkMessageName);
             String author = event.getAuthor().getAsMention();
             MessageEmbed embed = new EmbedBuilder()
                     .setTitle(recipe.drinkName().name())
