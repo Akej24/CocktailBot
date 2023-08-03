@@ -3,7 +3,6 @@ package org.cocktailbot;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.cocktailbot.drink.command.favourite.FavouriteCommandConfig;
 import org.cocktailbot.drink.reaction.favourite.FavouriteReactionConfig;
 import org.cocktailbot.drink.command.ingredient.IngredientCommandConfig;
@@ -23,7 +22,7 @@ class JdaBot {
     static void buildBot() throws LoginException {
         if (bot == null) {
             bot = JDABuilder
-                    .createLight(TOKEN, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MEMBERS)
+                    .createDefault(TOKEN)
                     .setActivity(Activity.playing("Preparing drink"))
                     .addEventListeners(
                             RandomConfig.getInstance(),

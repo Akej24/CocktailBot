@@ -21,7 +21,7 @@ class FavouriteCommand extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (validator.validateCommand(event, COMMAND)) {
-            String username = event.getAuthor().getName();
+            String username = event.getAuthor().getAsMention();
             Favourites favourites = favouriteService.getUserFavouritesDrink(username);
             event.getChannel()
                     .sendMessage(buildReturnMessage(username, favourites))

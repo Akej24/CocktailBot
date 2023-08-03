@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 class FavouriteRedisRepository implements FavouriteRepository {
 
     private static FavouriteRedisRepository INSTANCE;
+    private static final String PREFIX = "favourite:";
     Jedis jedis = RedisConfig.getInstance().getJedis();
 
     private FavouriteRedisRepository() {
@@ -20,7 +21,7 @@ class FavouriteRedisRepository implements FavouriteRepository {
 
     @Override
     public Set<Favourite> getUserFavouriteDrinks(String username) {
-        Set<String> members = jedis.smembers("favourite:" + username);
+        Set<String> members = jedis.smembers(PREFIX + username);
         return members.stream().map(Favourite::new).collect(Collectors.toSet());
     }
 }

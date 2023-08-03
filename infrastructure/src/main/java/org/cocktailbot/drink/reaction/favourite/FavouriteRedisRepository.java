@@ -7,6 +7,7 @@ import redis.clients.jedis.Transaction;
 class FavouriteRedisRepository implements FavouriteRepository {
 
     private static FavouriteRedisRepository INSTANCE;
+    private static final String PREFIX = "favourite:";
     Jedis jedis = RedisConfig.getInstance().getJedis();
 
     private FavouriteRedisRepository() {
@@ -18,12 +19,10 @@ class FavouriteRedisRepository implements FavouriteRepository {
 
     @Override
     public void addUserFavouriteDrink(String username, String drinkToSave) {
-        Transaction transaction = jedis.multi();
-        if(jedis.smembers("favourite:" + username).size() >= 50) {
-            transaction.discard();
-        } else {
-            transaction.sadd("favourite:" + username, drinkToSave);
-            transaction.sort("favourite:" + username);
+        if(jedis.smembers(PREFIX + username).size() < 50) {
+            Transaction transaction = jedis.multi();
+            transaction.sadd(PREFIX + username, drinkToSave);
+            transaction.sort(PREFIX + username);
             transaction.exec();
         }
     }
@@ -31,8 +30,8 @@ class FavouriteRedisRepository implements FavouriteRepository {
     @Override
     public void removeUserFavouriteDrink(String username, String drinkToRemove) {
         Transaction transaction = jedis.multi();
-        transaction.srem("favourite:" + username, drinkToRemove);
-        transaction.sort("favourite:" + username);
+        transaction.srem(PREFIX + username, drinkToRemove);
+        transaction.sort(PREFIX + username);
         transaction.exec();
     }
 }
