@@ -27,7 +27,8 @@ class JdaBot {
                                 RandomDrinkConfig.getInstance(),
                                 DrinkRecipeConfig.getInstance(),
                                 IngredientConfig.getInstance(),
-                                FavouriteDrinkConfig.getInstance()
+                                FavouriteDrinkConfig.getInstance(),
+                                org.cocktailbot.drink.command.favourite.FavouriteDrinkConfig.getInstance()
                         )
                         .build()
                 : bot;
