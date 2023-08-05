@@ -8,13 +8,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
 
-class RandomCommand extends ListenerAdapter {
+class RandomDrinkCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!random";
     private final RandomDrinkService randomDrinkService;
     private final Validator validator;
 
-    public RandomCommand(Validator validator, RandomDrinkService randomCocktailService) {
+    public RandomDrinkCommand(Validator validator, RandomDrinkService randomCocktailService) {
         this.validator = validator;
         this.randomDrinkService = randomCocktailService;
     }

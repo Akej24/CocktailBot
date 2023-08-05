@@ -4,9 +4,10 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import org.cocktailbot.drink.command.favourite.FavouriteCommandConfig;
+import org.cocktailbot.drink.command.suggest.SuggestConfig;
 import org.cocktailbot.drink.reaction.favourite.FavouriteReactionConfig;
 import org.cocktailbot.drink.command.ingredient.IngredientCommandConfig;
-import org.cocktailbot.drink.command.random.RandomConfig;
+import org.cocktailbot.drink.command.random.RandomDrinkConfig;
 import org.cocktailbot.drink.command.recipe.RecipeCommandConfig;
 
 import javax.security.auth.login.LoginException;
@@ -25,11 +26,12 @@ class JdaBot {
                     .createDefault(TOKEN)
                     .setActivity(Activity.playing("Preparing drink"))
                     .addEventListeners(
-                            RandomConfig.getInstance(),
+                            RandomDrinkConfig.getInstance(),
                             RecipeCommandConfig.getInstance(),
                             IngredientCommandConfig.getInstance(),
                             FavouriteReactionConfig.getInstance(),
-                            FavouriteCommandConfig.getInstance()
+                            FavouriteCommandConfig.getInstance(),
+                            SuggestConfig.getInstance()
                     )
                     .build();
         }

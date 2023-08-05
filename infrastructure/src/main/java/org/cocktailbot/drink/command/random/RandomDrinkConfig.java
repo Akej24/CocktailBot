@@ -4,10 +4,10 @@ import org.cocktailbot.drink.drink_api.DrinkJsonClient;
 import org.cocktailbot.drink.drink_api.DrinkJsonResponseReader;
 import org.cocktailbot.drink.validator.PrefixValidator;
 
-public class RandomConfig {
+public class RandomDrinkConfig {
 
-    public static RandomCommand getInstance() {
-        return new RandomCommand(
+    public static RandomDrinkCommand getInstance() {
+        return new RandomDrinkCommand(
                 PrefixValidator.getInstance(),
                 new RandomDrinkService(
                         DrinkJsonClient.getInstance(),
