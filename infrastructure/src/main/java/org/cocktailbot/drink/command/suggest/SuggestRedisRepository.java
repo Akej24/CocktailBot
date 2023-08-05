@@ -18,6 +18,6 @@ class SuggestRedisRepository implements SuggestRepository{
 
     @Override
     public void saveSuggestedDrinkToUser(String from, String drinkName, String to) {
-        jedis.hset(PREFIX + from, drinkName, to);
+        jedis.hset(PREFIX + to, drinkName, from);
     }
 }
