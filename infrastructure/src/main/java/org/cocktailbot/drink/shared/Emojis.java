@@ -1,4 +1,4 @@
-package org.cocktailbot.drink.utils;
+package org.cocktailbot.drink.shared;
 
 public class Emojis {
 

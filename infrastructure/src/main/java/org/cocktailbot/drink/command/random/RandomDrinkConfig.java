@@ -2,7 +2,7 @@ package org.cocktailbot.drink.command.random;
 
 import org.cocktailbot.drink.drink_api.DrinkJsonClient;
 import org.cocktailbot.drink.drink_api.DrinkJsonResponseReader;
-import org.cocktailbot.drink.validator.PrefixValidator;
+import org.cocktailbot.drink.command.validator.PrefixValidator;
 
 public class RandomDrinkConfig {
 

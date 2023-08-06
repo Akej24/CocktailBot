@@ -1,6 +1,6 @@
 package org.cocktailbot.drink.command.favourite;
 
-import org.cocktailbot.drink.validator.PrefixValidator;
+import org.cocktailbot.drink.command.validator.PrefixValidator;
 
 public class FavouriteCommandConfig {
 

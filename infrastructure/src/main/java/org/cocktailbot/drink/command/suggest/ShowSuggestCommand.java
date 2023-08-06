@@ -2,7 +2,7 @@ package org.cocktailbot.drink.command.suggest;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.validator.Validator;
+import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;
@@ -10,17 +10,17 @@ import java.util.stream.Collectors;
 class ShowSuggestCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!showsuggested";
-    private final Validator validator;
+    private final CommandValidator commandValidator;
     private final ShowSuggestService showSuggestService;
 
-    ShowSuggestCommand(Validator validator, ShowSuggestService showSuggestService) {
-        this.validator = validator;
+    ShowSuggestCommand(CommandValidator commandValidator, ShowSuggestService showSuggestService) {
+        this.commandValidator = commandValidator;
         this.showSuggestService = showSuggestService;
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (validator.validateCommand(event, COMMAND)) {
+        if (commandValidator.validateCommand(event, COMMAND)) {
             String username = event.getAuthor().getName().toLowerCase();
             SuggestedDrinks suggestedDrinks = showSuggestService.getSuggestedDrinksForUsername(username);
             String author = event.getAuthor().getAsMention();

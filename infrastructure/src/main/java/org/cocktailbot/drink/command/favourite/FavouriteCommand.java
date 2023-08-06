@@ -2,7 +2,7 @@ package org.cocktailbot.drink.command.favourite;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.validator.Validator;
+import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;
@@ -11,16 +11,16 @@ class FavouriteCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!favourites";
     private final FavouriteService favouriteService;
-    private final Validator validator;
+    private final CommandValidator commandValidator;
 
-    public FavouriteCommand(Validator validator, FavouriteService favouriteService) {
-        this.validator = validator;
+    public FavouriteCommand(CommandValidator commandValidator, FavouriteService favouriteService) {
+        this.commandValidator = commandValidator;
         this.favouriteService = favouriteService;
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (validator.validateCommand(event, COMMAND)) {
+        if (commandValidator.validateCommand(event, COMMAND)) {
             String mentionUsername = event.getAuthor().getAsMention();
             String author = event.getAuthor().getName();
             Favourites favourites = favouriteService.getUserFavouritesDrink(author);

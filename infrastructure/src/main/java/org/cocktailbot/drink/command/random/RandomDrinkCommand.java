@@ -2,28 +2,28 @@ package org.cocktailbot.drink.command.random;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.validator.Validator;
+import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
 
-import static org.cocktailbot.drink.utils.UrlImageStreamer.closeStream;
-import static org.cocktailbot.drink.utils.UrlImageStreamer.openStream;
+import static org.cocktailbot.drink.shared.UrlImageStreamer.closeStream;
+import static org.cocktailbot.drink.shared.UrlImageStreamer.openStream;
 
 class RandomDrinkCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!random";
     private final RandomDrinkService randomDrinkService;
-    private final Validator validator;
+    private final CommandValidator commandValidator;
 
-    public RandomDrinkCommand(Validator validator, RandomDrinkService randomCocktailService) {
-        this.validator = validator;
+    public RandomDrinkCommand(CommandValidator commandValidator, RandomDrinkService randomCocktailService) {
+        this.commandValidator = commandValidator;
         this.randomDrinkService = randomCocktailService;
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (validator.validateCommand(event, COMMAND)) {
+        if (commandValidator.validateCommand(event, COMMAND)) {
             event.getChannel().sendTyping().queue();
             String mentionAuthor = event.getAuthor().getAsMention();
             String message = event.getMessage().getContentRaw();

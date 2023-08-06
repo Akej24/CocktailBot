@@ -2,7 +2,7 @@ package org.cocktailbot.drink.command.ingredient;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.validator.Validator;
+import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -11,16 +11,16 @@ class IngredientCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!ingredient";
     private final IngredientService ingredientService;
-    private final Validator validator;
+    private final CommandValidator commandValidator;
 
-    public IngredientCommand(Validator validator, IngredientService ingredientService) {
-        this.validator = validator;
+    public IngredientCommand(CommandValidator commandValidator, IngredientService ingredientService) {
+        this.commandValidator = commandValidator;
         this.ingredientService = ingredientService;
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (validator.validateCommand(event, COMMAND)) {
+        if (commandValidator.validateCommand(event, COMMAND)) {
             String ingredientMessageName = getIngredientMessageName(event);
             Ingredient ingredient = ingredientService.getIngredient(ingredientMessageName);
             String mentionAuthor = event.getAuthor().getAsMention();

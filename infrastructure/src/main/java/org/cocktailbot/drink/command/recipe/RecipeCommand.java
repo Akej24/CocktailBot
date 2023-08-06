@@ -4,8 +4,8 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.utils.Emojis;
-import org.cocktailbot.drink.validator.Validator;
+import org.cocktailbot.drink.shared.Emojis;
+import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;
@@ -13,17 +13,17 @@ import java.util.stream.Collectors;
 class RecipeCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!recipe";
-    private final Validator validator;
+    private final CommandValidator commandValidator;
     private final RecipeService recipeService;
 
-    RecipeCommand(Validator validator, RecipeService recipeService) {
-        this.validator = validator;
+    RecipeCommand(CommandValidator commandValidator, RecipeService recipeService) {
+        this.commandValidator = commandValidator;
         this.recipeService = recipeService;
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (validator.validateCommand(event, COMMAND)) {
+        if (commandValidator.validateCommand(event, COMMAND)) {
             String drinkMessageName = getDrinkMessageName(event);
             Recipe recipe = recipeService.getDrinkRecipe(drinkMessageName);
             String author = event.getAuthor().getAsMention();

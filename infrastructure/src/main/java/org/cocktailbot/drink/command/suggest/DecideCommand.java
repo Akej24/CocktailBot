@@ -2,24 +2,24 @@ package org.cocktailbot.drink.command.suggest;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.validator.Validator;
+import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
 class DecideCommand extends ListenerAdapter {
 
     private static final String ACCEPT_COMMAND = "!accept";
     private static final String REJECT_COMMAND = "!reject";
-    private final Validator validator;
+    private final CommandValidator commandValidator;
     private final DecideService decideService;
 
-    DecideCommand(Validator validator, DecideService decideService) {
-        this.validator = validator;
+    DecideCommand(CommandValidator commandValidator, DecideService decideService) {
+        this.commandValidator = commandValidator;
         this.decideService = decideService;
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (validator.validateCommand(event, ACCEPT_COMMAND)) {
+        if (commandValidator.validateCommand(event, ACCEPT_COMMAND)) {
             String username = event.getAuthor().getName().toLowerCase();
             String drinkName = event.getMessage().getContentRaw().substring(ACCEPT_COMMAND.length()).trim();
             boolean status = decideService.acceptSuggestedDrink(username, drinkName);
@@ -27,7 +27,7 @@ class DecideCommand extends ListenerAdapter {
             event.getChannel()
                     .sendMessage(buildReturnMessage(author, drinkName, status))
                     .queue();
-        } else if (validator.validateCommand(event, REJECT_COMMAND)) {
+        } else if (commandValidator.validateCommand(event, REJECT_COMMAND)) {
             String username = event.getAuthor().getName().toLowerCase();
             String drinkName = event.getMessage().getContentRaw().substring(ACCEPT_COMMAND.length()).trim();
             boolean status = decideService.rejectSuggestedDrink(username, drinkName);

@@ -3,7 +3,7 @@ package org.cocktailbot.drink.command.suggest;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.validator.Validator;
+import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -12,17 +12,17 @@ import java.util.List;
 class SuggestCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!suggest";
-    private final Validator validator;
+    private final CommandValidator commandValidator;
     private final SuggestService suggestService;
 
-    SuggestCommand(Validator validator, SuggestService suggestService) {
-        this.validator = validator;
+    SuggestCommand(CommandValidator commandValidator, SuggestService suggestService) {
+        this.commandValidator = commandValidator;
         this.suggestService = suggestService;
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (validator.validateCommand(event, COMMAND)) {
+        if (commandValidator.validateCommand(event, COMMAND)) {
             SuggestCommandParams suggestCommandParams = getParamsFromMessage(event.getMessage().getContentRaw());
             String suggestedUsername = suggestCommandParams.suggestedUsername();
             String drinkName = suggestCommandParams.drinkName();

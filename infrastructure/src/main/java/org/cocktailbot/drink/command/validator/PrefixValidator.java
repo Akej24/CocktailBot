@@ -1,8 +1,8 @@
-package org.cocktailbot.drink.validator;
+package org.cocktailbot.drink.command.validator;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class PrefixValidator implements Validator {
+public class PrefixValidator implements CommandValidator {
 
     private static PrefixValidator INSTANCE;
 

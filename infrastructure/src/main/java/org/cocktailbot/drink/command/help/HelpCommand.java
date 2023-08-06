@@ -2,21 +2,21 @@ package org.cocktailbot.drink.command.help;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.validator.Validator;
+import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
 class HelpCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!help";
-    private final Validator validator;
+    private final CommandValidator commandValidator;
 
-    public HelpCommand(Validator validator) {
-        this.validator = validator;
+    public HelpCommand(CommandValidator commandValidator) {
+        this.commandValidator = commandValidator;
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (validator.validateCommand(event, COMMAND)) {
+        if (commandValidator.validateCommand(event, COMMAND)) {
             String author = event.getAuthor().getAsMention();
             event.getChannel()
                     .sendMessage(buildReturnMessage(author))
@@ -34,7 +34,7 @@ class HelpCommand extends ListenerAdapter {
         **!random -na** - _Draws a random non-alcoholic drink_
         **!recipe <drink name>** - _Shows a recipe for the given drink_
         **!ingredient <ingredient name>** - _Shows information for the given drink_
-        **!favourites** - _Shows a list of favourites drink_
+        **!favourites** - _Shows a list of favourite drinks (max 50)_
         **!suggest <username> <drink name>** - _Suggest the user the given drink_
         **!showsuggested** - _Shows a list of suggested drinks_
         **!accept <drink name>** - _Accepts the given drink and move it to 'to try' category_
