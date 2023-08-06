@@ -19,15 +19,15 @@ class RandomDrinkService {
         this.drinkResponseReader = drinkResponseReader;
     }
 
-    RandomDrink getRandomDrinkWithAlcoholContent(String messageWithFlags) {
+    RandomDrink getRandomDrinkFromAlcoholContentFlags(String messageWithFlags) {
         return Arrays.stream(AlcoholContent.values())
                 .filter(alcoholContent -> messageWithFlags.contains(alcoholContent.getFlag()))
                 .findFirst()
-                .map(this::getRandomDrink)
-                .orElseGet(() -> getRandomDrink(AlcoholContent.ANY));
+                .map(this::getRandomDrinkWithAlcoholContent)
+                .orElseGet(() -> getRandomDrinkWithAlcoholContent(AlcoholContent.ANY));
     }
 
-    RandomDrink getRandomDrink(AlcoholContent wantedAlcoholContent) {
+    private RandomDrink getRandomDrinkWithAlcoholContent(AlcoholContent wantedAlcoholContent) {
         int maxAttempts = 100;
         int attempts = 0;
         RandomDrink randomDrink = drawMatchingDrink(wantedAlcoholContent);
