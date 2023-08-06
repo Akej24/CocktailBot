@@ -11,6 +11,6 @@ class ShowSuggestService {
     }
 
     public SuggestedDrinks getSuggestedDrinksForUsername(String username) {
-        return new SuggestedDrinks(showSuggestedRepository.getSuggestedDrinksForUsername(username));
+        return SuggestedDrinks.from(showSuggestedRepository.getSuggestedDrinksForUsername(username));
     }
 }

@@ -1,3 +1,3 @@
 package org.cocktailbot.drink.command.suggest;
 
-record Username(String nick) { }
+public record Username(String nick) { }

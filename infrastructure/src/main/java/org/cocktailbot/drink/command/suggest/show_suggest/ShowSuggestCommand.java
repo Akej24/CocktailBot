@@ -2,7 +2,6 @@ package org.cocktailbot.drink.command.suggest.show_suggest;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.command.suggest.ShowSuggestService;
 import org.cocktailbot.drink.command.suggest.SuggestedDrinks;
 import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;

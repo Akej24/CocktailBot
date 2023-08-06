@@ -1,7 +1,6 @@
 package org.cocktailbot.drink.command.suggest.show_suggest;
 
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
-import org.cocktailbot.drink.command.suggest.ShowSuggestedRepository;
 import org.cocktailbot.drink.command.suggest.Username;
 import org.cocktailbot.drink.config.RedisConfig;
 import redis.clients.jedis.Jedis;

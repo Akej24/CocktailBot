@@ -1,6 +1,5 @@
 package org.cocktailbot.drink.command.suggest.decide;
 
-import org.cocktailbot.drink.command.suggest.DecideService;
 import org.cocktailbot.drink.command.validator.PrefixValidator;
 
 public class DecideConfig {

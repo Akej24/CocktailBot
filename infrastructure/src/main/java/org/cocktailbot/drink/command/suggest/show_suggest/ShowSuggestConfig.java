@@ -1,6 +1,5 @@
 package org.cocktailbot.drink.command.suggest.show_suggest;
 
-import org.cocktailbot.drink.command.suggest.ShowSuggestService;
 import org.cocktailbot.drink.command.validator.PrefixValidator;
 
 public class ShowSuggestConfig {

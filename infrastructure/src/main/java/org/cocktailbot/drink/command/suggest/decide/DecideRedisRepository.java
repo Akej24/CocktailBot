@@ -1,6 +1,5 @@
 package org.cocktailbot.drink.command.suggest.decide;
 
-import org.cocktailbot.drink.command.suggest.DecideRepository;
 import org.cocktailbot.drink.config.RedisConfig;
 import redis.clients.jedis.Jedis;
 
