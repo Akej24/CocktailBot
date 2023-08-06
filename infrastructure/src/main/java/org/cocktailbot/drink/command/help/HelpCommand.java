@@ -39,7 +39,7 @@ class HelpCommand extends ListenerAdapter {
         **!showsuggested** - _Shows a list of suggested drinks_
         **!accept <drink name>** - _Accepts the given drink and move it to 'to try' category_
         **!reject <drink name>** - _Rejects the given drink and remove it from suggested_
-        **!totry** - _Shows a list of drinks to try_
+        **!totry** - _Shows a list of drinks to try (max 50)_
         
         To add drink to favourites click heart emote ❤ under recipe for the given drink
         and to remove drink from favourites just click cross emote ❌.

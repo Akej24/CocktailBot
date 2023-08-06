@@ -1,7 +1,6 @@
 package org.cocktailbot.drink.command.to_try;
 
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
-import org.cocktailbot.drink.command.shared.value_object.Username;
 import org.cocktailbot.drink.config.RedisConfig;
 import redis.clients.jedis.Jedis;
 
@@ -22,14 +21,14 @@ class ToTryRedisRepository implements ToTryRepository {
     }
 
     @Override
-    public Map<DrinkName, Username> getUserToTryDrinks(String username) {
+    public Map<DrinkName, DrinkTried> getUserToTryDrinks(String username) {
         Map<String, String> toTryDrinks = jedis.hgetAll(PREFIX + username);
         return toTryDrinks.entrySet()
                 .stream()
                 .map(entry -> {
                     DrinkName drinkName = new DrinkName(entry.getKey());
-                    Username from = new Username(entry.getValue());
-                    return Map.entry(drinkName, from);
+                    DrinkTried drinkTried = new DrinkTried(entry.getValue().equalsIgnoreCase("true"));
+                    return Map.entry(drinkName, drinkTried);
                 })
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }

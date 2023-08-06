@@ -18,7 +18,7 @@ class SuggestRedisRepository implements SuggestRepository {
 
     @Override
     public boolean saveDrinkToSuggestedUsername(String from, String drinkName, String to) {
-        if(jedis.smembers(PREFIX + to).size() < 50) {
+        if (jedis.hlen(PREFIX + to) < 50) {
             jedis.hset(PREFIX + to, drinkName, from);
             return true;
         }

@@ -41,7 +41,7 @@ class DecideCommand extends ListenerAdapter {
 
     private String buildReturnAcceptMessage(String author, String drinkName, boolean status) {
         return String.format(
-                "Hello %s!\n%s", author, status
+                "Hello %s!\n%s", author, !status
                         ? "We could not accept your suggested drink: " + drinkName
                         : "Your suggested drink: " + drinkName + " has been accepted"
         );
@@ -49,7 +49,7 @@ class DecideCommand extends ListenerAdapter {
 
     private String buildReturnRejectMessage(String author, String drinkName, boolean status) {
         return String.format(
-                "Hello %s!\n%s", author, status
+                "Hello %s!\n%s", author, !status
                         ? "We could not reject your suggested drink: " + drinkName
                         : "Your suggested drink: " + drinkName + " has been rejected"
         );

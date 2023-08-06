@@ -41,9 +41,9 @@ class ToTryCommand extends ListenerAdapter {
         return toTryDrinks.drinks()
                 .entrySet()
                 .stream()
-                .map(entry -> String.format("- %s from %s\n",
+                .map(entry -> String.format("- %s %s\n",
                         entry.getKey().name(),
-                        entry.getValue().nick()))
+                        entry.getValue().isTried() ? "✅" : "❌"))
                 .collect(Collectors.joining());
     }
 }

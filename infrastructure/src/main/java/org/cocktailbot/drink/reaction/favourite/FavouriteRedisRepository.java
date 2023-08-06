@@ -19,7 +19,7 @@ class FavouriteRedisRepository implements FavouriteRepository {
 
     @Override
     public void addUserFavouriteDrink(String username, String drinkToSave) {
-        if(jedis.smembers(PREFIX + username).size() < 50) {
+        if (jedis.hlen(PREFIX + username) < 50) {
             Transaction transaction = jedis.multi();
             transaction.sadd(PREFIX + username, drinkToSave);
             transaction.sort(PREFIX + username);
