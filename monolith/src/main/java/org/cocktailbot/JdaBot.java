@@ -5,6 +5,8 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.cocktailbot.drink.command.favourite.FavouriteCommandConfig;
+import org.cocktailbot.drink.command.help.HelpConfig;
+import org.cocktailbot.drink.command.suggest.DecideConfig;
 import org.cocktailbot.drink.command.suggest.ShowSuggestConfig;
 import org.cocktailbot.drink.command.suggest.SuggestConfig;
 import org.cocktailbot.drink.reaction.favourite.FavouriteReactionConfig;
@@ -35,7 +37,9 @@ class JdaBot {
                             FavouriteReactionConfig.getInstance(),
                             FavouriteCommandConfig.getInstance(),
                             SuggestConfig.getInstance(),
-                            ShowSuggestConfig.getInstance()
+                            ShowSuggestConfig.getInstance(),
+                            DecideConfig.getInstance(),
+                            HelpConfig.getInstance()
                     )
                     .build();
         }

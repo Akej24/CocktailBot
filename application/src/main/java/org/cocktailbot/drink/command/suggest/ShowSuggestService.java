@@ -1,6 +1,6 @@
 package org.cocktailbot.drink.command.suggest;
 
-public class ShowSuggestService {
+class ShowSuggestService {
 
     private final ShowSuggestedRepository showSuggestedRepository;
 

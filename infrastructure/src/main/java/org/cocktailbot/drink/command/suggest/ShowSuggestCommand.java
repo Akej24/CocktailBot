@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 class ShowSuggestCommand extends ListenerAdapter {
 
-    private static final String COMMAND = "!showsuggest";
+    private static final String COMMAND = "!showsuggested";
     private final Validator validator;
     private final ShowSuggestService showSuggestService;
 
