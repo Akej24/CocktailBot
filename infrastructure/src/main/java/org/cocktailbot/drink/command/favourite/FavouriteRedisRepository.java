@@ -22,6 +22,8 @@ class FavouriteRedisRepository implements FavouriteRepository {
     @Override
     public Set<Favourite> getUserFavouriteDrinks(String username) {
         Set<String> members = jedis.smembers(PREFIX + username);
-        return members.stream().map(Favourite::new).collect(Collectors.toSet());
+        return members.stream()
+                .map(Favourite::new)
+                .collect(Collectors.toSet());
     }
 }
