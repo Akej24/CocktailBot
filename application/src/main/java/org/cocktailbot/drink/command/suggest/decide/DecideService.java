@@ -9,12 +9,10 @@ class DecideService {
     }
 
     public boolean acceptSuggestedDrink(String username, String drinkName) {
-        decideRepository.acceptSuggestedDrink(username, drinkName);
-        return true;
+        return decideRepository.acceptSuggestedDrink(username, drinkName);
     }
 
     public boolean rejectSuggestedDrink(String username, String drinkName) {
-        decideRepository.rejectSuggestedDrink(username, drinkName);
-        return true;
+        return decideRepository.rejectSuggestedDrink(username, drinkName);
     }
 }

@@ -2,6 +2,7 @@ package org.cocktailbot.drink.command.suggest.decide;
 
 import org.cocktailbot.drink.config.RedisConfig;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Transaction;
 
 class DecideRedisRepository implements DecideRepository {
 
@@ -20,13 +21,18 @@ class DecideRedisRepository implements DecideRepository {
     @Override
     public boolean acceptSuggestedDrink(String username, String drinkName) {
         String from = jedis.hget(SUGGEST_PREFIX + username, drinkName);
-        jedis.hdel(SUGGEST_PREFIX + username, drinkName);
-        jedis.hset(TOTRY_PREFIX + username, drinkName, from);
+        if(from.isBlank()) return false;
+        Transaction transaction = jedis.multi();
+        transaction.hdel(SUGGEST_PREFIX + username, drinkName);
+        transaction.hset(TOTRY_PREFIX + username, drinkName, from);
+        transaction.exec();
         return true;
     }
 
     @Override
     public boolean rejectSuggestedDrink(String username, String drinkName) {
+        String from = jedis.hget(SUGGEST_PREFIX + username, drinkName);
+        if(from.isBlank()) return false;
         jedis.hdel(SUGGEST_PREFIX + username, drinkName);
         return true;
     }

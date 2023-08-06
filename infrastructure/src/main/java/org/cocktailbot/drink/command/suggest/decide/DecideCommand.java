@@ -19,30 +19,39 @@ class DecideCommand extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (commandValidator.validateCommand(event, ACCEPT_COMMAND)) {
+        boolean detectedAccept = commandValidator.validateCommand(event, ACCEPT_COMMAND);
+        boolean detectedReject = commandValidator.validateCommand(event, REJECT_COMMAND);
+        if (detectedAccept || detectedReject) {
             String username = event.getAuthor().getName().toLowerCase();
             String drinkName = event.getMessage().getContentRaw().substring(ACCEPT_COMMAND.length()).trim();
-            boolean status = decideService.acceptSuggestedDrink(username, drinkName);
-            String author = event.getAuthor().getAsMention();
-            event.getChannel()
-                    .sendMessage(buildReturnMessage(author, drinkName, status))
-                    .queue();
-        } else if (commandValidator.validateCommand(event, REJECT_COMMAND)) {
-            String username = event.getAuthor().getName().toLowerCase();
-            String drinkName = event.getMessage().getContentRaw().substring(ACCEPT_COMMAND.length()).trim();
-            boolean status = decideService.rejectSuggestedDrink(username, drinkName);
-            String author = event.getAuthor().getAsMention();
-            event.getChannel()
-                    .sendMessage(buildReturnMessage(author, drinkName, status))
-                    .queue();
+            String mentionAuthor = event.getAuthor().getAsMention();
+            boolean status;
+            String responseMessage;
+            if (detectedAccept && !detectedReject) {
+                status = decideService.acceptSuggestedDrink(username, drinkName);
+                responseMessage = buildReturnAcceptMessage(mentionAuthor, drinkName, status);
+            } else {
+                status = decideService.rejectSuggestedDrink(username, drinkName);
+                responseMessage = buildReturnRejectMessage(mentionAuthor, drinkName, status);
+            }
+            event.getChannel().sendMessage(responseMessage).queue();
+
         }
     }
 
-    private String buildReturnMessage(String author, String drinkName, boolean status) {
+    private String buildReturnAcceptMessage(String author, String drinkName, boolean status) {
         return String.format(
                 "Hello %s!\n%s", author, status
                         ? "We could not accept your suggested drink: " + drinkName
                         : "Your suggested drink: " + drinkName + " has been accepted"
+        );
+    }
+
+    private String buildReturnRejectMessage(String author, String drinkName, boolean status) {
+        return String.format(
+                "Hello %s!\n%s", author, status
+                        ? "We could not reject your suggested drink: " + drinkName
+                        : "Your suggested drink: " + drinkName + " has been rejected"
         );
     }
 }
