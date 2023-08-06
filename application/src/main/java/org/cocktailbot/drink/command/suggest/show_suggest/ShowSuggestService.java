@@ -1,4 +1,6 @@
-package org.cocktailbot.drink.command.suggest;
+package org.cocktailbot.drink.command.suggest.show_suggest;
+
+import org.cocktailbot.drink.command.suggest.SuggestedDrinks;
 
 class ShowSuggestService {
 

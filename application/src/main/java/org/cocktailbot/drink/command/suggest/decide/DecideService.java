@@ -1,4 +1,4 @@
-package org.cocktailbot.drink.command.suggest;
+package org.cocktailbot.drink.command.suggest.decide;
 
 class DecideService {
 

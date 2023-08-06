@@ -1,9 +1,10 @@
-package org.cocktailbot.drink.command.suggest;
+package org.cocktailbot.drink.command.suggest.suggest;
 
+import org.cocktailbot.drink.command.suggest.SuggestRepository;
 import org.cocktailbot.drink.config.RedisConfig;
 import redis.clients.jedis.Jedis;
 
-class SuggestRedisRepository implements SuggestRepository{
+class SuggestRedisRepository implements SuggestRepository {
 
     private static SuggestRedisRepository INSTANCE;
     private static final String PREFIX = "suggest:";

@@ -1,4 +1,4 @@
-package org.cocktailbot.drink.command.suggest;
+package org.cocktailbot.drink.command.suggest.suggest;
 
 import org.cocktailbot.drink.drink_api.DrinkClient;
 import org.cocktailbot.drink.drink_api.DrinkResponseReader;
