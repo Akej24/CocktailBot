@@ -1,6 +1,5 @@
 package org.cocktailbot.drink.command.suggest.suggest;
 
-import org.cocktailbot.drink.command.suggest.SuggestRepository;
 import org.cocktailbot.drink.config.RedisConfig;
 import redis.clients.jedis.Jedis;
 
@@ -18,7 +17,11 @@ class SuggestRedisRepository implements SuggestRepository {
     }
 
     @Override
-    public void saveSuggestedDrinkToUser(String from, String drinkName, String to) {
-        jedis.hset(PREFIX + to, drinkName, from);
+    public boolean saveDrinkToSuggestedUsername(String from, String drinkName, String to) {
+        if(jedis.smembers(PREFIX + to).size() < 50) {
+            jedis.hset(PREFIX + to, drinkName, from);
+            return true;
+        }
+        return false;
     }
 }

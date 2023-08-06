@@ -3,7 +3,6 @@ package org.cocktailbot.drink.command.suggest.suggest;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.command.suggest.SuggestService;
 import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,19 +23,13 @@ class SuggestCommand extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (commandValidator.validateCommand(event, COMMAND)) {
-            SuggestCommandParams suggestCommandParams = getParamsFromMessage(event.getMessage().getContentRaw());
-            String suggestedUsername = suggestCommandParams.suggestedUsername();
-            String drinkName = suggestCommandParams.drinkName();
-            if (suggestedUsername.isEmpty() || drinkName.isEmpty()) return;
-
-            List<Member> availableUsers = new ArrayList<>();
-            event.getGuild().loadMembers().onSuccess(availableUsers::addAll);
-            if(!containsSuggestedUsername(availableUsers, suggestedUsername)) return;
-
-            boolean success = suggestService.tryAddSuggestedDrink(event.getAuthor().getName(), drinkName, suggestedUsername);
-            String author = event.getAuthor().getAsMention();
+            String author = event.getAuthor().getName();
+            SuggestCommandParams params = getParamsFromMessage(event.getMessage().getContentRaw());
+            List<Member> availableUsers = getAvailableUsers(event);
+            boolean success = suggestService.tryAddSuggestedDrink(author, params, availableUsers);
+            String mentionAuthor = event.getAuthor().getAsMention();
             event.getChannel()
-                    .sendMessage(buildReturnMessage(author, suggestedUsername, drinkName, success))
+                    .sendMessage(buildReturnMessage(mentionAuthor, params.suggestedUsername(), params.drinkName(), success))
                     .queue();
         }
     }
@@ -58,19 +51,16 @@ class SuggestCommand extends ListenerAdapter {
         }
     }
 
-    private boolean containsSuggestedUsername(List<Member> availableUsers, String suggestedUsername) {
-        for (Member member : availableUsers) {
-            if (member.getEffectiveName().equalsIgnoreCase(suggestedUsername)) {
-                return true;
-            }
-        }
-        return false;
+    private List<Member> getAvailableUsers(MessageReceivedEvent event) {
+        List<Member> availableUsers = new ArrayList<>();
+        event.getGuild().loadMembers().onSuccess(availableUsers::addAll);
+        return availableUsers;
     }
 
     private String buildReturnMessage(String author, String suggestedUsername, String drinkName, boolean success) {
         return String.format(
                 "Hello %s!\n%s", author, !success
-                        ? "Your suggested drink does not exist"
+                        ? "Your suggested drink or user does not exist (invalid params) or user has a maximum number of suggested drinks"
                         : "You have just suggested " + suggestedUsername
                         + " a drink: " + drinkName
         );

@@ -35,7 +35,7 @@ class HelpCommand extends ListenerAdapter {
         **!recipe <drink name>** - _Shows a recipe for the given drink_
         **!ingredient <ingredient name>** - _Shows information for the given drink_
         **!favourites** - _Shows a list of favourite drinks (max 50)_
-        **!suggest <username> <drink name>** - _Suggest the user the given drink_
+        **!suggest <username> <drink name>** - _Suggest the user the given drink (max 50)_
         **!showsuggested** - _Shows a list of suggested drinks_
         **!accept <drink name>** - _Accepts the given drink and move it to 'to try' category_
         **!reject <drink name>** - _Rejects the given drink and remove it from suggested_
