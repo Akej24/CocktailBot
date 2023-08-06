@@ -21,8 +21,9 @@ class RecipeService {
     }
 
     public Recipe getDrinkRecipe(String drinkNameFromMessage) {
-        String drink = drinkClient.getDrink(drinkNameFromMessage);
+        if (drinkNameFromMessage.isBlank()) return getEmptyRecipe();
         try {
+            String drink = drinkClient.getDrink(drinkNameFromMessage);
             return Recipe.from(
                     new DrinkName(drinkResponseReader.getValueFromDrink(drink, "strDrink")),
                     new Instruction(drinkResponseReader.getValueFromDrink(drink, "strInstructions")),
@@ -31,9 +32,16 @@ class RecipeService {
             );
         } catch (MalformedURLException e) {
             System.out.println("Image url for given drink is malformed");
-            e.printStackTrace();
+            return getEmptyRecipe();
         }
-        return Recipe.from(new DrinkName(""), new Instruction(""), new RecipeIngredients(null), new DrinkImageUrl(null));
+    }
+
+    private Recipe getEmptyRecipe() {
+        return Recipe.from(
+                new DrinkName(""),
+                new Instruction(""),
+                new RecipeIngredients(new HashMap<>()),
+                new DrinkImageUrl(null));
     }
 
     private RecipeIngredients buildDrinkIngredients(String drink) {

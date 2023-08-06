@@ -17,6 +17,7 @@ class IngredientService {
     }
 
     public Ingredient getIngredient(String ingredientMessageName) {
+        if(ingredientMessageName.isBlank()) return getEmptyIngredient();
         String ingredient = drinkClient.getIngredient(ingredientMessageName);
         String name = drinkResponseReader.getValueFromIngredient(ingredient, "strIngredient");
         String description = drinkResponseReader.getValueFromIngredient(ingredient, "strDescription");
@@ -27,6 +28,15 @@ class IngredientService {
                 new IngredientFacts(splitDescriptionIntoFacts(description)),
                 new IngredientType(ingredientType),
                 alcoholContent.equalsIgnoreCase("yes") ? AlcoholContent.ALCOHOLIC : AlcoholContent.NON_ALCOHOLIC
+        );
+    }
+
+    private Ingredient getEmptyIngredient() {
+        return Ingredient.from(
+                new IngredientName(""),
+                new IngredientFacts(List.of("")),
+                new IngredientType(""),
+                null
         );
     }
 

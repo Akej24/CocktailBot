@@ -21,12 +21,21 @@ class IngredientCommand extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (validator.validateCommand(event, COMMAND)) {
-            String ingredientMessageName = event.getMessage().getContentRaw().substring(COMMAND.length()+1);
+            String ingredientMessageName = getIngredientMessageName(event);
             Ingredient ingredient = ingredientService.getIngredient(ingredientMessageName);
             String mentionAuthor = event.getAuthor().getAsMention();
             event.getChannel()
                     .sendMessage(buildReturnMessage(mentionAuthor, ingredient))
                     .queue();
+        }
+    }
+
+    private static String getIngredientMessageName(MessageReceivedEvent event) {
+        try {
+            return event.getMessage().getContentRaw().substring(COMMAND.length()+1);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Invalid !ingredient command");
+            return "";
         }
     }
 

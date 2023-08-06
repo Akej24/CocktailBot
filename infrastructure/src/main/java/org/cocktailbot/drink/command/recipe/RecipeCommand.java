@@ -24,10 +24,28 @@ class RecipeCommand extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (validator.validateCommand(event, COMMAND)) {
-            String drinkMessageName = event.getMessage().getContentRaw().substring(COMMAND.length()).trim();
-            if (drinkMessageName.isEmpty()) return;
+            String drinkMessageName = getDrinkMessageName(event);
             Recipe recipe = recipeService.getDrinkRecipe(drinkMessageName);
             String author = event.getAuthor().getAsMention();
+            sendReturnMessage(event, author, recipe);
+        }
+    }
+
+    private String getDrinkMessageName(@NotNull MessageReceivedEvent event) {
+        try {
+            return event.getMessage().getContentRaw().substring(COMMAND.length() + 1);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Invalid !recipe command");
+            return "";
+        }
+    }
+
+    private void sendReturnMessage(MessageReceivedEvent event, String author, Recipe recipe) {
+        if(recipe.drinkName().name().isBlank()){
+            event.getChannel()
+                    .sendMessage(buildReturnMessage(author, recipe))
+                    .queue();
+        } else {
             MessageEmbed embed = new EmbedBuilder()
                     .setTitle(recipe.drinkName().name())
                     .setImage(recipe.drinkImageUrl().url().toString())
@@ -44,24 +62,34 @@ class RecipeCommand extends ListenerAdapter {
 
     private String buildReturnMessage(String author, Recipe recipe) {
         return String.format(
-                "Hello %s!\n%s", author, recipe.drinkName().name().equals("")
+                "Hello %s!\n%s", author, recipe.drinkName().name().isBlank()
                         ? "Your drink does not exist"
-                        : "This is how to make " + recipe.drinkName().name()
-                        + "\n\nIngredients:\n" + generateDrinkIngredients(recipe)
-                        + "\nInstruction:\n- " + recipe.instruction().instruction().replaceAll("\\. ", ".\n- ")
+                        : String.format("""
+                        This is how to make %s
+                        
+                        Ingredients:
+                        %s
+                        
+                        Instruction:
+                        - %s
+                        """,
+                        recipe.drinkName().name(),
+                        generateDrinkIngredients(recipe),
+                        recipe.instruction().instruction().replaceAll("\\. ", ".\n- "))
         );
     }
 
     private String generateDrinkIngredients(Recipe recipe) {
-        if (recipe == null || recipe.recipeIngredients() == null) {
-            return "No recipeIngredients found for this recipe";
+        if (recipe.recipeIngredients() == null || recipe.recipeIngredients().ingredients().isEmpty()) {
+            return "No ingredients found for this recipe";
         }
-        return recipe.recipeIngredients().ingredients().entrySet().stream()
-                .map(entry -> "- "
-                        + entry.getKey().name()
-                        + ": "
-                        + entry.getValue().measure()
-                        + "\n")
+        return recipe.recipeIngredients()
+                .ingredients()
+                .entrySet()
+                .stream()
+                .map(entry -> String.format("- %s: %s\n",
+                        entry.getKey().name(),
+                        entry.getValue().measure()))
                 .collect(Collectors.joining());
     }
 }
