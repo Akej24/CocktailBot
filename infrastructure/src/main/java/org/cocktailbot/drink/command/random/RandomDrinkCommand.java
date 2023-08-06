@@ -7,8 +7,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
 
-import static org.cocktailbot.drink.shared.UrlImageStreamer.closeStream;
-import static org.cocktailbot.drink.shared.UrlImageStreamer.openStream;
+import static org.cocktailbot.drink.utils.UrlImageStreamer.closeStream;
+import static org.cocktailbot.drink.utils.UrlImageStreamer.openStream;
 
 class RandomDrinkCommand extends ListenerAdapter {
 

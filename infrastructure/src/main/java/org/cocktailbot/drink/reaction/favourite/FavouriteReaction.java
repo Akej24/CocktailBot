@@ -3,7 +3,7 @@ package org.cocktailbot.drink.reaction.favourite;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.cocktailbot.drink.shared.Emojis;
+import org.cocktailbot.drink.utils.Emojis;
 import org.cocktailbot.drink.reaction.validator.CodepointValidator;
 import org.jetbrains.annotations.NotNull;
 

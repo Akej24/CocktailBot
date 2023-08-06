@@ -1,4 +1,4 @@
-package org.cocktailbot.drink.shared;
+package org.cocktailbot.drink.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
