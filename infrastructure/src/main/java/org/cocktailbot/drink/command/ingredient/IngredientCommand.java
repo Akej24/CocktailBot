@@ -23,20 +23,31 @@ class IngredientCommand extends ListenerAdapter {
         if (validator.validateCommand(event, COMMAND)) {
             String ingredientMessageName = event.getMessage().getContentRaw().substring(COMMAND.length()+1);
             Ingredient ingredient = ingredientService.getIngredient(ingredientMessageName);
-            String author = event.getAuthor().getAsMention();
+            String mentionAuthor = event.getAuthor().getAsMention();
             event.getChannel()
-                    .sendMessage(buildReturnMessage(author, ingredient))
+                    .sendMessage(buildReturnMessage(mentionAuthor, ingredient))
                     .queue();
         }
     }
 
-    private String buildReturnMessage(String author, Ingredient ingredient) {
+    private String buildReturnMessage(String mentionAuthor, Ingredient ingredient) {
         return String.format(
-                "Hello %s!\n%s", author, ingredient.ingredientName().name().equals("")
+                "Hello %s!\n%s", mentionAuthor, ingredient.ingredientName().name().equals("")
                         ? "Your ingredient does not exist"
-                        : "\nIngredient random fact:\n- " + drawRandomFact(ingredient.ingredientFacts())
-                        + "\n\nType:\n- " + ingredient.ingredientType().type()
-                        + "\n\nAlcohol content:\n- " + ingredient.alcoholContent().getName()
+                        : String.format("""
+                        
+                        Ingredient random fact:
+                        - %s
+                        
+                        Type:
+                        - %s
+                        
+                        Alcohol content:
+                        - %s
+                        """,
+                        drawRandomFact(ingredient.ingredientFacts()),
+                        ingredient.ingredientType().type(),
+                        ingredient.alcoholContent().getName())
         );
     }
 

@@ -11,7 +11,6 @@ class IngredientService {
     private final DrinkClient drinkClient;
     private final DrinkResponseReader drinkResponseReader;
 
-
     IngredientService(DrinkClient drinkClient, DrinkResponseReader drinkResponseReader) {
         this.drinkClient = drinkClient;
         this.drinkResponseReader = drinkResponseReader;
@@ -23,16 +22,15 @@ class IngredientService {
         String description = drinkResponseReader.getValueFromIngredient(ingredient, "strDescription");
         String ingredientType = drinkResponseReader.getValueFromIngredient(ingredient, "strType");
         String alcoholContent = drinkResponseReader.getValueFromIngredient(ingredient, "strAlcohol");
-
         return Ingredient.from(
                 new IngredientName(name),
-                new IngredientFacts(breakDescriptionIntoFacts(description)),
+                new IngredientFacts(splitDescriptionIntoFacts(description)),
                 new IngredientType(ingredientType),
                 alcoholContent.equalsIgnoreCase("yes") ? AlcoholContent.ALCOHOLIC : AlcoholContent.NON_ALCOHOLIC
         );
     }
 
-    private List<String> breakDescriptionIntoFacts(String ingredientDescription) {
+    private List<String> splitDescriptionIntoFacts(String ingredientDescription) {
         String[] splitDescription = ingredientDescription.split("\\r\\n\\r\\n");
         return List.of(splitDescription);
     }

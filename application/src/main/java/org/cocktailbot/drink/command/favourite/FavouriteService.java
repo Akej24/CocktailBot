@@ -9,6 +9,6 @@ class FavouriteService {
     }
 
     Favourites getUserFavouritesDrink(String username) {
-        return new Favourites(favouriteDrinkRepository.getUserFavouriteDrinks(username));
+        return Favourites.from(favouriteDrinkRepository.getUserFavouriteDrinks(username));
     }
 }

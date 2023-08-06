@@ -11,7 +11,7 @@ record Ingredient(
 
 ) {
 
-    public static Ingredient from(
+    static Ingredient from(
             IngredientName ingredientName,
             IngredientFacts ingredientFacts,
             IngredientType ingredientType,
