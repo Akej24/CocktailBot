@@ -25,7 +25,7 @@ class DecideRedisRepository implements DecideRepository {
         if (jedis.hlen(TOTRY_PREFIX + username) < 50) {
             Transaction transaction = jedis.multi();
             transaction.hdel(SUGGEST_PREFIX + username, drinkName);
-            transaction.hset(TOTRY_PREFIX + username, drinkName, "false");
+            transaction.sadd(TOTRY_PREFIX + username, drinkName);
             transaction.exec();
         }
         return true;

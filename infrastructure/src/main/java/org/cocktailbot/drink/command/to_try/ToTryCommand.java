@@ -39,11 +39,8 @@ class ToTryCommand extends ListenerAdapter {
 
     private String generateToTryDrinks(ToTryDrinks toTryDrinks) {
         return toTryDrinks.drinks()
-                .entrySet()
                 .stream()
-                .map(entry -> String.format("- %s %s\n",
-                        entry.getKey().name(),
-                        entry.getValue().isTried() ? "✅" : "❌"))
+                .map(drink -> String.format("- %s\n", drink.name()))
                 .collect(Collectors.joining());
     }
 }

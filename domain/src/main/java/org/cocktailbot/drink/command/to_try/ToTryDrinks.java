@@ -2,11 +2,11 @@ package org.cocktailbot.drink.command.to_try;
 
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
 
-import java.util.Map;
+import java.util.Set;
 
-record ToTryDrinks(Map<DrinkName, DrinkTried> drinks) {
+record ToTryDrinks(Set<DrinkName> drinks) {
 
-    static ToTryDrinks from(Map<DrinkName, DrinkTried> toTry) {
-        return new ToTryDrinks(toTry);
+    static ToTryDrinks from(Set<DrinkName> drinks) {
+        return new ToTryDrinks(drinks);
     }
 }
