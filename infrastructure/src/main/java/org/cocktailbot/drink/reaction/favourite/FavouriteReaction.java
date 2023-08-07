@@ -7,6 +7,8 @@ import org.cocktailbot.drink.utils.Emojis;
 import org.cocktailbot.drink.reaction.validator.CodepointValidator;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 class FavouriteReaction extends ListenerAdapter {
 
     private final CodepointValidator codepointValidator;
@@ -21,7 +23,7 @@ class FavouriteReaction extends ListenerAdapter {
     public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event) {
         String embedTitle = getEmbedTitle(event);
         if(codepointValidator.validateReactionEvent(event, embedTitle)) {
-            String username = event.getChannel().getName();
+            String username = Objects.requireNonNull(event.getUser()).getName();
             if(codepointValidator.validateEmote(event, Emojis.HEART)){
                 favouriteService.saveDrinkToFavourites(username, embedTitle);
             } else if(codepointValidator.validateEmote(event, Emojis.CROSS)) {
