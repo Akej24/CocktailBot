@@ -11,7 +11,7 @@ class ToTryRedisRepository implements ToTryRepository {
 
     private static ToTryRedisRepository INSTANCE;
     private static final String PREFIX = "totry:";
-    Jedis jedis = RedisConfig.getInstance().getJedis();
+    private final Jedis jedis = RedisConfig.getInstance().getJedis();
 
     private ToTryRedisRepository() {
     }

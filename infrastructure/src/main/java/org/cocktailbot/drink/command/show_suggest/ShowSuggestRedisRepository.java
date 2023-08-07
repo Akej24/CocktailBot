@@ -12,7 +12,7 @@ class ShowSuggestRedisRepository implements ShowSuggestedRepository {
 
     private static ShowSuggestRedisRepository INSTANCE;
     private static final String PREFIX = "suggest:";
-    Jedis jedis = RedisConfig.getInstance().getJedis();
+    private final Jedis jedis = RedisConfig.getInstance().getJedis();
 
     private ShowSuggestRedisRepository() {
     }

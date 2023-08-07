@@ -9,7 +9,7 @@ class DecideRedisRepository implements DecideRepository {
     private static DecideRedisRepository INSTANCE;
     private static final String SUGGEST_PREFIX = "suggest:";
     private static final String TOTRY_PREFIX = "totry:";
-    Jedis jedis = RedisConfig.getInstance().getJedis();
+    private final Jedis jedis = RedisConfig.getInstance().getJedis();
 
     private DecideRedisRepository() {
     }

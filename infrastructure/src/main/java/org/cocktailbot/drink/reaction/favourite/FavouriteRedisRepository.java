@@ -8,7 +8,7 @@ class FavouriteRedisRepository implements FavouriteRepository {
 
     private static FavouriteRedisRepository INSTANCE;
     private static final String PREFIX = "favourite:";
-    Jedis jedis = RedisConfig.getInstance().getJedis();
+    private final Jedis jedis = RedisConfig.getInstance().getJedis();
 
     private FavouriteRedisRepository() {
     }

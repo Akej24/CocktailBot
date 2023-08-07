@@ -7,7 +7,7 @@ class SuggestRedisRepository implements SuggestRepository {
 
     private static SuggestRedisRepository INSTANCE;
     private static final String PREFIX = "suggest:";
-    Jedis jedis = RedisConfig.getInstance().getJedis();
+    private final Jedis jedis = RedisConfig.getInstance().getJedis();
 
     private SuggestRedisRepository() {
     }
