@@ -10,6 +10,7 @@ import org.cocktailbot.drink.command.decide.DecideConfig;
 import org.cocktailbot.drink.command.show_suggest.ShowSuggestConfig;
 import org.cocktailbot.drink.command.suggest.SuggestConfig;
 import org.cocktailbot.drink.command.to_try.ToTryConfig;
+import org.cocktailbot.drink.command.tried.TriedConfig;
 import org.cocktailbot.drink.reaction.favourite.FavouriteReactionConfig;
 import org.cocktailbot.drink.command.ingredient.IngredientCommandConfig;
 import org.cocktailbot.drink.command.random.RandomDrinkConfig;
@@ -41,7 +42,8 @@ class JdaBot {
                             ShowSuggestConfig.getInstance(),
                             DecideConfig.getInstance(),
                             ToTryConfig.getInstance(),
-                            HelpConfig.getInstance()
+                            HelpConfig.getInstance(),
+                            TriedConfig.getInstance()
                     )
                     .build();
         }

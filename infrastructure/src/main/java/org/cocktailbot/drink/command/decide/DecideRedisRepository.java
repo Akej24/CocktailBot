@@ -22,7 +22,7 @@ class DecideRedisRepository implements DecideRepository {
     public boolean acceptSuggestedDrink(String username, String drinkName) {
         String from = jedis.hget(SUGGEST_PREFIX + username, drinkName);
         if(from.isBlank()) return false;
-        if (jedis.hlen(TOTRY_PREFIX + username) < 50) {
+        if (jedis.scard(TOTRY_PREFIX + username) < 50) {
             Transaction transaction = jedis.multi();
             transaction.hdel(SUGGEST_PREFIX + username, drinkName);
             transaction.sadd(TOTRY_PREFIX + username, drinkName);
