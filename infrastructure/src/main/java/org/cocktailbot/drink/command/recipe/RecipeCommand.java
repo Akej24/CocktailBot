@@ -69,7 +69,6 @@ class RecipeCommand extends ListenerAdapter {
                         
                         Ingredients:
                         %s
-                        
                         Instruction:
                         - %s
                         """,

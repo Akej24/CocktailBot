@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 class SuggestCommand extends ListenerAdapter {
@@ -25,7 +24,7 @@ class SuggestCommand extends ListenerAdapter {
         if (commandValidator.validateCommand(event, COMMAND)) {
             String author = event.getAuthor().getName();
             SuggestCommandParams params = getParamsFromMessage(event.getMessage().getContentRaw());
-            List<Member> availableUsers = getAvailableUsers(event);
+            List<Member> availableUsers = event.getGuild().getMembers();
             boolean success = suggestService.tryAddSuggestedDrink(author, params, availableUsers);
             String mentionAuthor = event.getAuthor().getAsMention();
             event.getChannel()
@@ -49,12 +48,6 @@ class SuggestCommand extends ListenerAdapter {
             System.out.println("Invalid !suggest command");
             return new SuggestCommandParams("", "");
         }
-    }
-
-    private List<Member> getAvailableUsers(MessageReceivedEvent event) {
-        List<Member> availableUsers = new ArrayList<>();
-        event.getGuild().loadMembers().onSuccess(availableUsers::addAll);
-        return availableUsers;
     }
 
     private String buildReturnMessage(String author, String suggestedUsername, String drinkName, boolean success) {
