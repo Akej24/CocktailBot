@@ -30,13 +30,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- Discord API -->
-        <dependency>
-            <groupId>net.dv8tion</groupId>
-            <artifactId>JDA</artifactId>
-            <version>5.0.0-alpha.4</version>
-        </dependency>
-
         <!-- Slf4j 1.7.32 for 'Failed to load class org.slf4j.impl.StaticLoggerBinder' problem-->
         <dependency>
             <groupId>org.slf4j</groupId>
