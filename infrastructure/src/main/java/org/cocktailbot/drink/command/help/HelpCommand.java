@@ -41,12 +41,9 @@ class HelpCommand extends ListenerAdapter {
         **!reject <drink name>** - _Rejects the given drink and remove it from suggested_
         **!totry** - _Shows a list of drinks to try (max 50)_
         
-        To add drink to favourites click heart emote ❤ under recipe for the given drink
-        and to remove drink from favourites just click cross emote ❌.
+        To add drink to favourites click heart emote ❤ under recipe for the given drink and to remove drink from favourites just click cross emote ❌.
         
-        This application is based on public https://www.thecocktaildb.com api, so when some commands do not
-        return any result, it is possible that the api contains gaps that prevent the execution
-        of individual functionalities on specific drinks (e.g. a drink may not have an image or a recipe)
+        This application is based on public https://www.thecocktaildb.com api, so when some commands do not return any result, it is possible that the api contains gaps that prevent the execution of individual functionalities on specific drinks (e.g. a drink may not have an image or a recipe)
         
         Thank you for using the bot!
         """, author);

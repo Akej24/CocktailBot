@@ -1,10 +1,7 @@
 package org.cocktailbot.drink.command.suggest;
 
-import net.dv8tion.jda.api.entities.Member;
 import org.cocktailbot.drink.drink_api.DrinkClient;
 import org.cocktailbot.drink.drink_api.DrinkResponseReader;
-
-import java.util.List;
 
 class SuggestService {
 
@@ -18,8 +15,7 @@ class SuggestService {
         this.drinkResponseReader = drinkResponseReader;
     }
 
-    boolean tryAddSuggestedDrink(String author, SuggestCommandParams params, List<Member> availableUsers) {
-        if(!checkUserExists(params.suggestedUsername(), availableUsers)) return false;
+    boolean tryAddSuggestedDrink(String author, SuggestCommandParams params) {
         if(!validateParams(params)) return false;
         if(!checkDrinkExists(params.drinkName())) return false;
         return suggestRepository.saveDrinkToSuggestedUsername(author, params.drinkName(), params.suggestedUsername());
@@ -33,10 +29,5 @@ class SuggestService {
     private boolean validateParams(SuggestCommandParams params) {
         return !params.suggestedUsername().isEmpty()
                 && !params.drinkName().isEmpty();
-    }
-
-    private boolean checkUserExists(String suggestedUsername, List<Member> availableUsers) {
-        return availableUsers.stream().anyMatch(member -> member
-                .getEffectiveName().equalsIgnoreCase(suggestedUsername));
     }
 }

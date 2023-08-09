@@ -24,13 +24,18 @@ class SuggestCommand extends ListenerAdapter {
         if (commandValidator.validateCommand(event, COMMAND)) {
             String author = event.getAuthor().getName();
             SuggestCommandParams params = getParamsFromMessage(event.getMessage().getContentRaw());
-            List<Member> availableUsers = event.getGuild().getMembers();
-            boolean success = suggestService.tryAddSuggestedDrink(author, params, availableUsers);
+            boolean success = checkUserExists(params.suggestedUsername(), event.getGuild().getMembers());
+            success = suggestService.tryAddSuggestedDrink(author, params);
             String mentionAuthor = event.getAuthor().getAsMention();
             event.getChannel()
                     .sendMessage(buildReturnMessage(mentionAuthor, params.suggestedUsername(), params.drinkName(), success))
                     .queue();
         }
+    }
+
+    private boolean checkUserExists(String suggestedUsername, List<Member> availableUsers) {
+        return availableUsers.stream().anyMatch(member -> member
+                .getEffectiveName().equalsIgnoreCase(suggestedUsername));
     }
 
     private SuggestCommandParams getParamsFromMessage(String message) {
