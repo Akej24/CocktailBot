@@ -20,7 +20,7 @@ class RecipeService {
         this.drinkResponseReader = drinkResponseReader;
     }
 
-    public Recipe getDrinkRecipe(String drinkNameFromMessage) {
+    Recipe getDrinkRecipe(String drinkNameFromMessage) {
         if (drinkNameFromMessage.isBlank()) return getEmptyRecipe();
         try {
             String drink = drinkClient.getDrink(drinkNameFromMessage);
@@ -49,7 +49,7 @@ class RecipeService {
         int amount = 1;
         String ingredient = drinkResponseReader.getValueFromDrink(drink, "strIngredient" + amount);
         String measure = drinkResponseReader.getValueFromDrink(drink, "strMeasure" + amount);
-        while(!ingredient.isEmpty() || !measure.isEmpty()) {
+        while(ingredient != null && measure != null && !ingredient.isEmpty() && !measure.isEmpty()) {
             ingredients.put(new IngredientName(ingredient), new Measure(measure));
             amount++;
             ingredient = drinkResponseReader.getValueFromDrink(drink, "strIngredient" + amount);
