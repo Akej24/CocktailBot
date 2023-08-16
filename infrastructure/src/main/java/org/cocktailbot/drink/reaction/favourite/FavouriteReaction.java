@@ -24,7 +24,7 @@ class FavouriteReaction extends ListenerAdapter {
         String embedTitle = getEmbedTitle(event);
         if(codepointValidator.validateReactionEvent(event, embedTitle)) {
             String username = Objects.requireNonNull(event.getUser()).getName();
-            if(codepointValidator.validateEmote(event, Emojis.HEART)){
+            if(codepointValidator.validateEmote(event, Emojis.HEART)) {
                 favouriteService.saveDrinkToFavourites(username, embedTitle);
             } else if(codepointValidator.validateEmote(event, Emojis.CROSS)) {
                 favouriteService.removedDrinkFromFavourites(username, embedTitle);

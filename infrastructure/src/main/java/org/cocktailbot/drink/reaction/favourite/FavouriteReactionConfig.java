@@ -1,5 +1,6 @@
 package org.cocktailbot.drink.reaction.favourite;
 
+import org.cocktailbot.drink.config.RedisConfig;
 import org.cocktailbot.drink.reaction.validator.CodepointValidator;
 
 public class FavouriteReactionConfig {
@@ -8,7 +9,7 @@ public class FavouriteReactionConfig {
         return new FavouriteReaction(
                 CodepointValidator.getInstance(),
                 new FavouriteService(
-                        FavouriteRedisRepository.getInstance()
+                        new FavouriteRedisRepository(RedisConfig.getInstance().getJedis())
                 )
         );
     }
