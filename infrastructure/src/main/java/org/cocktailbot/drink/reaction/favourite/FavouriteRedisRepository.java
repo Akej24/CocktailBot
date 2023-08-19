@@ -1,20 +1,15 @@
 package org.cocktailbot.drink.reaction.favourite;
 
-import org.cocktailbot.drink.config.RedisConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
 
 class FavouriteRedisRepository implements FavouriteRepository {
 
-    private static FavouriteRedisRepository INSTANCE;
     private static final String PREFIX = "favourite:";
-    private final Jedis jedis = RedisConfig.getInstance().getJedis();
+    private final Jedis jedis;
 
-    private FavouriteRedisRepository() {
-    }
-
-    public static FavouriteRedisRepository getInstance() {
-        return INSTANCE == null ? INSTANCE = new FavouriteRedisRepository() : INSTANCE;
+    public FavouriteRedisRepository(Jedis jedis) {
+        this.jedis = jedis;
     }
 
     @Override

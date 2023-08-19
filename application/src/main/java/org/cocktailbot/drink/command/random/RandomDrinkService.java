@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 class RandomDrinkService {
 
+    private static long delay = 100;
     private final DrinkClient drinkClient;
     private final DrinkResponseReader drinkResponseReader;
 
@@ -28,12 +29,12 @@ class RandomDrinkService {
     }
 
     private RandomDrink getRandomDrinkWithAlcoholContent(AlcoholContent wantedAlcoholContent) {
-        int maxAttempts = 100;
         int attempts = 0;
+        int maxAttempts = 100;
         RandomDrink randomDrink = drawMatchingDrink(wantedAlcoholContent);
         try {
             while (attempts < maxAttempts) {
-                Thread.sleep(300);
+                Thread.sleep(delay);
                 if (!randomDrink.drinkName().name().isEmpty()) return randomDrink;
                 randomDrink = drawMatchingDrink(wantedAlcoholContent);
                 attempts++;
@@ -58,6 +59,7 @@ class RandomDrinkService {
             } catch (MalformedURLException e) {
                 System.out.println("Image url for given drink is malformed");
                 e.printStackTrace();
+                throw new RuntimeException("Image url for given drink is malformed");
             }
         }
         return RandomDrink.from(new DrinkName(""), new DrinkImageUrl(null));
