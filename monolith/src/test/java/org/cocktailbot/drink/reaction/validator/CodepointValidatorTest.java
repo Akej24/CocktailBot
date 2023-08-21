@@ -24,7 +24,7 @@ class CodepointValidatorTest {
     }
 
     @Test
-    @DisplayName("Should return true when user form reaction add event exists and is not null")
+    @DisplayName("Should return true when user from reaction add event exists and is not null")
     void validateReactionEvent_withExistingUser() {
         var testMessageReactionAddEvent = mock(MessageReactionAddEvent.class);
         InMemoryUser.createForMessageReactionAddEvent(testMessageReactionAddEvent);
