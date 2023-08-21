@@ -9,8 +9,7 @@ import redis.clients.jedis.Jedis;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class FavouriteRedisRepositoryTest {
 
@@ -38,6 +37,16 @@ class FavouriteRedisRepositoryTest {
         testFavouriteRedisRepository.addUserFavouriteDrink(testUsername, testDrinkNameFromEmbed);
         Set<String> members = testRedisDatabase.smembers(PREFIX + testUsername);
         assertTrue(members.contains(testDrinkNameFromEmbed));
+    }
+
+    @Test
+    @DisplayName("Should pass when could not add more drinks than limit")
+    void saveDrinkToFavourites_aboveLimit() {
+        for(int i=0; i<52; i++) {
+            testFavouriteRedisRepository.addUserFavouriteDrink(testUsername, testDrinkNameFromEmbed + i);
+        }
+        Set<String> members = testRedisDatabase.smembers(PREFIX + testUsername);
+        assertEquals(50, members.size());
     }
 
     @Test
