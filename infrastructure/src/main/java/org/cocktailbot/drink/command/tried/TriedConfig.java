@@ -1,6 +1,7 @@
 package org.cocktailbot.drink.command.tried;
 
 import org.cocktailbot.drink.command.validator.PrefixValidator;
+import org.cocktailbot.drink.config.RedisConfig;
 
 public class TriedConfig {
 
@@ -8,7 +9,7 @@ public class TriedConfig {
         return new TriedCommand(
                 PrefixValidator.getInstance(),
                 new TriedService(
-                        TriedRedisRepository.getInstance()
+                        new TriedRedisRepository(RedisConfig.getInstance().getJedis())
                 )
         );
     }

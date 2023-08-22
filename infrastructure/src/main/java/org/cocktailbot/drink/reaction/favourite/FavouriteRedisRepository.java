@@ -8,7 +8,7 @@ class FavouriteRedisRepository implements FavouriteRepository {
     private static final String PREFIX = "favourite:";
     private final Jedis jedis;
 
-    public FavouriteRedisRepository(Jedis jedis) {
+    FavouriteRedisRepository(Jedis jedis) {
         this.jedis = jedis;
     }
 

@@ -1,19 +1,14 @@
 package org.cocktailbot.drink.command.tried;
 
-import org.cocktailbot.drink.config.RedisConfig;
 import redis.clients.jedis.Jedis;
 
 class TriedRedisRepository implements TriedRepository{
 
-    private static TriedRedisRepository INSTANCE;
     private static final String TOTRY_PREFIX = "totry:";
-    private final Jedis jedis = RedisConfig.getInstance().getJedis();
+    private final Jedis jedis;
 
-    private TriedRedisRepository() {
-    }
-
-    public static TriedRedisRepository getInstance() {
-        return INSTANCE == null ? INSTANCE = new TriedRedisRepository() : INSTANCE;
+    TriedRedisRepository(Jedis jedis) {
+        this.jedis = jedis;
     }
 
     @Override

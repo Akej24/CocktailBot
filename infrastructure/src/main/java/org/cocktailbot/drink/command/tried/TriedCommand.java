@@ -24,7 +24,6 @@ class TriedCommand extends ListenerAdapter {
             boolean status = triedService.removeTriedDrink(username, drinkName);
             String mentionAuthor = event.getAuthor().getAsMention();
             event.getChannel().sendMessage(buildReturnMessage(mentionAuthor, drinkName, status)).queue();
-
         }
     }
 

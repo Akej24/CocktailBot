@@ -18,6 +18,13 @@
     <name>monolith</name>
     <description>Cocktail discord bot with monolith architecture</description>
 
+    <repositories>
+        <repository>
+            <id>coly</id>
+            <url>https://m2.coly.dev/releases</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.cocktailbot</groupId>
@@ -53,7 +60,12 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- JDATest imported as .jar library-->
-    </dependencies>
+        <!-- JDATest -->
+        <dependency>
+            <groupId>dev.coly</groupId>
+            <artifactId>JDATesting</artifactId>
+            <version>0.4.3</version>
+        </dependency>
 
+    </dependencies>
 </project>

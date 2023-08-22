@@ -23,8 +23,8 @@ public class CodepointValidator implements ReactionValidator {
     @Override
     public boolean validateEmote(MessageReactionAddEvent event, String correctEmojiCodePoints) {
         return event.getReaction()
-                .getReactionEmote()
-                .getAsCodepoints()
+                .getEmoji()
+                .getAsReactionCode()
                 .equals(correctEmojiCodePoints);
     }
 }

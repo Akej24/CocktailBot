@@ -2,11 +2,11 @@ package org.cocktailbot.drink.in_memory;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.channel.concrete.PrivateChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
-import net.dv8tion.jda.api.requests.RestAction;
+import net.dv8tion.jda.api.requests.restaction.CacheRestAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
@@ -35,6 +35,11 @@ public class InMemoryBot {
                 return "name";
             }
 
+            @Override
+            public String getGlobalName() {
+                return "name";
+            }
+
             @NotNull
             @Override
             public String getDiscriminator() {
@@ -48,14 +53,14 @@ public class InMemoryBot {
 
             @NotNull
             @Override
-            public String getDefaultAvatarId() {
-                return "default-avatar-id";
+            public CacheRestAction<Profile> retrieveProfile() {
+                throw new RuntimeException("Not implemented yet");
             }
 
             @NotNull
             @Override
-            public RestAction<Profile> retrieveProfile() {
-                throw new RuntimeException("Not implemented yet");
+            public String getDefaultAvatarId() {
+                return "default-avatar-id";
             }
 
             @NotNull
@@ -71,7 +76,7 @@ public class InMemoryBot {
 
             @NotNull
             @Override
-            public RestAction<PrivateChannel> openPrivateChannel() {
+            public CacheRestAction<PrivateChannel> openPrivateChannel() {
                 throw new RuntimeException("Not implemented yet");
             }
 

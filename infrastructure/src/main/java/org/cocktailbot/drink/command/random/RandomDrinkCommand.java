@@ -2,6 +2,7 @@ package org.cocktailbot.drink.command.random;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.utils.FileUpload;
 import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
@@ -48,7 +49,7 @@ class RandomDrinkCommand extends ListenerAdapter {
         InputStream imageStream = openStream(randomDrink.drinkImageUrl().url());
         event.getChannel()
                 .sendMessage(successMessage)
-                .addFile(imageStream, "drink.png")
+                .addFiles(FileUpload.fromData(imageStream, "drink.png"))
                 .queue(success -> closeStream(imageStream), failure -> closeStream(imageStream));
     }
 

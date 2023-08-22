@@ -2,6 +2,7 @@ package org.cocktailbot.drink.command.recipe;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.cocktailbot.drink.utils.Emojis;
@@ -54,8 +55,8 @@ class RecipeCommand extends ListenerAdapter {
                     .sendMessage(buildReturnMessage(author, recipe))
                     .setEmbeds(embed)
                     .queue(message -> {
-                        message.addReaction(Emojis.HEART).queue();
-                        message.addReaction(Emojis.CROSS).queue();
+                        message.addReaction(Emoji.fromUnicode(Emojis.HEART)).queue();
+                        message.addReaction(Emoji.fromUnicode(Emojis.CROSS)).queue();
                     });
         }
     }
