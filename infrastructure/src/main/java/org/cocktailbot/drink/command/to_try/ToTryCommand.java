@@ -25,7 +25,6 @@ class ToTryCommand extends ListenerAdapter {
             ToTryDrinks toTryDrinks = toTryService.getUserToTryDrinks(username);
             String mentionAuthor = event.getAuthor().getAsMention();
             event.getChannel().sendMessage(buildReturnMessage(mentionAuthor, toTryDrinks)).queue();
-
         }
     }
 

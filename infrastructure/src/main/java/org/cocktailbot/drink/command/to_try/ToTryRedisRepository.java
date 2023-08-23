@@ -1,7 +1,6 @@
 package org.cocktailbot.drink.command.to_try;
 
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
-import org.cocktailbot.drink.config.RedisConfig;
 import redis.clients.jedis.Jedis;
 
 import java.util.Set;
@@ -9,15 +8,11 @@ import java.util.stream.Collectors;
 
 class ToTryRedisRepository implements ToTryRepository {
 
-    private static ToTryRedisRepository INSTANCE;
     private static final String PREFIX = "totry:";
-    private final Jedis jedis = RedisConfig.getInstance().getJedis();
+    private final Jedis jedis;
 
-    private ToTryRedisRepository() {
-    }
-
-    public static ToTryRedisRepository getInstance() {
-        return INSTANCE == null ? INSTANCE = new ToTryRedisRepository() : INSTANCE;
+    public ToTryRedisRepository(Jedis jedis) {
+        this.jedis = jedis;
     }
 
     @Override

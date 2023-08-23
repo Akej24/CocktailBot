@@ -24,16 +24,17 @@ class SuggestCommand extends ListenerAdapter {
         if (commandValidator.validateCommand(event, COMMAND)) {
             String author = event.getAuthor().getName();
             SuggestCommandParams params = getParamsFromMessage(event.getMessage().getContentRaw());
-            boolean success = checkUserExists(params.suggestedUsername(), event.getGuild().getMembers());
-            success = suggestService.tryAddSuggestedDrink(author, params);
+            boolean success = checkUserExists(params.suggestedUsername(), event);
+            if(success) success = suggestService.tryAddSuggestedDrink(author, params);
             String mentionAuthor = event.getAuthor().getAsMention();
             event.getChannel()
                     .sendMessage(buildReturnMessage(mentionAuthor, params.suggestedUsername(), params.drinkName(), success))
-                    .queue();
+                    .complete();
         }
     }
 
-    private boolean checkUserExists(String suggestedUsername, List<Member> availableUsers) {
+    boolean checkUserExists(String suggestedUsername, MessageReceivedEvent event) {
+        List<Member> availableUsers = event.getGuild().getMembers();
         return availableUsers.stream().anyMatch(member -> member
                 .getEffectiveName().equalsIgnoreCase(suggestedUsername));
     }
@@ -59,8 +60,7 @@ class SuggestCommand extends ListenerAdapter {
         return String.format(
                 "Hello %s!\n%s", author, !success
                         ? "Your suggested drink or user does not exist (invalid params) or user has a maximum number of suggested drinks"
-                        : "You have just suggested " + suggestedUsername
-                        + " a drink: " + drinkName
+                        : "You have just suggested " + suggestedUsername + " a drink: " + drinkName
         );
     }
 
