@@ -1,6 +1,7 @@
 package org.cocktailbot.drink.command.favourite;
 
 import org.cocktailbot.drink.command.validator.PrefixValidator;
+import org.cocktailbot.drink.config.RedisConfig;
 
 public class FavouriteCommandConfig {
 
@@ -8,7 +9,7 @@ public class FavouriteCommandConfig {
         return new FavouriteCommand(
                 PrefixValidator.getInstance(),
                 new FavouriteService(
-                        FavouriteRedisRepository.getInstance()
+                        new FavouriteRedisRepository(RedisConfig.getInstance().getJedis())
                 )
         );
     }

@@ -1,6 +1,7 @@
 package org.cocktailbot.drink.command.decide;
 
 import org.cocktailbot.drink.command.validator.PrefixValidator;
+import org.cocktailbot.drink.config.RedisConfig;
 
 public class DecideConfig {
 
@@ -8,7 +9,7 @@ public class DecideConfig {
         return new DecideCommand(
                 PrefixValidator.getInstance(),
                 new DecideService(
-                        DecideRedisRepository.getInstance()
+                        new DecideRedisRepository(RedisConfig.getInstance().getJedis())
                 )
         );
     }

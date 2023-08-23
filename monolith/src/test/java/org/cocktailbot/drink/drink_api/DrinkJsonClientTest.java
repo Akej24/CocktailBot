@@ -5,9 +5,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
 
 class DrinkJsonClientTest {
+
+    private static final String testDrinkName = "test-drink-name";
 
     private DrinkJsonClient testDrinkJsonClient;
 
@@ -27,7 +28,7 @@ class DrinkJsonClientTest {
     @Test
     @DisplayName("Should pass when returned valid json for any drink request")
     void getDrink() {
-        String response = testDrinkJsonClient.getDrink(anyString());
+        String response = testDrinkJsonClient.getDrink(testDrinkName);
         assertTrue(response.startsWith("{") && response.endsWith("}"));
         assertTrue(response.contains("drinks"));
     }
@@ -35,7 +36,7 @@ class DrinkJsonClientTest {
     @Test
     @DisplayName("Should pass when returned valid json for any ingredient request")
     void getIngredient() {
-        String response = testDrinkJsonClient.getIngredient(anyString());
+        String response = testDrinkJsonClient.getIngredient(testDrinkName);
         assertTrue(response.startsWith("{") && response.endsWith("}"));
         assertTrue(response.contains("ingredients"));
     }

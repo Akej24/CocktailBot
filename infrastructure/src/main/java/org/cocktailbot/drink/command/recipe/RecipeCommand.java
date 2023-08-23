@@ -58,6 +58,7 @@ class RecipeCommand extends ListenerAdapter {
                         message.addReaction(Emoji.fromUnicode(Emojis.HEART)).queue();
                         message.addReaction(Emoji.fromUnicode(Emojis.CROSS)).queue();
                     });
+
         }
     }
 

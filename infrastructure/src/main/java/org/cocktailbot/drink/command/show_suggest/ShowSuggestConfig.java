@@ -1,6 +1,7 @@
 package org.cocktailbot.drink.command.show_suggest;
 
 import org.cocktailbot.drink.command.validator.PrefixValidator;
+import org.cocktailbot.drink.config.RedisConfig;
 
 public class ShowSuggestConfig {
 
@@ -8,7 +9,7 @@ public class ShowSuggestConfig {
         return new ShowSuggestCommand(
                 PrefixValidator.getInstance(),
                 new ShowSuggestService(
-                        ShowSuggestRedisRepository.getInstance()
+                        new ShowSuggestRedisRepository(RedisConfig.getInstance().getJedis())
                 )
         );
     }

@@ -22,10 +22,11 @@ class TriedServiceTest {
     }
 
     @Test
-    @DisplayName("Should pass when successfully called repository method one time and returned true")
+    @DisplayName("Should pass when successfully called repository method one time")
     void removeTriedDrink() {
         when(testTriedRepository.removeTriedDrink(testUsername, testDrinkName)).thenReturn(true);
-        assertTrue(testTriedService.removeTriedDrink(testUsername, testDrinkName));
+        boolean status = testTriedService.removeTriedDrink(testUsername, testDrinkName);
         verify(testTriedRepository, times(1)).removeTriedDrink(testUsername, testDrinkName);
+        assertTrue(status);
     }
 }

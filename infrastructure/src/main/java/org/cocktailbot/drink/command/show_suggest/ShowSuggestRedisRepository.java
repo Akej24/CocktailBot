@@ -2,7 +2,6 @@ package org.cocktailbot.drink.command.show_suggest;
 
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
 import org.cocktailbot.drink.command.shared.value_object.Username;
-import org.cocktailbot.drink.config.RedisConfig;
 import redis.clients.jedis.Jedis;
 
 import java.util.Map;
@@ -10,15 +9,11 @@ import java.util.stream.Collectors;
 
 class ShowSuggestRedisRepository implements ShowSuggestedRepository {
 
-    private static ShowSuggestRedisRepository INSTANCE;
     private static final String PREFIX = "suggest:";
-    private final Jedis jedis = RedisConfig.getInstance().getJedis();
+    private final Jedis jedis;
 
-    private ShowSuggestRedisRepository() {
-    }
-
-    public static ShowSuggestRedisRepository getInstance() {
-        return INSTANCE == null ? INSTANCE = new ShowSuggestRedisRepository() : INSTANCE;
+    public ShowSuggestRedisRepository(Jedis jedis) {
+        this.jedis = jedis;
     }
 
     @Override
