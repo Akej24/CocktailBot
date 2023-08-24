@@ -1,5 +1,6 @@
 package org.cocktailbot.drink.command.ingredient;
 
+import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.cocktailbot.drink.command.validator.CommandValidator;
@@ -7,16 +8,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
+@AllArgsConstructor
 class IngredientCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!ingredient";
-    private final IngredientService ingredientService;
     private final CommandValidator commandValidator;
-
-    public IngredientCommand(CommandValidator commandValidator, IngredientService ingredientService) {
-        this.commandValidator = commandValidator;
-        this.ingredientService = ingredientService;
-    }
+    private final IngredientService ingredientService;
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {

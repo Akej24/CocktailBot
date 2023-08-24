@@ -4,23 +4,22 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.cocktailbot.drink.in_memory.InMemoryBot;
 import org.cocktailbot.drink.in_memory.InMemoryUser;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@SpringBootTest
 class PrefixValidatorTest {
 
     private static final String testCorrectCommandName = "!test-correct-command-name";
-    private PrefixValidator testPrefixValidatorTest;
 
-    @BeforeEach
-    void setUp() {
-        testPrefixValidatorTest = PrefixValidator.getInstance();
-    }
+    @Autowired
+    private PrefixValidator testPrefixValidatorTest;
 
     @Test
     @DisplayName("Should return true when command name is valid and author is not bot")

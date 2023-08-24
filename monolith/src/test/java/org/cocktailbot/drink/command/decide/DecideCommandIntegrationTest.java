@@ -7,10 +7,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import redis.clients.jedis.Jedis;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest
 class DecideCommandIntegrationTest {
 
     private static final String SUGGEST_PREFIX = "suggest:";
@@ -18,15 +21,20 @@ class DecideCommandIntegrationTest {
     private static final String testFromUsername = "test-from-username";
     private static final String testSuggestedDrinkName = "test-suggested-drink";
 
-    private final Jedis testDatabase = RedisTestConfig.getInstance().getJedis();
+    @Autowired
+    private PrefixValidator prefixValidator;
+    @Autowired
+    private RedisTestConfig redisTestConfig;
     private DecideCommand testDecideCommand;
+    private Jedis testDatabase;
 
     @BeforeEach
     void setUp() {
+        testDatabase = redisTestConfig.getJedis();
         testDatabase.flushAll();
-        DecideRedisRepository testDecideRedisRepository = new DecideRedisRepository(testDatabase);
-        DecideService testDecideService = new DecideService(testDecideRedisRepository);
-        testDecideCommand = new DecideCommand(PrefixValidator.getInstance(), testDecideService);
+        var testDecideRedisRepository = new DecideRedisRepository(testDatabase);
+        var testDecideService = new DecideService(testDecideRedisRepository);
+        testDecideCommand = new DecideCommand(prefixValidator, testDecideService);
     }
 
     @AfterEach

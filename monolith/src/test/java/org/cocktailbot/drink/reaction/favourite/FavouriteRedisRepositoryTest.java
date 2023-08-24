@@ -5,23 +5,30 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import redis.clients.jedis.Jedis;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class FavouriteRedisRepositoryTest {
 
     private static final String PREFIX = "favourite:";
     private static final String testUsername = "test-username";
     private static final String testDrinkNameFromEmbed = "test-drink-name-from-embed";
 
-    private final Jedis testRedisDatabase = RedisTestConfig.getInstance().getJedis();
+    @Autowired
+    private RedisTestConfig redisTestConfig;
+
+    private Jedis testRedisDatabase;
     private FavouriteRepository testFavouriteRedisRepository;
 
     @BeforeEach
     void setUp() {
+        testRedisDatabase = redisTestConfig.getJedis();
         testRedisDatabase.flushAll();
         testFavouriteRedisRepository = new FavouriteRedisRepository(testRedisDatabase);
     }

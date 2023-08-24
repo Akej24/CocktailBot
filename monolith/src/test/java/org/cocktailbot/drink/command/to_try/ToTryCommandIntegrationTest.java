@@ -8,10 +8,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import redis.clients.jedis.Jedis;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
 class ToTryCommandIntegrationTest {
 
     private static final String TO_TRY_PREFIX = "totry:";
@@ -19,14 +22,19 @@ class ToTryCommandIntegrationTest {
     private static final DrinkName testDrinkName1 = new DrinkName("test-drink-name1");
     private static final DrinkName testDrinkName2 = new DrinkName("test-drink-name2");
 
-    private final Jedis testDatabase = RedisTestConfig.getInstance().getJedis();
+    @Autowired
+    private PrefixValidator prefixValidator;
+    @Autowired
+    private RedisTestConfig redisTestConfig;
+    private Jedis testDatabase;
     private ToTryCommand testToTryCommand;
 
     @BeforeEach
     void setUp() {
+        testDatabase = redisTestConfig.getJedis();
         testDatabase.flushAll();
         ToTryService testToTryService = new ToTryService(new ToTryRedisRepository(testDatabase));
-        testToTryCommand = new ToTryCommand(PrefixValidator.getInstance(), testToTryService);
+        testToTryCommand = new ToTryCommand(prefixValidator, testToTryService);
     }
 
     @AfterEach

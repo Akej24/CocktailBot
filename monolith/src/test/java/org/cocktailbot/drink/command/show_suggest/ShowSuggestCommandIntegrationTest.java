@@ -6,12 +6,15 @@ import org.cocktailbot.drink.config.RedisTestConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import redis.clients.jedis.Jedis;
 
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
 class ShowSuggestCommandIntegrationTest {
 
     private static final String PREFIX = "suggest:";
@@ -20,14 +23,19 @@ class ShowSuggestCommandIntegrationTest {
     private static final String testDrinkName1 = "test-drink-name1";
     private static final String testDrinkName2 = "test-drink-name2";
 
-    private final Jedis testDatabase = RedisTestConfig.getInstance().getJedis();
+    @Autowired
+    private PrefixValidator prefixValidator;
+    @Autowired
+    private RedisTestConfig redisTestConfig;
+    private Jedis testDatabase;
     private ShowSuggestCommand testShowSuggestCommand;
 
     @BeforeEach
     void setUp() {
+        testDatabase = redisTestConfig.getJedis();
         testDatabase.flushAll();
         ShowSuggestService testShowSuggestService = new ShowSuggestService(new ShowSuggestRedisRepository(testDatabase));
-        testShowSuggestCommand = new ShowSuggestCommand(PrefixValidator.getInstance(), testShowSuggestService);
+        testShowSuggestCommand = new ShowSuggestCommand(prefixValidator, testShowSuggestService);
     }
 
     @AfterEach

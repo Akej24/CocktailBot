@@ -1,20 +1,17 @@
 package org.cocktailbot.drink.command.tried;
 
+import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
+@AllArgsConstructor
 class TriedCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!tried";
     private final CommandValidator commandValidator;
     private final TriedService triedService;
-
-    public TriedCommand(CommandValidator commandValidator, TriedService triedService) {
-        this.commandValidator = commandValidator;
-        this.triedService = triedService;
-    }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {

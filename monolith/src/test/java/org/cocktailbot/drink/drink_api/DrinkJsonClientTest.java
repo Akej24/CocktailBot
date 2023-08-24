@@ -1,21 +1,19 @@
 package org.cocktailbot.drink.drink_api;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest
 class DrinkJsonClientTest {
 
     private static final String testDrinkName = "test-drink-name";
 
+    @Autowired
     private DrinkJsonClient testDrinkJsonClient;
-
-    @BeforeEach
-    void setUp() {
-        testDrinkJsonClient = DrinkJsonClient.getInstance();
-    }
 
     @Test
     @DisplayName("Should pass when returned valid json for random drink request")

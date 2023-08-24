@@ -1,18 +1,16 @@
 package org.cocktailbot.drink.command.help;
 
+import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.cocktailbot.drink.command.validator.CommandValidator;
 import org.jetbrains.annotations.NotNull;
 
+@AllArgsConstructor
 class HelpCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!help";
     private final CommandValidator commandValidator;
-
-    public HelpCommand(CommandValidator commandValidator) {
-        this.commandValidator = commandValidator;
-    }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {

@@ -1,5 +1,6 @@
 package org.cocktailbot.drink.reaction.favourite;
 
+import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -9,15 +10,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+@AllArgsConstructor
 class FavouriteReaction extends ListenerAdapter {
 
     private final CodepointValidator codepointValidator;
     private final FavouriteService favouriteService;
-
-    FavouriteReaction(CodepointValidator codepointValidator, FavouriteService favouriteService) {
-        this.codepointValidator = codepointValidator;
-        this.favouriteService = favouriteService;
-    }
 
     @Override
     public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event) {

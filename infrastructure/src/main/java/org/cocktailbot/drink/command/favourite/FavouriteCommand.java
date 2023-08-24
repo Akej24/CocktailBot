@@ -1,5 +1,6 @@
 package org.cocktailbot.drink.command.favourite;
 
+import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.cocktailbot.drink.command.validator.CommandValidator;
@@ -7,16 +8,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 class FavouriteCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!favourites";
-    private final FavouriteService favouriteService;
     private final CommandValidator commandValidator;
-
-    public FavouriteCommand(CommandValidator commandValidator, FavouriteService favouriteService) {
-        this.commandValidator = commandValidator;
-        this.favouriteService = favouriteService;
-    }
+    private final FavouriteService favouriteService;
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {

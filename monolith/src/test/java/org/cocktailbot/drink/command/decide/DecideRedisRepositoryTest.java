@@ -5,6 +5,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import redis.clients.jedis.Jedis;
 
 import java.util.Map;
@@ -12,6 +14,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class DecideRedisRepositoryTest {
 
     private static final String SUGGEST_PREFIX = "suggest:";
@@ -20,11 +23,15 @@ class DecideRedisRepositoryTest {
     private static final String testFromUsername = "test-from-username";
     private static final String testSuggestedDrinkName = "test-suggested-drink";
 
-    private final Jedis testDatabase = RedisTestConfig.getInstance().getJedis();
+    @Autowired
+    private RedisTestConfig redisTestConfig;
+
+    private Jedis testDatabase;
     private DecideRedisRepository testDecideRedisRepository;
 
     @BeforeEach
     void setUp() {
+        testDatabase = redisTestConfig.getJedis();
         testDatabase.flushAll();
         testDecideRedisRepository = new DecideRedisRepository(testDatabase);
     }

@@ -1,20 +1,19 @@
 package org.cocktailbot.drink.config;
 
+import lombok.Getter;
+import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.Jedis;
 
+@Configuration
+@Getter
 public class RedisTestConfig {
 
-    private static RedisTestConfig INSTANCE;
-    private final Jedis jedis = new Jedis("localhost", 6385);
+    private final Jedis jedis;
 
-    private RedisTestConfig() {
-    }
-
-    public static RedisTestConfig getInstance() {
-        return INSTANCE == null ? INSTANCE = new RedisTestConfig() : INSTANCE;
-    }
-
-    public Jedis getJedis() {
-        return jedis;
+    public RedisTestConfig() {
+        this.jedis = new Jedis(
+                "localhost",
+                6385
+        );
     }
 }

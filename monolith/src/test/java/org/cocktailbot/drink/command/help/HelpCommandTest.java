@@ -5,16 +5,21 @@ import org.cocktailbot.drink.command.validator.PrefixValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class HelpCommandTest {
 
+    @Autowired
+    private PrefixValidator prefixValidator;
     private HelpCommand testHelpCommand;
 
     @BeforeEach
     void setUp() {
-        testHelpCommand = new HelpCommand(PrefixValidator.getInstance());
+        testHelpCommand = new HelpCommand(prefixValidator);
     }
 
     @Test

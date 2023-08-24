@@ -1,5 +1,6 @@
 package org.cocktailbot.drink.command.to_try;
 
+import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.cocktailbot.drink.command.validator.CommandValidator;
@@ -7,16 +8,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 class ToTryCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!totry";
     private final CommandValidator commandValidator;
     private final ToTryService toTryService;
-
-    ToTryCommand(CommandValidator commandValidator, ToTryService toTryService) {
-        this.commandValidator = commandValidator;
-        this.toTryService = toTryService;
-    }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {

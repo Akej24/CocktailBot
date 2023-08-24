@@ -6,12 +6,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import redis.clients.jedis.Jedis;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class ToTryRedisRepositoryTest {
 
     private static final String PREFIX = "totry:";
@@ -19,11 +22,15 @@ class ToTryRedisRepositoryTest {
     private static final DrinkName testDrinkName1 = new DrinkName("test-drink-name1");
     private static final DrinkName testDrinkName2 = new DrinkName("test-drink-name2");
 
-    private final Jedis testRedisDatabase = RedisTestConfig.getInstance().getJedis();
+    @Autowired
+    private RedisTestConfig redisTestConfig;
+
+    private Jedis testRedisDatabase;
     private ToTryRedisRepository testToTryRedisRepository;
 
     @BeforeEach
     void setUp() {
+        testRedisDatabase = redisTestConfig.getJedis();
         testRedisDatabase.flushAll();
         testToTryRedisRepository = new ToTryRedisRepository(testRedisDatabase);
     }

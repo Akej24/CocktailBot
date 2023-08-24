@@ -7,20 +7,29 @@ import org.cocktailbot.drink.drink_api.DrinkJsonResponseReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class IngredientCommandIntegrationTest {
 
     private static final String testExistingIngredient = "Bitter lemon";
     private static final String testNotExistingIngredient = "not-existing-ingredient";
 
+    @Autowired
+    private PrefixValidator prefixValidator;
+    @Autowired
+    private DrinkJsonClient drinkJsonClient;
+    @Autowired
+    private DrinkJsonResponseReader drinkJsonResponseReader;
     private IngredientCommand testIngredientCommand;
 
     @BeforeEach
     void setUp() {
-        IngredientService testIngredientService = new IngredientService(DrinkJsonClient.getInstance(), DrinkJsonResponseReader.getInstance());
-        testIngredientCommand = new IngredientCommand(PrefixValidator.getInstance(), testIngredientService);
+        IngredientService testIngredientService = new IngredientService(drinkJsonClient, drinkJsonResponseReader);
+        testIngredientCommand = new IngredientCommand(prefixValidator, testIngredientService);
     }
 
     @Test

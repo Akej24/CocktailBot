@@ -7,24 +7,32 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import redis.clients.jedis.Jedis;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class TriedCommandIntegrationTest {
 
     private static final String TO_TRY_PREFIX = "totry:";
     private static final String testUsername = "test user";
     private static final String testDrinkName = "test-drink-name";
 
-    private final Jedis testDatabase = RedisTestConfig.getInstance().getJedis();
+    @Autowired
+    private PrefixValidator prefixValidator;
+    @Autowired
+    private RedisTestConfig redisTestConfig;
+    private Jedis testDatabase;
     private TriedCommand testTriedCommand;
 
     @BeforeEach
     void setUp() {
+        testDatabase = redisTestConfig.getJedis();
         testDatabase.flushAll();
         TriedService testTriedService = new TriedService(new TriedRedisRepository(testDatabase));
-        testTriedCommand = new TriedCommand(PrefixValidator.getInstance(), testTriedService);
+        testTriedCommand = new TriedCommand(prefixValidator, testTriedService);
     }
 
     @AfterEach

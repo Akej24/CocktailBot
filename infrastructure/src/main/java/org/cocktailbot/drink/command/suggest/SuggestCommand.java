@@ -1,5 +1,6 @@
 package org.cocktailbot.drink.command.suggest;
 
+import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -8,16 +9,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+@AllArgsConstructor
 class SuggestCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!suggest";
     private final CommandValidator commandValidator;
     private final SuggestService suggestService;
-
-    SuggestCommand(CommandValidator commandValidator, SuggestService suggestService) {
-        this.commandValidator = commandValidator;
-        this.suggestService = suggestService;
-    }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {

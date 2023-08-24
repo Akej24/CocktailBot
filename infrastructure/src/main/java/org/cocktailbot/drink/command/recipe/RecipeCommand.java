@@ -1,5 +1,6 @@
 package org.cocktailbot.drink.command.recipe;
 
+import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
@@ -11,16 +12,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 class RecipeCommand extends ListenerAdapter {
 
     private static final String COMMAND = "!recipe";
     private final CommandValidator commandValidator;
     private final RecipeService recipeService;
-
-    RecipeCommand(CommandValidator commandValidator, RecipeService recipeService) {
-        this.commandValidator = commandValidator;
-        this.recipeService = recipeService;
-    }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
