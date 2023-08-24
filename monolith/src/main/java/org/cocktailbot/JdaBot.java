@@ -1,55 +1,64 @@
 package org.cocktailbot;
 
-import net.dv8tion.jda.api.JDA;
+import lombok.AllArgsConstructor;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import org.cocktailbot.drink.command.decide.DecideConfig;
 import org.cocktailbot.drink.command.favourite.FavouriteCommandConfig;
 import org.cocktailbot.drink.command.help.HelpConfig;
-import org.cocktailbot.drink.command.decide.DecideConfig;
+import org.cocktailbot.drink.command.ingredient.IngredientCommandConfig;
+import org.cocktailbot.drink.command.random.RandomDrinkConfig;
+import org.cocktailbot.drink.command.recipe.RecipeCommandConfig;
 import org.cocktailbot.drink.command.show_suggest.ShowSuggestConfig;
 import org.cocktailbot.drink.command.suggest.SuggestConfig;
 import org.cocktailbot.drink.command.to_try.ToTryConfig;
 import org.cocktailbot.drink.command.tried.TriedConfig;
 import org.cocktailbot.drink.reaction.favourite.FavouriteReactionConfig;
-import org.cocktailbot.drink.command.ingredient.IngredientCommandConfig;
-import org.cocktailbot.drink.command.random.RandomDrinkConfig;
-import org.cocktailbot.drink.command.recipe.RecipeCommandConfig;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
-import javax.security.auth.login.LoginException;
-
+@Component
+@AllArgsConstructor
 class JdaBot {
 
     private static final String TOKEN = "MTEyODM2OTI5MzIyMzAxMDQ0NQ.GIyxiX.xBoehSHfa1MnbuXXUfc86kgoVjusBeD0JsTi4E";
-    private static JDA bot;
 
-    private JdaBot() {
-    }
+    private final RandomDrinkConfig randomDrinkConfig;
+    private final RecipeCommandConfig recipeCommandConfig;
+    private final IngredientCommandConfig ingredientCommandConfig;
+    private final FavouriteReactionConfig favouriteReactionConfig;
+    private final FavouriteCommandConfig favouriteCommandConfig;
+    private final SuggestConfig suggestConfig;
+    private final ShowSuggestConfig showSuggestConfig;
+    private final DecideConfig decideConfig;
+    private final ToTryConfig toTryConfig;
+    private final HelpConfig helpConfig;
+    private final TriedConfig triedConfig;
 
-    static void buildBot() throws LoginException {
-        if (bot == null) {
-            bot = JDABuilder
-                    .createDefault(TOKEN)
-                    .setActivity(Activity.playing("Preparing drink"))
-                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
-                    .setChunkingFilter(ChunkingFilter.ALL)
-                    .setMemberCachePolicy(MemberCachePolicy.ALL)
-                    .addEventListeners(
-                            RandomDrinkConfig.getInstance(),
-                            RecipeCommandConfig.getInstance(),
-                            IngredientCommandConfig.getInstance(),
-                            FavouriteReactionConfig.getInstance(),
-                            FavouriteCommandConfig.getInstance(),
-                            SuggestConfig.getInstance(),
-                            ShowSuggestConfig.getInstance(),
-                            DecideConfig.getInstance(),
-                            ToTryConfig.getInstance(),
-                            HelpConfig.getInstance(),
-                            TriedConfig.getInstance()
-                    )
-                    .build();
-        }
+    @Bean
+    void buildBot() {
+        JDABuilder.createDefault(TOKEN)
+                .setActivity(Activity.playing("Preparing drink"))
+                .enableIntents(GatewayIntent.GUILD_MEMBERS)
+                .enableIntents(GatewayIntent.MESSAGE_CONTENT)
+                .setChunkingFilter(ChunkingFilter.ALL)
+                .setMemberCachePolicy(MemberCachePolicy.ALL)
+                .addEventListeners(
+                        randomDrinkConfig.subscribeRandomDrinkCommand(),
+                        recipeCommandConfig.subscribeRecipeCommand(),
+                        ingredientCommandConfig.subscribeIngredientCommand(),
+                        favouriteReactionConfig.subscribeFavouriteReaction(),
+                        favouriteCommandConfig.subscribeFavouriteCommand(),
+                        suggestConfig.subscribeSuggestCommand(),
+                        showSuggestConfig.subscribeShowSuggestedCommand(),
+                        decideConfig.subscribeDecideCommand(),
+                        toTryConfig.subscribeToTryCommand(),
+                        helpConfig.subscribeHelpCommand(),
+                        triedConfig.subscribeTriedCommand()
+                )
+                .build();
     }
 }

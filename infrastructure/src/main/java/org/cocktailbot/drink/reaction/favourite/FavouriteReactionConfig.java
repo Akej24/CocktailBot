@@ -1,15 +1,21 @@
 package org.cocktailbot.drink.reaction.favourite;
 
+import lombok.AllArgsConstructor;
 import org.cocktailbot.drink.config.RedisConfig;
 import org.cocktailbot.drink.reaction.validator.CodepointValidator;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
+@AllArgsConstructor
 public class FavouriteReactionConfig {
 
-    public static FavouriteReaction getInstance() {
+    private final RedisConfig redisConfig;
+
+    public FavouriteReaction subscribeFavouriteReaction() {
         return new FavouriteReaction(
                 CodepointValidator.getInstance(),
                 new FavouriteService(
-                        new FavouriteRedisRepository(RedisConfig.getInstance().getJedis())
+                        new FavouriteRedisRepository(redisConfig.getJedis())
                 )
         );
     }

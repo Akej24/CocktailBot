@@ -1,15 +1,22 @@
 package org.cocktailbot.drink.command.show_suggest;
 
+import lombok.AllArgsConstructor;
 import org.cocktailbot.drink.command.validator.PrefixValidator;
 import org.cocktailbot.drink.config.RedisConfig;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
+@AllArgsConstructor
 public class ShowSuggestConfig {
 
-    public static ShowSuggestCommand getInstance(){
+    private final PrefixValidator prefixValidator;
+    private final RedisConfig redisConfig;
+
+    public ShowSuggestCommand subscribeShowSuggestedCommand(){
         return new ShowSuggestCommand(
-                PrefixValidator.getInstance(),
+                prefixValidator,
                 new ShowSuggestService(
-                        new ShowSuggestRedisRepository(RedisConfig.getInstance().getJedis())
+                        new ShowSuggestRedisRepository(redisConfig.getJedis())
                 )
         );
     }

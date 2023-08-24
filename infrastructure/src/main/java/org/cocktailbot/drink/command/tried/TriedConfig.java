@@ -1,15 +1,22 @@
 package org.cocktailbot.drink.command.tried;
 
+import lombok.AllArgsConstructor;
 import org.cocktailbot.drink.command.validator.PrefixValidator;
 import org.cocktailbot.drink.config.RedisConfig;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
+@AllArgsConstructor
 public class TriedConfig {
 
-    public static TriedCommand getInstance(){
+    private final PrefixValidator prefixValidator;
+    private final RedisConfig redisConfig;
+
+    public TriedCommand subscribeTriedCommand(){
         return new TriedCommand(
-                PrefixValidator.getInstance(),
+                prefixValidator,
                 new TriedService(
-                        new TriedRedisRepository(RedisConfig.getInstance().getJedis())
+                        new TriedRedisRepository(redisConfig.getJedis())
                 )
         );
     }

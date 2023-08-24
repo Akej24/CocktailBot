@@ -3,17 +3,10 @@ package org.cocktailbot.drink.drink_api;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DrinkJsonResponseReader implements DrinkResponseReader {
-
-    private static DrinkJsonResponseReader INSTANCE;
-
-    private DrinkJsonResponseReader() {
-    }
-
-    public static DrinkJsonResponseReader getInstance() {
-        return INSTANCE == null ? INSTANCE = new DrinkJsonResponseReader() : INSTANCE;
-    }
 
     @Override
     public String getValueFromDrink(String text, String key) {

@@ -1,5 +1,7 @@
 package org.cocktailbot.drink.drink_api;
 
+import org.springframework.stereotype.Component;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,18 +10,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.stream.Collectors;
 
+@Component
 public class DrinkJsonClient implements DrinkClient {
 
-    private static DrinkJsonClient INSTANCE;
     private static final String DRINK_URL = "https://www.thecocktaildb.com/api/json/v1/";
     private static final String API_KEY = "1/";
-
-    private DrinkJsonClient() {
-    }
-
-    public static DrinkJsonClient getInstance() {
-        return INSTANCE == null ? INSTANCE = new DrinkJsonClient() : INSTANCE;
-    }
 
     @Override
     public String getRandomDrink() {

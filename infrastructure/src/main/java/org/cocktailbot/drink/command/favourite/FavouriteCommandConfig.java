@@ -1,15 +1,22 @@
 package org.cocktailbot.drink.command.favourite;
 
+import lombok.AllArgsConstructor;
 import org.cocktailbot.drink.command.validator.PrefixValidator;
 import org.cocktailbot.drink.config.RedisConfig;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
+@AllArgsConstructor
 public class FavouriteCommandConfig {
 
-    public static FavouriteCommand getInstance() {
+    private final PrefixValidator prefixValidator;
+    private final RedisConfig redisConfig;
+
+    public FavouriteCommand subscribeFavouriteCommand() {
         return new FavouriteCommand(
-                PrefixValidator.getInstance(),
+                prefixValidator,
                 new FavouriteService(
-                        new FavouriteRedisRepository(RedisConfig.getInstance().getJedis())
+                        new FavouriteRedisRepository(redisConfig.getJedis())
                 )
         );
     }
