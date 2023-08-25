@@ -2,7 +2,8 @@
 
 Cocktail Bot is an application based on JDA (Java Discord API) that connects to an external public https://www.thecocktaildb.com api, 
 so when some commands do not return any result, it is possible that the api contains gaps that prevent the execution of individual functionalities 
-on specific drinks (e.g. a drink may not have <br/> an image or a recipe)
+on specific drinks (e.g. a drink may not have <br/> an image or a recipe). Repository contains 2 branches: main, where project is written by pure 
+java + libraries and spring-boot branch, where project is rewritten for spring boot.
 
 The application has commands such as:<br/>
 **!help** - _Shows a list of available commands_<br/>
@@ -37,7 +38,8 @@ Some libraries used for this project:
 
 # How to run application?
 
-To run the application u need to create `token.txt` in the following places and paste your discord bot token into them (CocktailBot is root directory):
+To run the application u need to create `token.txt` in the following places and paste your discord bot token into them 
+(CocktailBot is root directory):
 
 `/CocktailBot/token.txt`<br/>
 `/CocktailBot/monolith/src/test/resources/token.txt`

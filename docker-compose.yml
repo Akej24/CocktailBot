@@ -1,0 +1,33 @@
+version: '3'
+services:
+  redis:
+    image: redis:7.0
+    hostname: localhost
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - cocktail-bot-redis:/data
+    networks:
+      - cocktail-bot-network
+    container_name: redis
+
+  app:
+    image: cocktail-bot:1.0
+    environment:
+      REDIS_URL: redis://redis:6381/0
+    depends_on:
+      - redis
+    networks:
+      - cocktail-bot-network
+    container_name: app
+
+networks:
+  bookstore-network:
+    external:
+      name: cocktail-bot-network
+
+volumes:
+  bookstore-redis:
+
+#docker-compose up
