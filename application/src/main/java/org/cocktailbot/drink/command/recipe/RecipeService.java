@@ -1,6 +1,7 @@
 package org.cocktailbot.drink.command.recipe;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.cocktailbot.drink.command.shared.value_object.DrinkImageUrl;
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
 import org.cocktailbot.drink.command.shared.value_object.IngredientName;
@@ -11,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
+@Slf4j
 @AllArgsConstructor
 class RecipeService {
 
@@ -28,7 +30,7 @@ class RecipeService {
                     new DrinkImageUrl(new URL(drinkResponseReader.getValueFromDrink(drink, "strDrinkThumb")))
             );
         } catch (MalformedURLException e) {
-            System.out.println("Image url for given drink is malformed");
+            log.info("Image url for given drink is malformed");
             return getEmptyRecipe();
         }
     }

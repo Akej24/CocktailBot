@@ -1,6 +1,7 @@
 package org.cocktailbot.drink.command.suggest;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -9,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+@Slf4j
 @AllArgsConstructor
 class SuggestCommand extends ListenerAdapter {
 
@@ -48,7 +50,7 @@ class SuggestCommand extends ListenerAdapter {
                     .trim();
             return new SuggestCommandParams(suggestedUsername, drinkName);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Invalid !suggest command");
+            log.info("Invalid !suggest command");
             return new SuggestCommandParams("", "");
         }
     }

@@ -1,6 +1,7 @@
 package org.cocktailbot.drink.command.recipe;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;
 
+@Slf4j
 @AllArgsConstructor
 class RecipeCommand extends ListenerAdapter {
 
@@ -33,7 +35,7 @@ class RecipeCommand extends ListenerAdapter {
         try {
             return event.getMessage().getContentRaw().substring(COMMAND.length() + 1);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Invalid !recipe command");
+            log.info("Invalid !recipe command");
             return "";
         }
     }

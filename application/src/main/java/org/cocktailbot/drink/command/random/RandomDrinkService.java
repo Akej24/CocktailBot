@@ -1,6 +1,7 @@
 package org.cocktailbot.drink.command.random;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.cocktailbot.drink.command.shared.value_object.DrinkImageUrl;
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
 import org.cocktailbot.drink.drink_api.DrinkClient;
@@ -10,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 
+@Slf4j
 @AllArgsConstructor
 class RandomDrinkService {
 
@@ -37,7 +39,7 @@ class RandomDrinkService {
                 attempts++;
             }
         } catch (InterruptedException e) {
-            System.out.println("Thread is interrupted: " + Thread.currentThread().getName());
+            log.info("Thread is interrupted: " + Thread.currentThread().getName());
             e.printStackTrace();
         }
         return randomDrink;
@@ -54,8 +56,7 @@ class RandomDrinkService {
                         new DrinkImageUrl(new URL(drinkResponseReader.getValueFromDrink(randomDrink, "strDrinkThumb")))
                 );
             } catch (MalformedURLException e) {
-                System.out.println("Image url for given drink is malformed");
-                e.printStackTrace();
+                log.info("Image url for given drink is malformed");
                 throw new RuntimeException("Image url for given drink is malformed");
             }
         }
