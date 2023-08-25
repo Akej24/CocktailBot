@@ -49,6 +49,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <!-- Test Containers -->
         <dependency>
             <groupId>org.testcontainers</groupId>
@@ -63,7 +64,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- JDATest -->
+        <!-- JDA Tests -->
         <dependency>
             <groupId>dev.coly</groupId>
             <artifactId>JDATesting</artifactId>

@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 /TODO.md
 /token.txt
+/monolith/src/test/resources/token.txt
 
 ### IntelliJ IDEA ###
 .idea

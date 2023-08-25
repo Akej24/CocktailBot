@@ -31,7 +31,7 @@ import java.nio.file.Paths;
 @AllArgsConstructor
 class JdaBot {
 
-    private static final String TOKEN = readTokenFromFile("token.txt");
+    private static final String TOKEN = readFromTokenFiles();
 
     private final RandomDrinkConfig randomDrinkConfig;
     private final RecipeCommandConfig recipeCommandConfig;
@@ -73,12 +73,16 @@ class JdaBot {
         }
     }
 
-    public static String readTokenFromFile(String filePath) {
-        try {
-            return new String(Files.readAllBytes(Paths.get(filePath)));
-        } catch(IOException e) {
-            log.info("Could not write token from .txt file");
-            throw new RuntimeException("Could not write token from .txt file");
+    static String readFromTokenFiles() {
+        String[] filePaths = {"token.txt", "src/test/resources/token.txt"};
+        for (String filePath : filePaths) {
+            try {
+                return new String(Files.readAllBytes(Paths.get(filePath))).trim();
+            } catch (IOException e) {
+                log.info("Could not read from {}, trying to read from a different location", filePath);
+            }
         }
+        log.info("Could not read token from token.txt file");
+        throw new RuntimeException("Could not read token from token.txt file");
     }
 }
