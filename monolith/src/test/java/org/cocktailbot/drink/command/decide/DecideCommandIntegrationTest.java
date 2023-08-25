@@ -14,7 +14,7 @@ import redis.clients.jedis.Jedis;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-class DecideCommandIntegrationTest extends IntegrationTest {
+class   DecideCommandIntegrationTest extends IntegrationTest {
 
     private static final String SUGGEST_PREFIX = "suggest:";
     private static final String testToUsername = "test user";
