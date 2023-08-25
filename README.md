@@ -20,8 +20,6 @@ The application has commands such as:<br/>
 
 To add drink to favourites click heart emote ❤ under recipe for the given drink and to remove drink from favourites just click cross emote ❌.
 
----
-
 # Technologies
 
 The application was created based on the following technologies:
@@ -36,7 +34,7 @@ Some libraries used for this project:
 - JDA (Java Discord API)
 - Json
 - JUnit/Mockito
----
+
 # How to run application?
 
 To run application u need to create `token.txt` in the following places and paste your discord bot token into them (CocktailBot is root directory):
