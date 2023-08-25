@@ -11,7 +11,6 @@ public class UrlImageStreamer {
         try {
             inputStream = imageUrl.openStream();
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException("Error during opening image stream");
         }
         return inputStream;
@@ -21,7 +20,6 @@ public class UrlImageStreamer {
         try {
             imageStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException("Error during closing image stream");
         }
     }

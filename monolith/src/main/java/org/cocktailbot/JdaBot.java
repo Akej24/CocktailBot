@@ -1,8 +1,10 @@
 package org.cocktailbot;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.exceptions.InvalidTokenException;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
@@ -20,11 +22,16 @@ import org.cocktailbot.drink.reaction.favourite.FavouriteReactionConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+@Slf4j
 @Component
 @AllArgsConstructor
 class JdaBot {
 
-    private static final String TOKEN = "MTEyODM2OTI5MzIyMzAxMDQ0NQ.GIyxiX.xBoehSHfa1MnbuXXUfc86kgoVjusBeD0JsTi4E";
+    private static final String TOKEN = readTokenFromFile("token.txt");
 
     private final RandomDrinkConfig randomDrinkConfig;
     private final RecipeCommandConfig recipeCommandConfig;
@@ -40,25 +47,38 @@ class JdaBot {
 
     @Bean
     void buildBot() {
-        JDABuilder.createDefault(TOKEN)
-                .setActivity(Activity.playing("Preparing drink"))
-                .enableIntents(GatewayIntent.GUILD_MEMBERS)
-                .enableIntents(GatewayIntent.MESSAGE_CONTENT)
-                .setChunkingFilter(ChunkingFilter.ALL)
-                .setMemberCachePolicy(MemberCachePolicy.ALL)
-                .addEventListeners(
-                        randomDrinkConfig.subscribeRandomDrinkCommand(),
-                        recipeCommandConfig.subscribeRecipeCommand(),
-                        ingredientCommandConfig.subscribeIngredientCommand(),
-                        favouriteReactionConfig.subscribeFavouriteReaction(),
-                        favouriteCommandConfig.subscribeFavouriteCommand(),
-                        suggestConfig.subscribeSuggestCommand(),
-                        showSuggestConfig.subscribeShowSuggestedCommand(),
-                        decideConfig.subscribeDecideCommand(),
-                        toTryConfig.subscribeToTryCommand(),
-                        helpConfig.subscribeHelpCommand(),
-                        triedConfig.subscribeTriedCommand()
-                )
-                .build();
+        try {
+            JDABuilder.createDefault(TOKEN)
+                    .setActivity(Activity.playing("Preparing drink"))
+                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
+                    .enableIntents(GatewayIntent.MESSAGE_CONTENT)
+                    .setChunkingFilter(ChunkingFilter.ALL)
+                    .setMemberCachePolicy(MemberCachePolicy.ALL)
+                    .addEventListeners(
+                            randomDrinkConfig.subscribeRandomDrinkCommand(),
+                            recipeCommandConfig.subscribeRecipeCommand(),
+                            ingredientCommandConfig.subscribeIngredientCommand(),
+                            favouriteReactionConfig.subscribeFavouriteReaction(),
+                            favouriteCommandConfig.subscribeFavouriteCommand(),
+                            suggestConfig.subscribeSuggestCommand(),
+                            showSuggestConfig.subscribeShowSuggestedCommand(),
+                            decideConfig.subscribeDecideCommand(),
+                            toTryConfig.subscribeToTryCommand(),
+                            helpConfig.subscribeHelpCommand(),
+                            triedConfig.subscribeTriedCommand()
+                    )
+                    .build();
+        } catch(InvalidTokenException e ) {
+            log.info("Invalid token in token.txt file, could not start application");
+        }
+    }
+
+    public static String readTokenFromFile(String filePath) {
+        try {
+            return new String(Files.readAllBytes(Paths.get(filePath)));
+        } catch(IOException e) {
+            log.info("Could not write token from .txt file");
+            throw new RuntimeException("Could not write token from .txt file");
+        }
     }
 }
