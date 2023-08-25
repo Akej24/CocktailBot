@@ -1,11 +1,10 @@
 package org.cocktailbot.drink.command.favourite;
 
-import org.cocktailbot.drink.config.RedisTestConfig;
+import org.cocktailbot.drink.test_environment.base.IntegrationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import redis.clients.jedis.Jedis;
 
@@ -14,21 +13,19 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class FavouriteRedisRepositoryTest {
+class FavouriteRedisRepositoryTest extends IntegrationTest {
 
     private static final String PREFIX = "favourite:";
     private static final String testUsername = "test-username";
     private static final String testFavouriteDrinkName1 = "test-favourite-drink1";
     private static final String testFavouriteDrinkName2 = "test-favourite-drink2";
 
-    @Autowired
-    private RedisTestConfig redisTestConfig;
     private Jedis testDatabase;
     private FavouriteRedisRepository testFavouriteRedisRepository;
 
     @BeforeEach
     void setUp() {
-        testDatabase = redisTestConfig.getJedis();
+        testDatabase = new Jedis(getRedisContainerHostName(), getRedisContainerPort());
         testDatabase.flushAll();
         testFavouriteRedisRepository = new FavouriteRedisRepository(testDatabase);
     }

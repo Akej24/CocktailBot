@@ -1,4 +1,4 @@
-package org.cocktailbot.drink.in_memory;
+package org.cocktailbot.drink.test_environment.in_memory;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 
-public class InMemoryUser {
+public class InMemoryBot {
 
     public static void createForMessageReceivedEvent(MessageReceivedEvent testMessageReceivedEvent) {
         when(testMessageReceivedEvent.getAuthor())
@@ -88,7 +88,7 @@ public class InMemoryUser {
 
             @Override
             public boolean isBot() {
-                return false;
+                return true;
             }
 
             @Override
@@ -125,4 +125,5 @@ public class InMemoryUser {
             }
         };
     }
+
 }

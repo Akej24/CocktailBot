@@ -1,11 +1,10 @@
 package org.cocktailbot.drink.command.decide;
 
-import org.cocktailbot.drink.config.RedisTestConfig;
+import org.cocktailbot.drink.test_environment.base.IntegrationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import redis.clients.jedis.Jedis;
 
@@ -15,7 +14,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class DecideRedisRepositoryTest {
+class DecideRedisRepositoryTest extends IntegrationTest {
 
     private static final String SUGGEST_PREFIX = "suggest:";
     private static final String TOTRY_PREFIX = "totry:";
@@ -23,15 +22,12 @@ class DecideRedisRepositoryTest {
     private static final String testFromUsername = "test-from-username";
     private static final String testSuggestedDrinkName = "test-suggested-drink";
 
-    @Autowired
-    private RedisTestConfig redisTestConfig;
-
     private Jedis testDatabase;
     private DecideRedisRepository testDecideRedisRepository;
 
     @BeforeEach
     void setUp() {
-        testDatabase = redisTestConfig.getJedis();
+        testDatabase = new Jedis(getRedisContainerHostName(), getRedisContainerPort());
         testDatabase.flushAll();
         testDecideRedisRepository = new DecideRedisRepository(testDatabase);
     }

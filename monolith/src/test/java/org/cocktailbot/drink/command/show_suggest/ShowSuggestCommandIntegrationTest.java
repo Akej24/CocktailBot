@@ -2,7 +2,7 @@ package org.cocktailbot.drink.command.show_suggest;
 
 import dev.coly.jdat.JDATesting;
 import org.cocktailbot.drink.command.validator.PrefixValidator;
-import org.cocktailbot.drink.config.RedisTestConfig;
+import org.cocktailbot.drink.test_environment.base.IntegrationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class ShowSuggestCommandIntegrationTest {
+class ShowSuggestCommandIntegrationTest extends IntegrationTest {
 
     private static final String PREFIX = "suggest:";
     private static final String testUsername = "test user";
@@ -25,14 +25,12 @@ class ShowSuggestCommandIntegrationTest {
 
     @Autowired
     private PrefixValidator prefixValidator;
-    @Autowired
-    private RedisTestConfig redisTestConfig;
     private Jedis testDatabase;
     private ShowSuggestCommand testShowSuggestCommand;
 
     @BeforeEach
     void setUp() {
-        testDatabase = redisTestConfig.getJedis();
+        testDatabase = new Jedis(getRedisContainerHostName(), getRedisContainerPort());
         testDatabase.flushAll();
         ShowSuggestService testShowSuggestService = new ShowSuggestService(new ShowSuggestRedisRepository(testDatabase));
         testShowSuggestCommand = new ShowSuggestCommand(prefixValidator, testShowSuggestService);

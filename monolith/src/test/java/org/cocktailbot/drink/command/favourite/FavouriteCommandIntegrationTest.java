@@ -2,7 +2,7 @@ package org.cocktailbot.drink.command.favourite;
 
 import dev.coly.jdat.JDATesting;
 import org.cocktailbot.drink.command.validator.PrefixValidator;
-import org.cocktailbot.drink.config.RedisTestConfig;
+import org.cocktailbot.drink.test_environment.base.IntegrationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +14,7 @@ import redis.clients.jedis.Jedis;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-class FavouriteCommandIntegrationTest {
+class FavouriteCommandIntegrationTest extends IntegrationTest {
 
     private static final String PREFIX = "favourite:";
     private static final String testUsername = "test user";
@@ -23,15 +23,12 @@ class FavouriteCommandIntegrationTest {
 
     @Autowired
     private PrefixValidator prefixValidator;
-    @Autowired
-    private RedisTestConfig redisTestConfig;
-
     private FavouriteCommand testFavouriteCommand;
     private Jedis testDatabase;
 
     @BeforeEach
     void setUp() {
-        testDatabase = redisTestConfig.getJedis();
+        testDatabase = new Jedis(getRedisContainerHostName(), getRedisContainerPort());
         testDatabase.flushAll();
         var testFavouriteRedisRepository = new FavouriteRedisRepository(testDatabase);
         var testFavouriteService = new FavouriteService(testFavouriteRedisRepository);

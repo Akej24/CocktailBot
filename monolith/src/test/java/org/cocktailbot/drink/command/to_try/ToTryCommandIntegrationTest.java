@@ -3,7 +3,7 @@ package org.cocktailbot.drink.command.to_try;
 import dev.coly.jdat.JDATesting;
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
 import org.cocktailbot.drink.command.validator.PrefixValidator;
-import org.cocktailbot.drink.config.RedisTestConfig;
+import org.cocktailbot.drink.test_environment.base.IntegrationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +15,7 @@ import redis.clients.jedis.Jedis;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class ToTryCommandIntegrationTest {
+class ToTryCommandIntegrationTest extends IntegrationTest {
 
     private static final String TO_TRY_PREFIX = "totry:";
     private static final String testUsername = "test user";
@@ -24,14 +24,12 @@ class ToTryCommandIntegrationTest {
 
     @Autowired
     private PrefixValidator prefixValidator;
-    @Autowired
-    private RedisTestConfig redisTestConfig;
     private Jedis testDatabase;
     private ToTryCommand testToTryCommand;
 
     @BeforeEach
     void setUp() {
-        testDatabase = redisTestConfig.getJedis();
+        testDatabase = new Jedis(getRedisContainerHostName(), getRedisContainerPort());
         testDatabase.flushAll();
         ToTryService testToTryService = new ToTryService(new ToTryRedisRepository(testDatabase));
         testToTryCommand = new ToTryCommand(prefixValidator, testToTryService);

@@ -1,8 +1,8 @@
 package org.cocktailbot.drink.reaction.validator;
 
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
-import org.cocktailbot.drink.in_memory.InMemoryBot;
-import org.cocktailbot.drink.in_memory.InMemoryUser;
+import org.cocktailbot.drink.test_environment.in_memory.InMemoryBot;
+import org.cocktailbot.drink.test_environment.in_memory.InMemoryUser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
