@@ -20,6 +20,10 @@ The application has commands such as:<br/>
 
 To add drink to favourites click heart emote ❤ under recipe for the given drink and to remove drink from favourites just click cross emote ❌.
 
+---
+
+# Technologies
+
 The application was created based on the following technologies:
 - Java
 - Spring Boot
