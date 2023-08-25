@@ -41,7 +41,7 @@ To run application u need to create `token.txt` in the following places and past
 `/CocktailBot/monolith/src/test/resources/token.txt`
 
 Commands:<br/>
-`$ git clone https://github.com/Akej24/CocktailBot` <br/>
-`$ docker build -t cocktail-bot:1.0 .` <br/>
-`$ docker pull redis:7.0` <br/>
-`$ docker-compose up` <br/>
+> $ git clone https://github.com/Akej24/CocktailBot <br/>
+$ docker build -t cocktail-bot:1.0 . <br/>
+$ docker pull redis:7.0 <br/>
+$ docker-compose up <br/>
