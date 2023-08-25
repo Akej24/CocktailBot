@@ -19,8 +19,7 @@ The application has commands such as:<br/>
 **!totry** - _Shows a list of drinks to try (max 50)_<br/>
 
 To add drink to favourites click heart emote ❤ under recipe for the given drink and to remove drink from favourites just click cross emote ❌.
-
----
+<br/><br/>
 
 # Technologies
 
@@ -36,7 +35,8 @@ Some libraries used for this project:
 - JDA (Java Discord API)
 - Json
 - JUnit/Mockito
----
+<br/><br/>
+
 # How to run application?
 
 To run application u need to create `token.txt` in the following places and paste your discord bot token into them (CocktailBot is root directory):
