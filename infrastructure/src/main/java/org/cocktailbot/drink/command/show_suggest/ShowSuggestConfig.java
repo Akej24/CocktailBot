@@ -13,11 +13,8 @@ public class ShowSuggestConfig {
     private final RedisConfig redisConfig;
 
     public ShowSuggestCommand subscribeShowSuggestedCommand(){
-        return new ShowSuggestCommand(
-                prefixValidator,
-                new ShowSuggestService(
-                        new ShowSuggestRedisRepository(redisConfig.getJedis())
-                )
-        );
+        var showSuggestRedisRepository = new ShowSuggestRedisRepository(redisConfig.getJedis());
+        var showSuggestedService = new ShowSuggestService(showSuggestRedisRepository);
+        return new ShowSuggestCommand(prefixValidator, showSuggestedService);
     }
 }

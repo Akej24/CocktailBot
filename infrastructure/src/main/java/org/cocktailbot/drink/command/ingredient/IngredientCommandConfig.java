@@ -15,9 +15,7 @@ public class IngredientCommandConfig {
     private final DrinkJsonResponseReader drinkJsonResponseReader;
 
     public IngredientCommand subscribeIngredientCommand() {
-        return new IngredientCommand(
-                prefixValidator,
-                new IngredientService(drinkJsonClient, drinkJsonResponseReader)
-        );
+        var ingredientService = new IngredientService(drinkJsonClient, drinkJsonResponseReader);
+        return new IngredientCommand(prefixValidator, ingredientService);
     }
 }

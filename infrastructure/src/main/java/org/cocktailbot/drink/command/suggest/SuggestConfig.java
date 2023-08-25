@@ -17,11 +17,8 @@ public class SuggestConfig {
     private final RedisConfig redisConfig;
 
     public SuggestCommand subscribeSuggestCommand(){
-        return new SuggestCommand(
-                prefixValidator,
-                new SuggestService(
-                        new SuggestRedisRepository(redisConfig.getJedis()),
-                        drinkJsonClient, drinkJsonResponseReader)
-        );
+        var suggestRedisRepository = new SuggestRedisRepository(redisConfig.getJedis());
+        var suggestService = new SuggestService(suggestRedisRepository, drinkJsonClient, drinkJsonResponseReader);
+        return new SuggestCommand(prefixValidator, suggestService);
     }
 }

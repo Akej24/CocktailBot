@@ -1,20 +1,17 @@
 package org.cocktailbot.drink.command.ingredient;
 
+import lombok.AllArgsConstructor;
 import org.cocktailbot.drink.command.shared.value_object.IngredientName;
 import org.cocktailbot.drink.drink_api.DrinkClient;
 import org.cocktailbot.drink.drink_api.DrinkResponseReader;
 
 import java.util.List;
 
+@AllArgsConstructor
 class IngredientService {
 
     private final DrinkClient drinkClient;
     private final DrinkResponseReader drinkResponseReader;
-
-    IngredientService(DrinkClient drinkClient, DrinkResponseReader drinkResponseReader) {
-        this.drinkClient = drinkClient;
-        this.drinkResponseReader = drinkResponseReader;
-    }
 
     public Ingredient getIngredient(String ingredientMessageName) {
         if(ingredientMessageName.isBlank()) return getEmptyIngredient();

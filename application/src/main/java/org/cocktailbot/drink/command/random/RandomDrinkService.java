@@ -1,5 +1,6 @@
 package org.cocktailbot.drink.command.random;
 
+import lombok.AllArgsConstructor;
 import org.cocktailbot.drink.command.shared.value_object.DrinkImageUrl;
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
 import org.cocktailbot.drink.drink_api.DrinkClient;
@@ -9,16 +10,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 
+@AllArgsConstructor
 class RandomDrinkService {
 
     private static long delay = 100;
     private final DrinkClient drinkClient;
     private final DrinkResponseReader drinkResponseReader;
-
-    RandomDrinkService(DrinkClient drinkClient, DrinkResponseReader drinkResponseReader) {
-        this.drinkClient = drinkClient;
-        this.drinkResponseReader = drinkResponseReader;
-    }
 
     RandomDrink getRandomDrinkFromAlcoholContentFlags(String messageWithFlags) {
         return Arrays.stream(AlcoholContent.values())

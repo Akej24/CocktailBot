@@ -13,11 +13,8 @@ public class FavouriteCommandConfig {
     private final RedisConfig redisConfig;
 
     public FavouriteCommand subscribeFavouriteCommand() {
-        return new FavouriteCommand(
-                prefixValidator,
-                new FavouriteService(
-                        new FavouriteRedisRepository(redisConfig.getJedis())
-                )
-        );
+        var favouriteRedisRepository = new FavouriteRedisRepository(redisConfig.getJedis());
+        var favouriteService = new FavouriteService(favouriteRedisRepository);
+        return new FavouriteCommand(prefixValidator, favouriteService);
     }
 }

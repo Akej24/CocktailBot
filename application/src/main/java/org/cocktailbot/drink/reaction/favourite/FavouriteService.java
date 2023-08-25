@@ -1,12 +1,11 @@
 package org.cocktailbot.drink.reaction.favourite;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 class FavouriteService {
 
     private final FavouriteRepository favouriteDrinkRepository;
-
-    public FavouriteService(FavouriteRepository favouriteDrinkRepository) {
-        this.favouriteDrinkRepository = favouriteDrinkRepository;
-    }
 
     void saveDrinkToFavourites(String username, String embedTitle) {
         favouriteDrinkRepository.addUserFavouriteDrink(username, embedTitle);

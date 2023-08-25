@@ -13,11 +13,8 @@ public class ToTryConfig {
     private final RedisConfig redisConfig;
 
     public ToTryCommand subscribeToTryCommand(){
-        return new ToTryCommand(
-                prefixValidator,
-                new ToTryService(
-                        new ToTryRedisRepository(redisConfig.getJedis())
-                )
-        );
+        var toTryRedisRepository = new ToTryRedisRepository(redisConfig.getJedis());
+        var toTryService = new ToTryService(toTryRedisRepository);
+        return new ToTryCommand(prefixValidator, toTryService);
     }
 }

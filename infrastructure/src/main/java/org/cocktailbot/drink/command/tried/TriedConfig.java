@@ -13,11 +13,8 @@ public class TriedConfig {
     private final RedisConfig redisConfig;
 
     public TriedCommand subscribeTriedCommand(){
-        return new TriedCommand(
-                prefixValidator,
-                new TriedService(
-                        new TriedRedisRepository(redisConfig.getJedis())
-                )
-        );
+        var triedRedisRepository = new TriedRedisRepository(redisConfig.getJedis());
+        var triedService = new TriedService(triedRedisRepository);
+        return new TriedCommand(prefixValidator, triedService);
     }
 }

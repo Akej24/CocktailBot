@@ -1,5 +1,6 @@
 package org.cocktailbot.drink.command.recipe;
 
+import lombok.AllArgsConstructor;
 import org.cocktailbot.drink.command.shared.value_object.DrinkImageUrl;
 import org.cocktailbot.drink.command.shared.value_object.DrinkName;
 import org.cocktailbot.drink.command.shared.value_object.IngredientName;
@@ -10,15 +11,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
+@AllArgsConstructor
 class RecipeService {
 
     private final DrinkClient drinkClient;
     private final DrinkResponseReader drinkResponseReader;
-
-    public RecipeService(DrinkClient drinkClient, DrinkResponseReader drinkResponseReader) {
-        this.drinkClient = drinkClient;
-        this.drinkResponseReader = drinkResponseReader;
-    }
 
     Recipe getDrinkRecipe(String drinkNameFromMessage) {
         if (drinkNameFromMessage.isBlank()) return getEmptyRecipe();

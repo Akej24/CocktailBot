@@ -9,14 +9,12 @@ import org.springframework.context.annotation.Configuration;
 @AllArgsConstructor
 public class FavouriteReactionConfig {
 
+    private final CodepointValidator codepointValidator;
     private final RedisConfig redisConfig;
 
     public FavouriteReaction subscribeFavouriteReaction() {
-        return new FavouriteReaction(
-                CodepointValidator.getInstance(),
-                new FavouriteService(
-                        new FavouriteRedisRepository(redisConfig.getJedis())
-                )
-        );
+        var favouriteRedisRepository = new FavouriteRedisRepository(redisConfig.getJedis());
+        var favouriteService = new FavouriteService(favouriteRedisRepository);
+        return new FavouriteReaction(codepointValidator, favouriteService);
     }
 }

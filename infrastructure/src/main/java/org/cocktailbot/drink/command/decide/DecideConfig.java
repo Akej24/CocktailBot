@@ -13,11 +13,8 @@ public class DecideConfig {
     private final RedisConfig redisConfig;
 
     public DecideCommand subscribeDecideCommand() {
-        return new DecideCommand(
-                prefixValidator,
-                new DecideService(
-                        new DecideRedisRepository(redisConfig.getJedis())
-                )
-        );
+        var decideRedisRepository = new DecideRedisRepository(redisConfig.getJedis());
+        var decideService = new DecideService(decideRedisRepository);
+        return new DecideCommand(prefixValidator, decideService);
     }
 }

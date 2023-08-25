@@ -15,9 +15,7 @@ public class RandomDrinkConfig {
     private final DrinkJsonResponseReader drinkJsonResponseReader;
 
     public RandomDrinkCommand subscribeRandomDrinkCommand() {
-        return new RandomDrinkCommand(
-                prefixValidator,
-                new RandomDrinkService(drinkJsonClient, drinkJsonResponseReader)
-        );
+        var randomDrinkConfig = new RandomDrinkService(drinkJsonClient, drinkJsonResponseReader);
+        return new RandomDrinkCommand(prefixValidator, randomDrinkConfig);
     }
 }
