@@ -38,11 +38,7 @@ Some libraries used for this project:
 
 # How to run application?
 
-To run the application u need to create `token.txt` in the following places and paste your discord bot token into them 
-(CocktailBot is root directory):
-
-`/CocktailBot/token.txt`<br/>
-`/CocktailBot/monolith/src/test/resources/token.txt`
+To run the application put your discord bot token into environment variable 'COCKTAILBOT_TOKEN' inside docker-compose file.
 
 Commands:<br/>
 `$ git clone https://github.com/Akej24/CocktailBot` <br/>

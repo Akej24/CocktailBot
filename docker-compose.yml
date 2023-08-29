@@ -16,6 +16,7 @@ services:
     image: cocktail-bot:1.0
     environment:
       REDIS_URL: redis://redis:6379/0
+      COCKTAILBOT_TOKEN:
     depends_on:
       - cocktailbot-redis
     networks:

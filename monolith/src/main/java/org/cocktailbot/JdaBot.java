@@ -22,16 +22,12 @@ import org.cocktailbot.drink.reaction.favourite.FavouriteReactionConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 @Slf4j
 @Component
 @AllArgsConstructor
 class JdaBot {
 
-    private static final String TOKEN = readFromTokenFiles();
+    private static final String TOKEN = System.getenv("COCKTAILBOT_TOKEN");
 
     private final RandomDrinkConfig randomDrinkConfig;
     private final RecipeCommandConfig recipeCommandConfig;
@@ -71,18 +67,5 @@ class JdaBot {
         } catch(InvalidTokenException e ) {
             log.info("Invalid token in token.txt file, could not start application");
         }
-    }
-
-    static String readFromTokenFiles() {
-        String[] filePaths = {"token.txt", "src/test/resources/token.txt"};
-        for (String filePath : filePaths) {
-            try {
-                return new String(Files.readAllBytes(Paths.get(filePath))).trim();
-            } catch (IOException e) {
-                log.info("Could not read from {}, trying to read from a different location", filePath);
-            }
-        }
-        log.info("Could not read token from token.txt file");
-        throw new RuntimeException("Could not read token from token.txt file");
     }
 }

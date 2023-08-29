@@ -21,7 +21,7 @@
         <start-class>org.cocktailbot.CocktailBot</start-class>
     </properties>
 
-    <name>Monolith</name>
+    <name>monolith</name>
     <description>Cocktail discord bot with monolith architecture</description>
 
     <repositories>

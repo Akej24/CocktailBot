@@ -7,7 +7,6 @@ COPY monolith/ ./monolith/
 COPY infrastructure/ ./infrastructure/
 COPY domain/ ./domain/
 COPY application/ ./application/
-COPY token.txt ./token.txt
 
 # Copy .mvn mvnw and pom.xml
 COPY .mvn/ .mvn
@@ -25,9 +24,8 @@ FROM eclipse-temurin:17-jre-alpine as deployer
 WORKDIR /opt/app
 
 #Copy and run .jar
-COPY --from=builder /opt/app/monolith/target/*.jar /opt/app/*.jar
-COPY --from=builder /opt/app/token.txt /opt/app/token.txt
-ENTRYPOINT ["java", "-jar", "/opt/app/*.jar"]
+COPY --from=builder /opt/app/monolith/target/monolith-1.0-SNAPSHOT.jar /opt/app/monolith-1.0-SNAPSHOT.jar
+ENTRYPOINT ["java", "-jar", "/opt/app/monolith-1.0-SNAPSHOT.jar"]
 
 #docker build -t cocktail-bot:1.0 .
 
