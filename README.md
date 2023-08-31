@@ -3,7 +3,7 @@
 Cocktail Bot is an application based on JDA (Java Discord API) that connects to an external public https://www.thecocktaildb.com api, 
 so when some commands do not return any result, it is possible that the api contains gaps that prevent the execution of individual functionalities 
 on specific drinks (e.g. a drink may not have <br/> an image or a recipe). Repository contains 2 branches: main, where project is written by pure 
-java + libraries and spring-boot branch, where project is rewritten for spring boot.
+java + libraries and spring-boot branch, where project is rewritten for spring boot. DockerHub: https://hub.docker.com/r/akej24/cocktail-bot
 
 The application has commands such as:<br/>
 **!help** - _Shows a list of available commands_<br/>
@@ -38,10 +38,10 @@ Some libraries used for this project:
 
 # How to run application?
 
-To run the application put your discord bot token into environment variable 'COCKTAILBOT_TOKEN' inside docker-compose file.
+To run the application download the following images, put your discord bot token into environment variable 
+'COCKTAILBOT_TOKEN' inside docker-compose and run docker-compose.yml.
 
 Commands:<br/>
-`$ git clone https://github.com/Akej24/CocktailBot` <br/>
-`$ docker build -t cocktail-bot:1.0 .` <br/>
 `$ docker pull redis:7.0` <br/>
+`$ docker pull akej24/cocktail-bot:1.0` <br/>
 `$ docker-compose up` <br/>
